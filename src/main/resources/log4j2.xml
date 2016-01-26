@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level | %-15t | %-25logger{36} | %msg%n"/>
+        </Console>
+
+        <RollingFile
+                name="FileOutput"
+                fileName="logs/${date:yyyy-MM-dd}.log"
+                filePattern="logs/$${date:yyyy-MM}/%d{yyyy-MM-dd}-%i.log.gz"
+        >
+            <PatternLayout pattern="%d{mm-dd HH:mm:ss.SSS} %-5level | %-15t | %-25logger{36} | %msg%n"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console" level="info"/>
+            <AppenderRef ref="FileOutput"/>
+        </Root>
+    </Loggers>
+</Configuration>
