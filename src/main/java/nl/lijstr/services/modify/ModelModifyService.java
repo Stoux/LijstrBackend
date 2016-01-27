@@ -38,6 +38,8 @@ import org.springframework.util.StringUtils;
 public class ModelModifyService {
 
     public static final String DOMAIN_PACKAGE = "nl.lijstr.domain";
+    public static final String[] GETTER_PREFIXES = {"get", "is"};
+    public static final String[] SETTER_PREFIXES = {"set"};
 
     @InjectLogger("ModifyServices")
     private static Logger logger;
@@ -76,6 +78,17 @@ public class ModelModifyService {
                 xRepository, original, modifyWith,
                 classToReflectedFields.get(original.getClass())
         );
+    }
+
+    /**
+     * Get the List of reflected fields for a certain class.
+     *
+     * @param clazz The class
+     *
+     * @return the list
+     */
+    public List<ReflectedField> getReflectedFields(Class<?> clazz) {
+        return classToReflectedFields.get(clazz);
     }
 
 
@@ -178,8 +191,8 @@ public class ModelModifyService {
         final String capitalizedField = StringUtils.capitalize(reflectedField.getField().getName());
 
         ReflectionUtils.MethodCallback callback = method -> {
-            matchMethod("get", capitalizedField, method, reflectedField::setGetterMethod);
-            matchMethod("set", capitalizedField, method, reflectedField::setSetterMethod);
+            matchMethod(GETTER_PREFIXES, capitalizedField, method, reflectedField::setGetterMethod);
+            matchMethod(SETTER_PREFIXES, capitalizedField, method, reflectedField::setSetterMethod);
         };
 
         ReflectionUtils.MethodFilter filter = method ->
@@ -190,9 +203,11 @@ public class ModelModifyService {
         return reflectedField.getGetterMethod() != null && reflectedField.getSetterMethod() != null;
     }
 
-    private void matchMethod(String prefix, String capitalizedField, Method method, Consumer<Method> setter) {
-        if (method.getName().equals(prefix + capitalizedField)) {
-            setter.accept(method);
+    private void matchMethod(String[] prefixes, String capitalizedField, Method method, Consumer<Method> setter) {
+        for (String prefix : prefixes) {
+            if (method.getName().equals(prefix + capitalizedField)) {
+                setter.accept(method);
+            }
         }
     }
 
