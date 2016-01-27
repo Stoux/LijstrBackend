@@ -2,8 +2,6 @@ package nl.lijstr.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -50,8 +48,9 @@ public class User extends IdCmModel {
     @OneToMany(mappedBy = "user")
     private List<PasswordReset> passwordResets;
 
+    @SuppressWarnings("squid:UnusedPrivateMethod")
     @PrePersist
-    public void fillPassword() {
+    private void fillPassword() {
         if (plainPassword != null) {
             //TODO: Improve
             setPassword(new StringBuilder(plainPassword).reverse().toString());

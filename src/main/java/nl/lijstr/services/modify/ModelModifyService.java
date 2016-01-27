@@ -38,8 +38,8 @@ import org.springframework.util.StringUtils;
 public class ModelModifyService {
 
     public static final String DOMAIN_PACKAGE = "nl.lijstr.domain";
-    public static final String[] GETTER_PREFIXES = {"get", "is"};
-    public static final String[] SETTER_PREFIXES = {"set"};
+    private static final String[] GETTER_PREFIXES = {"get", "is"};
+    private static final String[] SETTER_PREFIXES = {"set"};
 
     @InjectLogger("ModifyServices")
     private static Logger logger;

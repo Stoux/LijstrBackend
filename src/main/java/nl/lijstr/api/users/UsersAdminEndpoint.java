@@ -1,7 +1,6 @@
 package nl.lijstr.api.users;
 
 import nl.lijstr.api.abs.AbsCrudRestService;
-import nl.lijstr.api.abs.AbsRestService;
 import nl.lijstr.configs.security.Permissions;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicRepository;

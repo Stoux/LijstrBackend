@@ -16,7 +16,6 @@ import static org.mockito.Mockito.*;
 
 /**
  * A Test for {@link ModelModifyService} that mainly focuses on the public methods.
-
  */
 public class ModelModifyServicePublicTest {
 

@@ -22,6 +22,7 @@ public abstract class IdCmModel extends IdModel {
     @NotModifiable
     private LocalDateTime created;
 
+    @SuppressWarnings("squid:UnusedPrivateMethod")
     @PrePersist
     @PreUpdate
     private void fillTimes() {

@@ -32,7 +32,7 @@ public abstract class AbsCrudRestService<X extends IdModel> extends AbsRestServi
         this(xClass.getSimpleName(), xClass);
     }
 
-    public AbsCrudRestService(String itemName, Class<X> xClass) {
+    protected AbsCrudRestService(String itemName, Class<X> xClass) {
         super(itemName);
         this.xClass = xClass;
     }

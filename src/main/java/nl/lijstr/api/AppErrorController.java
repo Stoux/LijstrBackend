@@ -21,7 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RequestMapping(value = AppErrorController.ERROR_PATH, produces = "application/json")
 public class AppErrorController implements ErrorController {
 
-    public final static String ERROR_PATH = "/error";
+    public static final String ERROR_PATH = "/error";
 
     @InjectLogger
     private Logger logger;
@@ -59,7 +59,7 @@ public class AppErrorController implements ErrorController {
         if (statusCode != null) {
             try {
                 return HttpStatus.valueOf(statusCode);
-            } catch (Exception ex) {
+            } catch (IllegalArgumentException ex) {
                 //A thing happened.
                 logger.warn(ex);
             }
