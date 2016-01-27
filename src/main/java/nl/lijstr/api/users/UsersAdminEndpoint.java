@@ -1,5 +1,6 @@
 package nl.lijstr.api.users;
 
+import nl.lijstr.api.abs.AbsCrudRestService;
 import nl.lijstr.api.abs.AbsRestService;
 import nl.lijstr.configs.security.Permissions;
 import nl.lijstr.domain.users.User;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Secured(Permissions.ADMIN)
 @RequestMapping(value = "/users", produces = "application/json")
-public class UsersAdminEndpoint extends AbsRestService<User> {
+public class UsersAdminEndpoint extends AbsCrudRestService<User> {
 
     @Autowired
     private UserRepository userRepository;
@@ -27,7 +28,13 @@ public class UsersAdminEndpoint extends AbsRestService<User> {
      * Create a new UsersAdminEndpoint.
      */
     public UsersAdminEndpoint() {
-        super("User");
+        super(User.class);
+    }
+
+    @Override
+    protected User validateNewItem(User newItem) {
+        newItem.setId(null);
+        return newItem;
     }
 
     @Override

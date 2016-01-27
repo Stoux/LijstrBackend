@@ -1,10 +1,17 @@
 package nl.lijstr.api.abs;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import nl.lijstr.common.Utils;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.services.modify.ModelModifyService;
+import nl.lijstr.services.modify.models.ReflectedField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,8 +26,15 @@ public abstract class AbsCrudRestService<X extends IdModel> extends AbsRestServi
     @Autowired
     private ModelModifyService modelModifyService;
 
-    protected AbsCrudRestService(String itemName) {
+    private Class<X> xClass;
+
+    protected AbsCrudRestService(Class<X> xClass) {
+        this(xClass.getSimpleName(), xClass);
+    }
+
+    public AbsCrudRestService(String itemName, Class<X> xClass) {
         super(itemName);
+        this.xClass = xClass;
     }
 
     /**
@@ -32,10 +46,10 @@ public abstract class AbsCrudRestService<X extends IdModel> extends AbsRestServi
      * @return The item with the modified values
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public X modify(@PathVariable("id") final long id, @RequestBody final X modifiedValues) {
+    public ResponseEntity<X> modify(@PathVariable("id") final long id, @RequestBody final X modifiedValues) {
         X foundItem = getById(id);
-        modifyValues(foundItem, modifiedValues);
-        return foundItem;
+        boolean modified = modifyValues(foundItem, modifiedValues);
+        return new ResponseEntity<>(foundItem, modified ? HttpStatus.OK : HttpStatus.NOT_MODIFIED);
     }
 
     /**
@@ -43,9 +57,29 @@ public abstract class AbsCrudRestService<X extends IdModel> extends AbsRestServi
      *
      * @param original  The original item (to be modified)
      * @param newValues The new values
+     *
+     * @return is modified
      */
-    protected void modifyValues(X original, X newValues) {
-        modelModifyService.modify(basicRepository, original, newValues);
+    protected boolean modifyValues(X original, X newValues) {
+        Optional<X> modifiedItem = modelModifyService.modify(basicRepository, original, newValues);
+        return modifiedItem.isPresent();
+    }
+
+    /**
+     * Return a list of all the fields that can be modified.
+     *
+     * @return the fields
+     */
+    @RequestMapping("/options")
+    public Map modifiableFields() {
+        //Get the ReflectedFields
+        List<ReflectedField> reflectedFields = modelModifyService.getReflectedFields(xClass);
+        List<String> fieldNames = reflectedFields.stream()
+                .map(ReflectedField::getFieldName)
+                .collect(Collectors.toList());
+
+        //Return the fields
+        return Utils.asMap("modifiable", fieldNames);
     }
 
     /**

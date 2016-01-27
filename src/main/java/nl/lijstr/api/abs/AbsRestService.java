@@ -36,7 +36,6 @@ public abstract class AbsRestService<X extends IdModel> extends AbsService {
      *
      * @return the value
      */
-    @Cacheable
     @RequestMapping("/id")
     public X getById(@PathVariable("id") final long id) {
         X foundItem = basicRepository.findOne(id);
@@ -51,7 +50,6 @@ public abstract class AbsRestService<X extends IdModel> extends AbsService {
      *
      * @return the entities
      */
-    @Cacheable
     @RequestMapping
     public List<X> findAll() {
         return basicRepository.findAll();

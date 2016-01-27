@@ -16,6 +16,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * A Test for {@link ModelModifyService} that mainly focuses on the public methods.
+
  */
 public class ModelModifyServicePublicTest {
 
@@ -59,6 +60,28 @@ public class ModelModifyServicePublicTest {
         //Assert
         assertEquals(originalModify, optional.get());
         verify(mockFieldModifier, times(1)).modify(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testGetEmptyReflectedFields() {
+        //Act
+        List<ReflectedField> reflectedFields = service.getReflectedFields(ModifyClass.class);
+
+        //Assert
+        assertNull(reflectedFields);
+    }
+
+    @Test
+    public void testGetReflectedFields() {
+        //Arrange
+        List<ReflectedField> reflectedFields = new ArrayList<>();
+        mirroredClassListMap.put(ModifyClass.class, reflectedFields);
+
+        //Act
+        List<ReflectedField> foundFields = service.getReflectedFields(ModifyClass.class);
+
+        //Arrange
+        assertEquals(reflectedFields, foundFields);
     }
 
     private class ModifyClass extends IdModel {
