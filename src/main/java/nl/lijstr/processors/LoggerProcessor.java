@@ -1,6 +1,7 @@
 package nl.lijstr.processors;
 
 import java.lang.reflect.Field;
+import nl.lijstr.common.Container;
 import nl.lijstr.processors.annotations.InjectLogger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,11 +16,14 @@ import org.springframework.util.ReflectionUtils;
 @Component
 public class LoggerProcessor implements BeanPostProcessor {
 
+
+
     @Override
     public Object postProcessBeforeInitialization(final Object bean, final String beanName) throws BeansException {
+        Container<InjectLogger> annContainer = new Container<>();
         ReflectionUtils.doWithFields(bean.getClass(), field -> {
-            if (isLoggerType(field) && hasInjectLoggerAnnotation(field)) {
-                injectLogger(bean, field);
+            if (isLoggerType(field) && hasInjectLoggerAnnotation(field, annContainer)) {
+                injectLogger(bean, field, annContainer.getItem());
             }
         });
         return bean;
@@ -29,13 +33,15 @@ public class LoggerProcessor implements BeanPostProcessor {
         return Logger.class.isAssignableFrom(field.getType());
     }
 
-    private boolean hasInjectLoggerAnnotation(Field field) {
+    private boolean hasInjectLoggerAnnotation(Field field, Container<InjectLogger> container) {
         InjectLogger injectLogger = field.getDeclaredAnnotation(InjectLogger.class);
+        container.setItem(injectLogger);
         return injectLogger != null;
     }
 
-    private void injectLogger(Object bean, Field field) {
-        Logger logger = LogManager.getLogger(bean.getClass().getName());
+    private void injectLogger(Object bean, Field field, InjectLogger injectLogger) {
+        String name = injectLogger.value().isEmpty() ? bean.getClass().getName() : injectLogger.value();
+        Logger logger = LogManager.getLogger(name);
         ReflectionUtils.makeAccessible(field);
         ReflectionUtils.setField(field, bean, logger);
     }
