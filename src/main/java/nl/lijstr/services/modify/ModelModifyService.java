@@ -37,6 +37,8 @@ import org.springframework.util.StringUtils;
 @Service
 public class ModelModifyService {
 
+    public static final String DOMAIN_PACKAGE = "nl.lijstr.domain";
+
     @InjectLogger("ModifyServices")
     private static Logger logger;
     private final Map<Class<?>, List<ReflectedField>> classToReflectedFields;
@@ -80,11 +82,11 @@ public class ModelModifyService {
     @SuppressWarnings("squid:UnusedPrivateMethod")
     @PostConstruct
     private void construct() throws ClassNotFoundException {
-        ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(true);
+        ClassPathScanningCandidateComponentProvider scanner = getClassPathScanner();
         scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
         scanner.addExcludeFilter(new AnnotationTypeFilter(NotModifiable.class));
 
-        for (BeanDefinition beanDefinition : scanner.findCandidateComponents("nl.lijstr.domain")) {
+        for (BeanDefinition beanDefinition : scanner.findCandidateComponents(DOMAIN_PACKAGE)) {
             //Try to reflect the field
             String className = beanDefinition.getBeanClassName();
             Class<?> clazz = loadClass(className);
@@ -103,6 +105,10 @@ public class ModelModifyService {
 
     private Class<?> loadClass(String className) throws ClassNotFoundException {
         return Class.forName(className);
+    }
+
+    private ClassPathScanningCandidateComponentProvider getClassPathScanner() {
+        return new ClassPathScanningCandidateComponentProvider(false);
     }
 
     /**

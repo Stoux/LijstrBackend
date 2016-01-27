@@ -17,7 +17,6 @@ import org.springframework.util.ReflectionUtils;
 public class LoggerProcessor implements BeanPostProcessor {
 
 
-
     @Override
     public Object postProcessBeforeInitialization(final Object bean, final String beanName) throws BeansException {
         Container<InjectLogger> annContainer = new Container<>();
