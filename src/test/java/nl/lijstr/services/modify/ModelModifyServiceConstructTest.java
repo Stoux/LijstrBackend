@@ -53,9 +53,8 @@ public class ModelModifyServiceConstructTest {
 
     @Before
     public void setUp() throws Exception {
-        mockedLogger = mock(Logger.class);
         ModelModifyService service = new ModelModifyService();
-        insertMocks(service, mockedLogger);
+        mockedLogger = mockLogger(service);
         spyService = PowerMockito.spy(service);
     }
 
@@ -146,11 +145,6 @@ public class ModelModifyServiceConstructTest {
         } else {
             fail();
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T getInvocationParam(InvocationOnMock invocation, int index) {
-        return (T) invocation.getArguments()[index];
     }
 
     public class ConstructModel {

@@ -3,6 +3,7 @@ package nl.lijstr;
 import java.lang.reflect.Field;
 import nl.lijstr.common.Container;
 import org.apache.logging.log4j.Logger;
+import org.mockito.invocation.InvocationOnMock;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.StringUtils;
 
@@ -19,10 +20,13 @@ public class TestUtils {
      *
      * @param object    The bean/object with a logger field
      * @param fieldName The name of the logger field
+     *
+     * @return the mocked logger
      */
-    public static void mockLogger(Object object, String fieldName) {
+    public static Logger mockLogger(Object object, String fieldName) {
         Logger logger = mock(Logger.class);
         ReflectionTestUtils.setField(object, fieldName, logger);
+        return logger;
     }
 
     /**
@@ -30,9 +34,11 @@ public class TestUtils {
      * This calls {@link #mockLogger(Object, String)} with "logger" as second param.
      *
      * @param object The bean/object with a logger field
+     *
+     * @return the mocked logger
      */
-    public static void mockLogger(Object object) {
-        mockLogger(object, "logger");
+    public static Logger mockLogger(Object object) {
+        return mockLogger(object, "logger");
     }
 
     /**
@@ -100,6 +106,20 @@ public class TestUtils {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Get a given argument of an invocation.
+     *
+     * @param invocation The invocation
+     * @param paramIndex The index of the param (zero-based)
+     * @param <T>        The class of the resulting object
+     *
+     * @return the object
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getInvocationParam(InvocationOnMock invocation, int paramIndex) {
+        return (T) invocation.getArguments()[paramIndex];
     }
 
 }
