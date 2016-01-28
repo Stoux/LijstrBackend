@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
+import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.Language;
@@ -25,7 +26,7 @@ import nl.lijstr.services.modify.annotations.NotModifiable;
 @NoArgsConstructor
 @Entity
 @ModifiableWithHistory
-public class Movie extends IdModel {
+public class Movie extends IdCmModel {
 
     @Setter(value = AccessLevel.NONE)
     @NotModifiable
@@ -54,7 +55,7 @@ public class Movie extends IdModel {
 
     private String youtubeUrl;
 
-    private LocalDateTime created;
+    @NotModifiable
     private LocalDateTime lastUpdated;
 
     @ManyToOne
