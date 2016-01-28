@@ -76,7 +76,34 @@ public final class Utils {
      * @return has the annotation
      */
     public static <X extends Annotation> boolean hasAnnotation(Field field, Class<X> annotationClass) {
-        X annotation = field.getDeclaredAnnotation(annotationClass);
+        X annotation = getAnnotation(field, annotationClass);
+        return annotation != null;
+    }
+
+    /**
+     * Get a field's Annotation.
+     *
+     * @param field           The field
+     * @param annotationClass The class of the Annotation
+     * @param <X>             The annotation
+     *
+     * @return the annotation or null
+     */
+    public static <X extends Annotation> X getAnnotation(Field field, Class<X> annotationClass) {
+        return field.getDeclaredAnnotation(annotationClass);
+    }
+
+    /**
+     * Check if a Class has a certain annotation.
+     *
+     * @param clazz           The class
+     * @param annotationClass The class of the annotation
+     * @param <X>             The annotation
+     *
+     * @return has the annotation
+     */
+    public static <X extends Annotation> boolean hasAnnotation(Class<?> clazz, Class<X> annotationClass) {
+        X annotation = clazz.getDeclaredAnnotation(annotationClass);
         return annotation != null;
     }
 

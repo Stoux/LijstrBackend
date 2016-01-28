@@ -2,6 +2,7 @@ package nl.lijstr.processors.abs;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import nl.lijstr.common.Utils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ReflectionUtils;
@@ -33,7 +34,7 @@ public abstract class AbsBeanProcessor<X extends Annotation> implements BeanPost
 
     private void processField(Object bean, Field field) {
         //Find the annotation & check if it qualifies
-        X annotation = field.getDeclaredAnnotation(annotationClass);
+        X annotation = Utils.getAnnotation(field, annotationClass);
         if (annotation == null || !qualifies(bean, field, annotation)) {
             return;
         }
