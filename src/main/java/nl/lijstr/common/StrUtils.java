@@ -36,4 +36,23 @@ public final class StrUtils {
         return stringBuilder.toString();
     }
 
+    /**
+     * Use a String if it's not null and not empty, otherwise use the default.
+     * <p>
+     * This is just a more readable version of:
+     * isEmpty ? default : use
+     *
+     * @param use          The string
+     * @param useAsDefault The default if use is empty
+     *
+     * @return the result
+     */
+    public static String useOrDefault(String use, String useAsDefault) {
+        if (use == null || use.isEmpty()) {
+            return useAsDefault;
+        } else {
+            return use;
+        }
+    }
+
 }
