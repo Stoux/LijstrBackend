@@ -54,11 +54,7 @@ public abstract class AbsBeanProcessor<X extends Annotation> implements BeanPost
      *
      * @return is qualified for injection
      */
-    protected boolean qualifies(Object bean, Field field, X annotation) {
-        return true;
-    }
-
-    ;
+    protected abstract boolean qualifies(Object bean, Field field, X annotation);
 
     /**
      * Get the object that needs to be injected into the field.

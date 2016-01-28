@@ -26,7 +26,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr.TestUtils.*;
+import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

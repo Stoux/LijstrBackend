@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 
-import static nl.lijstr.TestUtils.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 27/01/2016.

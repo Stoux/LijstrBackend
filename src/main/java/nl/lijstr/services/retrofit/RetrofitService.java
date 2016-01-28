@@ -21,14 +21,22 @@ public class RetrofitService {
         endpointMap = new ConcurrentHashMap<>();
     }
 
+
     /**
-     * Get a Retrofit endpoint.
+     * Create a Retrofit Service.
      *
-     * @param endpoint the endpoint URL
+     * @param endpoint The endpoint URL
+     * @param xClass   The service class
+     * @param <X>      the service
      *
-     * @return the Retrofit instance
+     * @return the service
      */
-    public Retrofit getRetrofitEndpoint(String endpoint) {
+    public <X> X createRetrofitService(String endpoint, Class<X> xClass) {
+        Retrofit retrofit = getRetrofitEndpoint(endpoint);
+        return retrofit.create(xClass);
+    }
+
+    private Retrofit getRetrofitEndpoint(String endpoint) {
         //Check if cached
         if (endpointMap.containsKey(endpoint)) {
             return endpointMap.get(endpoint);

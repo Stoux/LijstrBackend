@@ -1,10 +1,11 @@
-package nl.lijstr;
+package nl.lijstr._TestUtils;
 
 import java.lang.reflect.Field;
 import nl.lijstr.common.Container;
 import org.apache.logging.log4j.Logger;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import static org.junit.Assert.*;
@@ -120,6 +121,21 @@ public class TestUtils {
     @SuppressWarnings("unchecked")
     public static <T> T getInvocationParam(InvocationOnMock invocation, int paramIndex) {
         return (T) invocation.getArguments()[paramIndex];
+    }
+
+    /**
+     * Get a Field's value.
+     *
+     * @param object The object
+     * @param fieldName  The field
+     * @param <X>    Casted to
+     *
+     * @return the value
+     * @throws IllegalAccessException if no access
+     */
+    @SuppressWarnings("unchecked")
+    public static <X> X getFieldValue(Object object, String fieldName) throws Exception {
+        return (X) ReflectionTestUtils.getField(object, fieldName);
     }
 
 }

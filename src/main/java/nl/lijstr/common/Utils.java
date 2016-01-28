@@ -94,6 +94,19 @@ public final class Utils {
     }
 
     /**
+     * Get a class' annotation.
+     *
+     * @param aClass          The class
+     * @param annotationClass The class of the annotation
+     * @param <X>             The annotation
+     *
+     * @return the annotation or null
+     */
+    public static <X extends Annotation> X getAnnotation(Class<?> aClass, Class<X> annotationClass) {
+        return aClass.getDeclaredAnnotation(annotationClass);
+    }
+
+    /**
      * Check if a Class has a certain annotation.
      *
      * @param clazz           The class
