@@ -50,7 +50,16 @@ public final class ReflectUtils {
 
         //Execute
         ReflectionUtils.doWithMethods(clazz, callback, filter);
-        return foundGetter.getItem() && foundSetter.getItem();
+
+        if (getterConsumer != null && !foundGetter.getItem()) {
+            return false;
+        }
+
+        if (setterConsumer != null && !foundSetter.getItem()) {
+            return false;
+        }
+
+        return true;
     }
 
     private static void handleMethod(Method method, String[] prefixes,
