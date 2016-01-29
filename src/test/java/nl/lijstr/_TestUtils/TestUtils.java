@@ -1,5 +1,6 @@
 package nl.lijstr._TestUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import nl.lijstr.common.Container;
 import org.apache.logging.log4j.Logger;
@@ -126,9 +127,9 @@ public class TestUtils {
     /**
      * Get a Field's value.
      *
-     * @param object The object
-     * @param fieldName  The field
-     * @param <X>    Casted to
+     * @param object    The object
+     * @param fieldName The field
+     * @param <X>       Casted to
      *
      * @return the value
      * @throws IllegalAccessException if no access
@@ -136,6 +137,22 @@ public class TestUtils {
     @SuppressWarnings("unchecked")
     public static <X> X getFieldValue(Object object, String fieldName) throws Exception {
         return (X) ReflectionTestUtils.getField(object, fieldName);
+    }
+
+    /**
+     * Call a Private constructor for coverage.
+     *
+     * @param forClass The class it's going to be called on
+     * @param <X>      The class
+     *
+     * @throws Exception if anything fails
+     */
+    public static <X> void callPrivateConstructor(Class<X> forClass) throws Exception {
+        Constructor<X> constructor = forClass.getDeclaredConstructor();
+        ReflectionUtils.makeAccessible(constructor);
+
+        X instance = constructor.newInstance();
+        assertNotNull(instance);
     }
 
 }
