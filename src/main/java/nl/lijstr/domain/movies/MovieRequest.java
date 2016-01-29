@@ -10,7 +10,6 @@ import nl.lijstr.domain.base.IdCmUserModel;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

@@ -13,7 +13,6 @@ import nl.lijstr.services.modify.annotations.NotModifiable;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

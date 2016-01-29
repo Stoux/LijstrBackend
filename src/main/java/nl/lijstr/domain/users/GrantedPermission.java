@@ -10,7 +10,6 @@ import org.springframework.security.core.GrantedAuthority;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

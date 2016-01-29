@@ -1,12 +1,10 @@
 package nl.lijstr.services.modify;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.function.Consumer;
 import javax.annotation.PostConstruct;
 import javax.persistence.*;
+import nl.lijstr.common.ReflectUtils;
 import nl.lijstr.common.StrUtils;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.base.IdModel;
@@ -25,7 +23,6 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * A service that allows easy modification of entities by using annotations.
@@ -38,8 +35,6 @@ import org.springframework.util.StringUtils;
 public class ModelModifyService {
 
     public static final String DOMAIN_PACKAGE = "nl.lijstr.domain";
-    private static final String[] GETTER_PREFIXES = {"get", "is"};
-    private static final String[] SETTER_PREFIXES = {"set"};
 
     @InjectLogger("ModifyServices")
     private static Logger logger;
@@ -53,6 +48,16 @@ public class ModelModifyService {
      */
     public ModelModifyService() {
         classToReflectedFields = new HashMap<>();
+    }
+
+    /**
+     * Find the Getter & Setter methods for a certain field.
+     */
+    private static boolean findFieldMethods(final Class<?> clazz, final ReflectedField reflectedField) {
+        return ReflectUtils.findFieldMethods(
+                clazz, reflectedField.getFieldName(),
+                reflectedField::setGetterMethod, reflectedField::setSetterMethod
+        );
     }
 
     /**
@@ -90,7 +95,6 @@ public class ModelModifyService {
     public List<ReflectedField> getReflectedFields(Class<?> clazz) {
         return classToReflectedFields.get(clazz);
     }
-
 
     @SuppressWarnings("squid:UnusedPrivateMethod")
     @PostConstruct
@@ -182,33 +186,6 @@ public class ModelModifyService {
         }
 
         return true;
-    }
-
-    /**
-     * Find the Getter & Setter methods for a certain field.
-     */
-    private boolean findFieldMethods(final Class<?> clazz, final ReflectedField reflectedField) {
-        final String capitalizedField = StringUtils.capitalize(reflectedField.getField().getName());
-
-        ReflectionUtils.MethodCallback callback = method -> {
-            matchMethod(GETTER_PREFIXES, capitalizedField, method, reflectedField::setGetterMethod);
-            matchMethod(SETTER_PREFIXES, capitalizedField, method, reflectedField::setSetterMethod);
-        };
-
-        ReflectionUtils.MethodFilter filter = method ->
-                method.getName().endsWith(capitalizedField) && Modifier.isPublic(method.getModifiers());
-
-        ReflectionUtils.doWithMethods(clazz, callback, filter);
-
-        return reflectedField.getGetterMethod() != null && reflectedField.getSetterMethod() != null;
-    }
-
-    private void matchMethod(String[] prefixes, String capitalizedField, Method method, Consumer<Method> setter) {
-        for (String prefix : prefixes) {
-            if (method.getName().equals(prefix + capitalizedField)) {
-                setter.accept(method);
-            }
-        }
     }
 
 }

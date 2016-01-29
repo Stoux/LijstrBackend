@@ -1,12 +1,12 @@
 package nl.lijstr.domain.movies;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
-import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.Language;
 import nl.lijstr.domain.movies.people.MovieActor;
@@ -21,7 +21,6 @@ import nl.lijstr.services.modify.annotations.NotModifiable;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -34,13 +33,16 @@ public class Movie extends IdCmModel {
     private String imdbId;
 
     private String title;
+    @JsonIgnore
+    @NotModifiable
+    private String originalTitle;
 
     private Integer year;
     private LocalDate released;
 
     private Double imdbRating;
     private Long imdbVotes;
-    private Integer metacritic;
+    private Integer metacriticScore;
 
     private String shortPlot;
     private String longPlot;
@@ -62,9 +64,9 @@ public class Movie extends IdCmModel {
     private User addedBy;
 
     //Relations | Details
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Genre> genres;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Language> languages;
 
     //Relations | People

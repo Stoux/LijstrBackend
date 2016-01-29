@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.lijstr.common.ReflectUtils;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.repositories.abs.BasicRepository;
@@ -132,12 +133,13 @@ public class FieldModifierServiceTest {
 
             ReflectedField reflectedField = new ReflectedField(field);
             reflectedField.setKeepHistory(field.getName().startsWith("varh"));
-            reflectedField.setGetterMethod(FieldModel.class.getDeclaredMethod(
-                    "get" + StringUtils.capitalize(field.getName())
-            ));
-            reflectedField.setSetterMethod(FieldModel.class.getDeclaredMethod(
-                    "set" + StringUtils.capitalize(field.getName()), String.class
-            ));
+
+            ReflectUtils.findFieldMethods(
+                    FieldModel.class,
+                    field.getName(),
+                    reflectedField::setGetterMethod,
+                    reflectedField::setSetterMethod
+            );
 
             list.add(reflectedField);
         }

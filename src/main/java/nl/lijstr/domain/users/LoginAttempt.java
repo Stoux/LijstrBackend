@@ -1,10 +1,7 @@
 package nl.lijstr.domain.users;
 
 import javax.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.domain.base.UserModel;
 
 /**
@@ -12,7 +9,6 @@ import nl.lijstr.domain.base.UserModel;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @Entity
 public class LoginAttempt extends UserModel {

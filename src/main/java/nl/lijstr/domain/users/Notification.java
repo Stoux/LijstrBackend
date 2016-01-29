@@ -9,7 +9,6 @@ import nl.lijstr.domain.base.UserModel;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

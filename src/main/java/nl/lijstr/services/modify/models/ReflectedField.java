@@ -2,9 +2,7 @@ package nl.lijstr.services.modify.models;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * A container class that contains a Field and metadata.

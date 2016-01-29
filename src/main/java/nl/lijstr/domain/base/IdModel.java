@@ -1,8 +1,7 @@
 package nl.lijstr.domain.base;
 
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
 /**

@@ -2,8 +2,7 @@ package nl.lijstr.domain.imdb;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.domain.base.IdModel;
 
 /**

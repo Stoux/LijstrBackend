@@ -2,9 +2,7 @@ package nl.lijstr.domain.other;
 
 import java.lang.reflect.Field;
 import javax.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
@@ -37,12 +35,23 @@ public class FieldHistory extends IdModel {
      */
     public static FieldHistory asFieldHistory(Class<?> clazz, long objectId, Field field, String oldValue, String newValue) {
         return new FieldHistory(
-                clazz.getSimpleName(),
+                getDatabaseClassName(clazz),
                 objectId,
                 field.getName(),
                 oldValue,
                 newValue
         );
+    }
+
+    /**
+     * Get the name for the given class as it would be stored in the database.
+     *
+     * @param clazz The class
+     *
+     * @return the name
+     */
+    public static String getDatabaseClassName(Class<?> clazz) {
+        return clazz.getSimpleName();
     }
 
 }

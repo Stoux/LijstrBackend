@@ -1,5 +1,6 @@
 package nl.lijstr.domain.movies.people;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import lombok.*;
@@ -12,7 +13,6 @@ import nl.lijstr.domain.movies.Movie;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,7 +20,7 @@ public class MovieDirector extends IdModel {
 
     @ManyToOne
     private Movie movie;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Person person;
 
 }

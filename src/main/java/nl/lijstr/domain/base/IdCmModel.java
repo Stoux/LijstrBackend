@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
 /**
