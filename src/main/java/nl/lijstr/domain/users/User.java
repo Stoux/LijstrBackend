@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.services.modify.annotations.NotModifiable;
@@ -21,13 +22,18 @@ public class User extends IdCmModel {
     @Column(unique = true)
     @NotModifiable
     private String username;
+
     @NotModifiable
     @JsonIgnore
+    @NotNull
     private String hashedPassword;
+
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     private String displayName;
+
     @Column(unique = true)
     private String email;
 

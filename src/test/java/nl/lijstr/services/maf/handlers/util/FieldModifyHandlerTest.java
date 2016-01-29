@@ -78,8 +78,8 @@ public class FieldModifyHandlerTest {
     public class TestModify {
         String nullVar;
         String varX;
-        int varEqual;
         private String var;
+        int varEqual;
     }
 
     @Setter

@@ -1,4 +1,4 @@
-package nl.lijstr.api;
+package nl.lijstr.api.errors;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
