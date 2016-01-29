@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -15,6 +16,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.SystemPropertyUtils;
+
+import static org.junit.Assert.*;
 
 /**
  * This test is literally only here for Test coverage.
@@ -33,9 +36,36 @@ public class CoverageTest {
         runCoverage("nl.lijstr.exceptions", false);
     }
 
+    @Test
+    public void privateConstructorCoverage() throws Exception {
+        Function<Class, Boolean> candidateFunction = c -> {
+            if (!isNotAbstractAndNotTest(c)) {
+                return false;
+            }
+
+            if (c.getDeclaredConstructors().length != 1) {
+                return false;
+            }
+
+            Constructor constructor = c.getDeclaredConstructors()[0];
+            if (!Modifier.isPrivate(constructor.getModifiers())) {
+                return false;
+            }
+
+            return constructor.getParameterCount() == 0;
+        };
+
+        for (Class aClass : findMyTypes("nl.lijstr", candidateFunction)) {
+            Constructor constructor = aClass.getDeclaredConstructors()[0];
+            ReflectionUtils.makeAccessible(constructor);
+            Object instance = constructor.newInstance();
+            assertNotNull(instance);
+        }
+    }
+
     //Run coverage (constructors, getters, setters)
     private void runCoverage(String scanPackage, boolean runMethods) throws Exception {
-        for (Class aClass : findMyTypes(scanPackage)) {
+        for (Class aClass : findMyTypes(scanPackage, this::isNotAbstractAndNotTest)) {
             Object instance = coverConstructors(aClass);
             if (instance != null && runMethods) {
                 coverMethods(aClass, instance);
@@ -44,7 +74,7 @@ public class CoverageTest {
     }
 
     //Find all classes in the package
-    private List<Class> findMyTypes(String basePackage) throws Exception {
+    private List<Class> findMyTypes(String basePackage, Function<Class, Boolean> candidateFunction) throws Exception {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
 
@@ -55,7 +85,7 @@ public class CoverageTest {
         for (Resource resource : resources) {
             if (resource.isReadable()) {
                 MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
-                if (isCandidate(metadataReader)) {
+                if (isCandidate(metadataReader, candidateFunction)) {
                     candidates.add(Class.forName(metadataReader.getClassMetadata().getClassName()));
                 }
             }
@@ -68,8 +98,13 @@ public class CoverageTest {
         return ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage));
     }
 
-    private boolean isCandidate(MetadataReader metadataReader) throws Exception {
+    private boolean isCandidate(MetadataReader metadataReader,
+                                Function<Class, Boolean> candidateFunction) throws Exception {
         Class c = Class.forName(metadataReader.getClassMetadata().getClassName());
+        return candidateFunction.apply(c);
+    }
+
+    private boolean isNotAbstractAndNotTest(Class c) {
         return !Modifier.isAbstract(c.getModifiers()) && !c.getSimpleName().endsWith("Test");
     }
 

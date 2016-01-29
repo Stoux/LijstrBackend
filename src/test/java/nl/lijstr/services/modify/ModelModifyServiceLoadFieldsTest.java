@@ -2,8 +2,7 @@ package nl.lijstr.services.modify;
 
 import java.util.*;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.services.modify.annotations.ExternalModifiable;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
@@ -56,6 +55,47 @@ public class ModelModifyServiceLoadFieldsTest {
         assertTrue(expectedFields.isEmpty());
     }
 
+    @Test
+    public void testLoadWithHistoryModel() throws Exception {
+        //Act
+        List<ReflectedField> fields = invokeLoadWithAssert(WithHistoryModel.class, 1);
+        ReflectedField field = fields.get(0);
+
+        //Assert
+        assertEquals("randomVar", field.getFieldName());
+        assertTrue(field.keepsHistory());
+    }
+
+    @Test
+    public void testLoadWithHistoryFieldModel() throws Exception {
+        //Act
+        List<ReflectedField> fields = invokeLoadWithAssert(WithHistoryFieldModel.class, 2);
+
+        //Assert
+        ReflectedField otherVarField = fields.get(0);
+        assertEquals("otherVar", otherVarField.getFieldName());
+        assertFalse(otherVarField.keepsHistory());
+
+        ReflectedField randomVarField = fields.get(1);
+        assertEquals("randomVar", randomVarField.getFieldName());
+        assertTrue(randomVarField.keepsHistory());
+    }
+
+    private List<ReflectedField> invokeLoadWithAssert(Class<?> clazz, int expectedFieldsSize) {
+        //Act
+        List<ReflectedField> fields = invokeLoadClassFieldsMethod(clazz);
+
+        //Assert
+        assertEquals(1, mirroredClassListMap.size());
+        assertEquals(expectedFieldsSize, fields.size());
+
+        return fields;
+    }
+
+    private List<ReflectedField> invokeLoadClassFieldsMethod(Class<?> clazz) {
+        return ReflectionTestUtils.invokeMethod(service, "loadClassFields", clazz);
+    }
+
     @Getter
     @Setter
     private class NotModifiableFieldModel {
@@ -80,37 +120,11 @@ public class ModelModifyServiceLoadFieldsTest {
         private String modifiable;
     }
 
-    @Test
-    public void testLoadWithHistoryModel() throws Exception {
-        //Act
-        List<ReflectedField> fields = invokeLoadWithAssert(WithHistoryModel.class, 1);
-        ReflectedField field = fields.get(0);
-
-        //Assert
-        assertEquals("randomVar", field.getFieldName());
-        assertTrue(field.keepsHistory());
-    }
-
     @Getter
     @Setter
     @ModifiableWithHistory
     private class WithHistoryModel {
         private String randomVar;
-    }
-
-    @Test
-    public void testLoadWithHistoryFieldModel() throws Exception {
-        //Act
-        List<ReflectedField> fields = invokeLoadWithAssert(WithHistoryFieldModel.class, 2);
-
-        //Assert
-        ReflectedField otherVarField = fields.get(0);
-        assertEquals("otherVar", otherVarField.getFieldName());
-        assertFalse(otherVarField.keepsHistory());
-
-        ReflectedField randomVarField = fields.get(1);
-        assertEquals("randomVar", randomVarField.getFieldName());
-        assertTrue(randomVarField.keepsHistory());
     }
 
     @Getter
@@ -119,21 +133,6 @@ public class ModelModifyServiceLoadFieldsTest {
         private String otherVar;
         @ModifiableWithHistory
         private String randomVar;
-    }
-
-    private List<ReflectedField> invokeLoadWithAssert(Class<?> clazz, int expectedFieldsSize) {
-        //Act
-        List<ReflectedField> fields = invokeLoadClassFieldsMethod(clazz);
-
-        //Assert
-        assertEquals(1, mirroredClassListMap.size());
-        assertEquals(expectedFieldsSize, fields.size());
-
-        return fields;
-    }
-
-    private List<ReflectedField> invokeLoadClassFieldsMethod(Class<?> clazz) {
-        return ReflectionTestUtils.invokeMethod(service, "loadClassFields", clazz);
     }
 
 }

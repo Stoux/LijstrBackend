@@ -5,10 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.common.ReflectUtils;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.other.FieldHistory;
@@ -19,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.util.StringUtils;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;
@@ -111,18 +107,6 @@ public class FieldModifierServiceTest {
         return "";
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class FieldModel extends IdModel {
-        private String var1;
-        private String var2;
-        private String var3;
-        private String varh4;
-        private String varh5;
-    }
-
     private List<ReflectedField> reflectModelFields() throws Exception {
         List<ReflectedField> list = new ArrayList<>();
 
@@ -147,6 +131,17 @@ public class FieldModifierServiceTest {
         return list;
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public class FieldModel extends IdModel {
+        private String var1;
+        private String var2;
+        private String var3;
+        private String varh4;
+        private String varh5;
+    }
 
 
 }

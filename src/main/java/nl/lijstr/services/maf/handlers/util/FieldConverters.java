@@ -19,6 +19,7 @@ public final class FieldConverters {
      * Expected format: yyyyMMdd
      *
      * @param s The string
+     *
      * @return the date or null
      */
     public static LocalDate convertToDate(String s) {
@@ -50,6 +51,7 @@ public final class FieldConverters {
      * Expects a 4 digit long string, all numbers.
      *
      * @param s The string
+     *
      * @return The year or null
      */
     public static Integer convertToYear(String s) {
@@ -64,6 +66,7 @@ public final class FieldConverters {
      * It also supports integers that will be converted to doubles.
      *
      * @param s The string
+     *
      * @return the double or null
      */
     public static Double convertToDouble(String s) {
@@ -82,6 +85,7 @@ public final class FieldConverters {
      * This supports both ,'s as .'s as thousand separators.
      *
      * @param s The string
+     *
      * @return the long or null
      */
     public static Long convertToLong(String s) {
@@ -98,6 +102,7 @@ public final class FieldConverters {
      * Expected format x/100 or xx/100.
      *
      * @param s The string
+     *
      * @return The int (x) or null
      */
     public static Integer convertMetaCriticScore(String s) {

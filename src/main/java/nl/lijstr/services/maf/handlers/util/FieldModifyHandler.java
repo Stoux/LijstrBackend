@@ -4,12 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import nl.lijstr.common.Container;
 import nl.lijstr.common.ReflectUtils;
-import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.exceptions.LijstrException;
-import nl.lijstr.services.maf.models.ApiMovie;
 import org.springframework.util.ReflectionUtils;
 
 /**

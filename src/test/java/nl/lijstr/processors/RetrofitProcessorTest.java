@@ -2,7 +2,7 @@ package nl.lijstr.processors;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.retrofit.RetrofitService;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;

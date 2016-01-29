@@ -2,7 +2,6 @@ package nl.lijstr.services.maf.handlers.util;
 
 import java.time.LocalDate;
 import java.util.function.Function;
-import nl.lijstr.services.maf.handlers.util.FieldConverters;
 import org.junit.Before;
 import org.junit.Test;
 

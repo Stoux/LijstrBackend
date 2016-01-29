@@ -38,7 +38,7 @@ public class LijstrUserDetailsService implements UserDetailsService {
     private org.springframework.security.core.userdetails.User asSpringUser(User user) {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
-                user.getPassword(),
+                user.getHashedPassword(),
                 getRights(user)
         );
     }

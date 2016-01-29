@@ -2,8 +2,7 @@ package nl.lijstr.common;
 
 import java.lang.reflect.Method;
 import java.math.BigInteger;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr._TestUtils.TestUtils;
 import org.junit.Before;
 import org.junit.Test;

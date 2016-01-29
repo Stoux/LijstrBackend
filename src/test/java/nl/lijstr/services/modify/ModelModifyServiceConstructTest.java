@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import javax.persistence.Entity;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 import nl.lijstr.services.modify.models.ReflectedField;
 import org.apache.logging.log4j.Logger;

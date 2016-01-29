@@ -9,7 +9,6 @@ import retrofit.http.GET;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 29/01/2016.

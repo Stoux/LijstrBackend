@@ -1,6 +1,5 @@
 package nl.lijstr.services.maf.handlers.util;
 
-import java.lang.reflect.Method;
 import lombok.*;
 import nl.lijstr.exceptions.LijstrException;
 import org.junit.Before;
@@ -18,26 +17,6 @@ public class FieldModifyHandlerTest {
     @Before
     public void setUp() {
         handler = null;
-    }
-
-    @Setter
-    @Getter
-    @AllArgsConstructor
-    public class TestModify {
-        private String var;
-        String nullVar;
-        String varX;
-        int varEqual;
-    }
-
-    @Setter
-    @Getter
-    @AllArgsConstructor
-    public class OtherTestModify {
-        public String var;
-        String nullVar;
-        String varY;
-        int varEqual;
     }
 
     @Test
@@ -63,10 +42,6 @@ public class FieldModifyHandlerTest {
         assertEquals(otherTestModify.varY, testModify.varX);
     }
 
-    public class InvalidModel {
-        private String var;
-    }
-
     @Test(expected = LijstrException.class)
     public void testInvalidClass() throws Exception {
         //Arrange
@@ -78,11 +53,6 @@ public class FieldModifyHandlerTest {
 
         //Assert
         fail();
-    }
-
-    @AllArgsConstructor
-    public class DifferentModel {
-        int varEqual;
     }
 
     @Test
@@ -100,6 +70,35 @@ public class FieldModifyHandlerTest {
 
         //Assert
         assertEquals("x9001", testModify.getVar());
+    }
+
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    public class TestModify {
+        String nullVar;
+        String varX;
+        int varEqual;
+        private String var;
+    }
+
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    public class OtherTestModify {
+        public String var;
+        String nullVar;
+        String varY;
+        int varEqual;
+    }
+
+    public class InvalidModel {
+        private String var;
+    }
+
+    @AllArgsConstructor
+    public class DifferentModel {
+        int varEqual;
     }
 
 }

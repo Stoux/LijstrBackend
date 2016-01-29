@@ -21,11 +21,12 @@ public class User extends IdCmModel {
     @Column(unique = true)
     @NotModifiable
     private String username;
+    @NotModifiable
     @JsonIgnore
-    private String password;
+    private String hashedPassword;
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String plainPassword;
+    private String password;
     private String displayName;
     @Column(unique = true)
     private String email;
@@ -49,10 +50,11 @@ public class User extends IdCmModel {
 
     @SuppressWarnings("squid:UnusedPrivateMethod")
     @PrePersist
+    @PreUpdate
     private void fillPassword() {
-        if (plainPassword != null) {
+        if (password != null) {
             //TODO: Improve
-            setPassword(new StringBuilder(plainPassword).reverse().toString());
+            setHashedPassword(new StringBuilder(password).reverse().toString());
         }
     }
 

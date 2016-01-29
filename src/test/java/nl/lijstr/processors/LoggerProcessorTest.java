@@ -57,12 +57,6 @@ public class LoggerProcessorTest {
         PowerMockito.verifyStatic(times(1));
     }
 
-    private class ValidBean {
-        @InjectLogger
-        private Logger logger;
-        private String randomVar;
-    }
-
     @Test
     public void testValidNamedPostProcessBeforeInit() throws Exception {
         //Arrange
@@ -73,12 +67,6 @@ public class LoggerProcessorTest {
 
         //Assert
         assertEquals(ValidNamedBean.NAMED_LOGGER, namedBean.logger.getName());
-    }
-
-    private class ValidNamedBean {
-        public static final String NAMED_LOGGER = "NamedLogger";
-        @InjectLogger(NAMED_LOGGER)
-        private Logger logger;
     }
 
     @Test
@@ -93,11 +81,6 @@ public class LoggerProcessorTest {
         assertNull(invalidTypeBean.logger);
     }
 
-    private class InvalidTypeBean {
-        @InjectLogger
-        private String logger;
-    }
-
     @Test
     public void testMissingAnnotationPostProcessBeforeInit() throws Exception {
         //Arrange
@@ -108,10 +91,6 @@ public class LoggerProcessorTest {
 
         //Assert
         assertNull(missingAnnotationBean.logger);
-    }
-
-    private class MissingAnnotationBean {
-        private Logger logger;
     }
 
     private void executeAndConfirmSameBean(Object bean) {
@@ -129,6 +108,27 @@ public class LoggerProcessorTest {
 
         //Assert
         assertNull(bean);
+    }
+
+    private class ValidBean {
+        @InjectLogger
+        private Logger logger;
+        private String randomVar;
+    }
+
+    private class ValidNamedBean {
+        public static final String NAMED_LOGGER = "NamedLogger";
+        @InjectLogger(NAMED_LOGGER)
+        private Logger logger;
+    }
+
+    private class InvalidTypeBean {
+        @InjectLogger
+        private String logger;
+    }
+
+    private class MissingAnnotationBean {
+        private Logger logger;
     }
 
 }
