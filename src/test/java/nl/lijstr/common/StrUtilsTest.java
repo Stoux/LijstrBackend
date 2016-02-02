@@ -50,4 +50,25 @@ public class StrUtilsTest {
         TestUtils.callPrivateConstructor(StrUtils.class);
     }
 
+    @Test
+    public void testStingOrNull() throws Exception {
+        //Arrange
+        Integer i = 5;
+        String empty = "";
+        Object nObject = null;
+        String s = "Hello";
+
+        //Act
+        String intResult = StrUtils.stringOrNull(i);
+        String emptyResult = StrUtils.stringOrNull(empty);
+        String nullResult = StrUtils.stringOrNull(nObject);
+        String helloResult = StrUtils.stringOrNull(s);
+
+        //Assert
+        assertEquals("5", intResult);
+        assertNull(emptyResult);
+        assertNull(nullResult);
+        assertEquals(s, helloResult);
+    }
+
 }

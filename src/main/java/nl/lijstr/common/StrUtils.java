@@ -55,4 +55,24 @@ public final class StrUtils {
         }
     }
 
+    /**
+     * Transform an object into a String or return null.
+     *
+     * @param o The object
+     *
+     * @return the string or null
+     */
+    public static String stringOrNull(Object o) {
+        if (o == null) {
+            return null;
+        } else {
+            String asString = o.toString();
+            if (asString.isEmpty()) {
+                return null;
+            } else {
+                return asString;
+            }
+        }
+    }
+
 }
