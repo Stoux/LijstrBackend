@@ -16,6 +16,6 @@ public interface FieldHistorySuggestionRepository extends BasicRepository<FieldH
      *
      * @return the suggestion
      */
-    FieldHistorySuggestion findByFieldHistory(FieldHistory fieldHistory);
+    FieldHistorySuggestion findByOverwriteTarget(FieldHistory fieldHistory);
 
 }

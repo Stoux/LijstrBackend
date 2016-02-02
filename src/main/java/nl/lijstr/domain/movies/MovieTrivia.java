@@ -1,6 +1,7 @@
 package nl.lijstr.domain.movies;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import lombok.*;
 import nl.lijstr.domain.base.IdModel;
@@ -18,6 +19,7 @@ public class MovieTrivia extends IdModel {
     @ManyToOne
     private Movie movie;
 
+    @Lob
     private String trivia;
 
 }

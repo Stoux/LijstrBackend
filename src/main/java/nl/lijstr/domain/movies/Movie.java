@@ -44,7 +44,9 @@ public class Movie extends IdCmModel {
     private Long imdbVotes;
     private Integer metacriticScore;
 
+    @Lob
     private String shortPlot;
+    @Lob
     private String longPlot;
 
     //TODO: Runtime (1 or versions?)
