@@ -70,11 +70,11 @@ public final class FieldConverters {
      * @return the double or null
      */
     public static Double convertToDouble(String s) {
-        s = s.replace(",", ".");
-        if (s.matches("^[0-9]+\\.[0-9]+$")) {
-            return Double.parseDouble(s);
-        } else if (allNumbers(s)) {
-            return 0.0 + Integer.parseInt(s);
+        String sanitized = s.replace(",", ".");
+        if (sanitized.matches("^[0-9]+\\.[0-9]+$")) {
+            return Double.parseDouble(sanitized);
+        } else if (allNumbers(sanitized)) {
+            return 0.0 + Integer.parseInt(sanitized);
         } else {
             return null;
         }
@@ -89,9 +89,9 @@ public final class FieldConverters {
      * @return the long or null
      */
     public static Long convertToLong(String s) {
-        s = s.replace(",", "").replace(".", "");
-        if (allNumbers(s)) {
-            return Long.parseLong(s);
+        String sanitized = s.replace(",", "").replace(".", "");
+        if (allNumbers(sanitized)) {
+            return Long.parseLong(sanitized);
         } else {
             return null;
         }
