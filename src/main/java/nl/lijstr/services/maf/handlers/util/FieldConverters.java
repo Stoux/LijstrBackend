@@ -70,7 +70,7 @@ public final class FieldConverters {
      * @return the double or null
      */
     public static Double convertToDouble(String s) {
-        String sanitized = s.replace(".", "").replace(",", ".").replace(" ", "");
+        String sanitized = s.replace(" ", "").replace(",", ".");
         if (sanitized.matches("^[0-9]+\\.[0-9]+$")) {
             return Double.parseDouble(sanitized);
         } else if (allNumbers(sanitized)) {
