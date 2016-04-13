@@ -1,5 +1,7 @@
 package nl.lijstr.domain.movies;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -16,10 +18,12 @@ import nl.lijstr.domain.base.IdModel;
 @Entity
 public class MovieTrivia extends IdModel {
 
+    @JsonIgnore
     @ManyToOne
     private Movie movie;
 
     @Lob
+    @Column(nullable = false)
     private String trivia;
 
 }

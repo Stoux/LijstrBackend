@@ -2,6 +2,9 @@ package nl.lijstr.api.abs;
 
 import java.util.Map;
 import nl.lijstr.common.Utils;
+import nl.lijstr.domain.base.IdModel;
+import nl.lijstr.exceptions.db.NotFoundException;
+import nl.lijstr.repositories.abs.BasicRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,11 +15,64 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public abstract class AbsService {
 
+    /**
+     * Create an OK Response with the given message.
+     *
+     * @param message The message
+     *
+     * @return the response
+     */
     protected ResponseEntity<Map> ok(String message) {
         return new ResponseEntity<>(
                 Utils.asMap("message", message),
                 HttpStatus.OK
         );
     }
+
+    /**
+     * Find an item by it's ID in the given repository.
+     * Throws an NotFoundException if not found.
+     *
+     * @param basicRepository The repository
+     * @param id              ID of the item
+     * @param itemName        The name of the item (for the NFE)
+     * @param <X>             The class of the item
+     *
+     * @return the item
+     */
+    protected <X extends IdModel> X findOne(BasicRepository<X> basicRepository, long id, String itemName) {
+        X item = basicRepository.findOne(id);
+        if (item == null) {
+            throw new NotFoundException(itemName, id);
+        }
+        return item;
+    }
+
+    /**
+     * Check if the result is not null.
+     * If the result is null throw a NotFoundException.
+     *
+     * @param result The result
+     */
+    protected void checkIfFound(Object result) {
+        if (result == null) {
+            throw new NotFoundException();
+        }
+    }
+
+    /**
+     * Check if the result is not null.
+     * If the result is null throw a NotFoundException for a certain item /w key.
+     *
+     * @param result   The result
+     * @param itemName The name of the item
+     * @param key      The key for the item
+     */
+    protected void checkIfFound(Object result, String itemName, String key) {
+        if (result == null) {
+            throw new NotFoundException(itemName, key);
+        }
+    }
+
 
 }

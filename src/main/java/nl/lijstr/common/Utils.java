@@ -2,8 +2,10 @@ package nl.lijstr.common;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Common General Utilities.
@@ -27,6 +29,20 @@ public final class Utils {
         for (int i = 0; i < objects.length; i += 2) {
             map.put(objects[i], objects[i + 1]);
         }
+        return map;
+    }
+
+    /**
+     * Transform a Collection of items to a Map.
+     * @param items The items
+     * @param itemToKeyFunction Get the key from an item
+     * @param <X> The item class
+     * @param <Y> The key class
+     * @return the map
+     */
+    public static <X, Y> Map<Y, X> toMap(Collection<X> items, Function<X, Y> itemToKeyFunction) {
+        final Map<Y, X> map = new HashMap<>();
+        items.forEach(i -> map.put(itemToKeyFunction.apply(i), i));
         return map;
     }
 

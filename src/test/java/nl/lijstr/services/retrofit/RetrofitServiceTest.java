@@ -3,9 +3,9 @@ package nl.lijstr.services.retrofit;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
-import retrofit.Call;
-import retrofit.Retrofit;
-import retrofit.http.GET;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;

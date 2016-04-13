@@ -2,9 +2,11 @@ package nl.lijstr.services.retrofit;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import org.springframework.stereotype.Service;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A service that provides Retrofit instances for multiple endpoints.
@@ -49,9 +51,19 @@ public class RetrofitService {
     }
 
     private Retrofit createRetrofit(String endpoint) {
+        //Create the OkHttpClient
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+
+        //Build the Retrofit instance
         return new Retrofit.Builder()
                 .baseUrl(endpoint)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package nl.lijstr.domain.imdb;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.*;
 import nl.lijstr.domain.base.IdModel;
@@ -12,8 +13,9 @@ import nl.lijstr.domain.base.IdModel;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Language extends IdModel {
+public class SpokenLanguage extends IdModel {
 
-    private String langauge;
+    @Column(unique = true, nullable = false)
+    private String language;
 
 }

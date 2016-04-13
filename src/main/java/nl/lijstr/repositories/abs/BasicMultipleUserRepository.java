@@ -6,20 +6,20 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 /**
  * Create a BasicMultipleUserRepository.
- * This repository contains an items that belong to a User.
+ * This repository contains items that belong to a User.
  *
- * @param <X> The model
+ * @param <T> The model
  */
 @NoRepositoryBean
-public interface BasicMultipleUserRepository<X> extends BasicRepository<X> {
+public interface BasicMultipleUserRepository<T> extends BasicRepository<T> {
 
     /**
      * Find a X by their User.
      *
      * @param user The user
      *
-     * @return The object or null
+     * @return the object or null
      */
-    List<X> findByUser(User user);
+    List<T> findByUser(User user);
 
 }

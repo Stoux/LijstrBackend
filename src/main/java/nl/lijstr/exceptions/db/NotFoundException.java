@@ -20,4 +20,21 @@ public class NotFoundException extends LijstrException {
         super("No item (" + name + ") with ID " + id + " found.");
     }
 
+    /**
+     * A NotFoundException for an item by a certain key.
+     *
+     * @param name The name of the item
+     * @param key The search key for the item
+     */
+    public NotFoundException(String name, String key) {
+        super("No item (" + name + ") by key '"  + key + "' found.");
+    }
+
+    /**
+     * Basic NotFoundException.
+     */
+    public NotFoundException() {
+        super("Item not found.");
+    }
+
 }

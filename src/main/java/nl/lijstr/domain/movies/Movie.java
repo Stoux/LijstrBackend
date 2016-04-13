@@ -8,8 +8,8 @@ import javax.persistence.*;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.imdb.Genre;
-import nl.lijstr.domain.imdb.Language;
-import nl.lijstr.domain.movies.people.MovieActor;
+import nl.lijstr.domain.imdb.SpokenLanguage;
+import nl.lijstr.domain.movies.people.MovieCharacter;
 import nl.lijstr.domain.movies.people.MovieDirector;
 import nl.lijstr.domain.movies.people.MovieWriter;
 import nl.lijstr.domain.users.User;
@@ -27,9 +27,18 @@ import nl.lijstr.services.modify.annotations.NotModifiable;
 @ModifiableWithHistory
 public class Movie extends IdCmModel {
 
+    /**
+     * Create a new Movie by it's IMDB ID.
+     *
+     * @param imdbId The ID
+     */
+    public Movie(String imdbId) {
+        this.imdbId = imdbId;
+    }
+
     @Setter(value = AccessLevel.NONE)
     @NotModifiable
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String imdbId;
 
     private String title;
@@ -69,14 +78,19 @@ public class Movie extends IdCmModel {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Genre> genres;
     @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Language> languages;
+    private List<SpokenLanguage> languages;
 
     //Relations | People
-    @OneToMany(mappedBy = "movie")
-    private List<MovieActor> actors;
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<MovieCharacter> characters;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<MovieWriter> writers;
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<MovieDirector> directors;
+
+    //Relations | External items
+    @JsonIgnore
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MovieTrivia> trivia;
 
 }

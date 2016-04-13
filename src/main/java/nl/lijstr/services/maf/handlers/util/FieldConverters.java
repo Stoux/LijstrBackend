@@ -70,7 +70,7 @@ public final class FieldConverters {
      * @return the double or null
      */
     public static Double convertToDouble(String s) {
-        String sanitized = s.replace(",", ".");
+        String sanitized = s.replace(".", "").replace(",", ".").replace(" ", "");
         if (sanitized.matches("^[0-9]+\\.[0-9]+$")) {
             return Double.parseDouble(sanitized);
         } else if (allNumbers(sanitized)) {
@@ -99,7 +99,7 @@ public final class FieldConverters {
 
     /**
      * Convert a string to an Integer by assuming MetaCritic notation.
-     * Expected format x/100 or xx/100.
+     * Expected format xx, x/100 or xx/100.
      *
      * @param s The string
      *
@@ -114,6 +114,8 @@ public final class FieldConverters {
             } else {
                 return result;
             }
+        } else if (s.matches("^[0-9]{1,2}$")) {
+            return Integer.parseInt(s);
         } else {
             return null;
         }

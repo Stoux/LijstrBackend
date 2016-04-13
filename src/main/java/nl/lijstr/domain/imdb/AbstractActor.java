@@ -1,9 +1,12 @@
 package nl.lijstr.domain.imdb;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import lombok.*;
 import nl.lijstr.domain.base.IdModel;
+import nl.lijstr.domain.interfaces.ImdbIdentifiable;
+import nl.lijstr.domain.interfaces.PersonBound;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -11,8 +14,11 @@ import nl.lijstr.domain.base.IdModel;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractActor extends IdModel {
+@NoArgsConstructor
+@AllArgsConstructor
+public abstract class AbstractActor extends IdModel implements PersonBound {
 
+    @JsonManagedReference
     @ManyToOne
     private Person person;
 
@@ -22,4 +28,8 @@ public abstract class AbstractActor extends IdModel {
 
     private boolean mainCharacter;
 
+    @Override
+    public String getImdbId() {
+        return person.getImdbId();
+    }
 }

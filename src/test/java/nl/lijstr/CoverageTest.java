@@ -37,6 +37,11 @@ public class CoverageTest {
     }
 
     @Test
+    public void mafModelsCoverage() throws Exception {
+        runCoverage("nl.lijstr.services.maf.models", true);
+    }
+
+    @Test
     public void privateConstructorCoverage() throws Exception {
         Function<Class, Boolean> candidateFunction = c -> {
             if (!isNotAbstractAndNotTest(c)) {
