@@ -23,19 +23,20 @@ public final class FieldConverters {
      * @return the date or null
      */
     public static LocalDate convertToDate(String s) {
-        int sLength = s.length();
-        if (!allNumbers(s) || sLength < 4) {
+        String clean = cleanString(s);
+        int sLength = clean.length();
+        if (!allNumbers(clean) || sLength < 4) {
             return null;
         } else {
             int day = 1;
             int month = 1;
-            int year = Integer.valueOf(s.substring(0, 4));
+            int year = Integer.valueOf(clean.substring(0, 4));
 
             if (sLength >= 6) {
-                month = Integer.valueOf(s.substring(4, 6));
+                month = Integer.valueOf(clean.substring(4, 6));
             }
             if (sLength >= 8) {
-                day = Integer.valueOf(s.substring(6, 8));
+                day = Integer.valueOf(clean.substring(6, 8));
             }
 
             try {
@@ -55,7 +56,7 @@ public final class FieldConverters {
      * @return The year or null
      */
     public static Integer convertToYear(String s) {
-        return asInt(s, 4);
+        return asInt(cleanString(s), 4);
     }
 
     /**
@@ -70,7 +71,7 @@ public final class FieldConverters {
      * @return the double or null
      */
     public static Double convertToDouble(String s) {
-        String sanitized = s.replace(" ", "").replace(",", ".");
+        String sanitized = cleanString(s.replace(" ", "").replace(",", "."));
         if (sanitized.matches("^[0-9]+\\.[0-9]+$")) {
             return Double.parseDouble(sanitized);
         } else if (allNumbers(sanitized)) {
@@ -89,7 +90,7 @@ public final class FieldConverters {
      * @return the long or null
      */
     public static Long convertToLong(String s) {
-        String sanitized = replaceSpaces(s.replace(",", "").replace(".", ""));
+        String sanitized = cleanString(s.replaceAll("(\\.|,|\\s)", ""));
         if (allNumbers(sanitized)) {
             return Long.parseLong(sanitized);
         } else {
@@ -106,16 +107,17 @@ public final class FieldConverters {
      * @return The int (x) or null
      */
     public static Integer convertMetaCriticScore(String s) {
-        if (s.matches("^[0-9]{1,3}/100$")) {
-            String[] split = s.split("/");
+        String clean = cleanString(s);
+        if (clean.matches("^[0-9]{1,3}/100$")) {
+            String[] split = clean.split("/");
             int result = Integer.parseInt(split[0]);
             if (result > 100) {
                 return null;
             } else {
                 return result;
             }
-        } else if (s.matches("^[0-9]{1,2}$")) {
-            return Integer.parseInt(s);
+        } else if (clean.matches("^[0-9]{1,2}$")) {
+            return Integer.parseInt(clean);
         } else {
             return null;
         }
@@ -135,9 +137,9 @@ public final class FieldConverters {
         return Integer.parseInt(s);
     }
 
-    private static String replaceSpaces(String s) {
-        return s.replaceAll("(\\s|\\u00a0)", "");
+    private static String cleanString(String s) {
+        //TODO: Log this somewhere. Need to know what happens; exactly.
+        return s.replaceAll("[^\\x00-\\x7F]", "").trim();
     }
-
 
 }
