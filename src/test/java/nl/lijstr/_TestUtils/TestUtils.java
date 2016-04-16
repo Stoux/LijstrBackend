@@ -1,5 +1,6 @@
 package nl.lijstr._TestUtils;
 
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import nl.lijstr.common.Container;
@@ -153,6 +154,17 @@ public class TestUtils {
 
         X instance = constructor.newInstance();
         assertNotNull(instance);
+    }
+
+    /**
+     * Get a test resource.
+     *
+     * @param name The name (and path) of the file
+     *
+     * @return the inputstream
+     */
+    public static InputStream getTestResource(String name) {
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
     }
 
 }

@@ -89,7 +89,7 @@ public final class FieldConverters {
      * @return the long or null
      */
     public static Long convertToLong(String s) {
-        String sanitized = s.replace(",", "").replace(".", "");
+        String sanitized = replaceSpaces(s.replace(",", "").replace(".", ""));
         if (allNumbers(sanitized)) {
             return Long.parseLong(sanitized);
         } else {
@@ -133,6 +133,10 @@ public final class FieldConverters {
             return null;
         }
         return Integer.parseInt(s);
+    }
+
+    private static String replaceSpaces(String s) {
+        return s.replaceAll("(\\s|\\u00a0)", "");
     }
 
 

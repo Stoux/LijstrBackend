@@ -77,6 +77,7 @@ public class FieldConvertersTest {
         exec("12000", 12000L);
         exec("12.000", 12000L);
         exec("12,000", 12000L);
+        exec("12 000", 12000L);
 
         //Act - Invalid
         execInvalid("-12000");

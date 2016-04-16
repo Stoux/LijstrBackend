@@ -1,0 +1,348 @@
+{
+  "title": "The Martian",
+  "originalTitle": "",
+  "year": "2015",
+  "releaseDate": "20151002",
+  "directors": [
+    {
+      "name": "Ridley Scott",
+      "id": "nm0000631"
+    }
+  ],
+  "writers": [
+    {
+      "name": "Drew Goddard",
+      "id": "nm1206844"
+    },
+    {
+      "name": "Andy Weir",
+      "id": "nm1083982"
+    }
+  ],
+  "runtime": "144 min",
+  "urlPoster": "http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_UX182_CR0,0,182,268_AL_.jpg",
+  "countries": [
+    "USA",
+    "UK"
+  ],
+  "languages": [
+    "English",
+    "Mandarin"
+  ],
+  "genres": [
+    "Adventure",
+    "Drama",
+    "Sci-Fi"
+  ],
+  "plot": "During a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive. Millions of miles away, NASA and a team of international scientists work tirelessly to bring \"the Martian\" home, while his crewmates concurrently plot a daring, if not impossible, rescue mission. As these stories of incredible bravery unfold, the world comes together to root for Watney's safe return.",
+  "simplePlot": "During a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive.",
+  "actors": [
+    {
+      "actorName": "Matt Damon",
+      "urlProfile": "http://www.imdb.com/name/nm0000354",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTM0NzYzNDgxMl5BMl5BanBnXkFtZTcwMDg2MTMyMw@@._V1_UY44_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm0000354",
+      "character": "Mark Watney",
+      "urlCharacter": "http://www.imdb.com/character/ch0484069",
+      "main": true
+    },
+    {
+      "actorName": "Jessica Chastain",
+      "urlProfile": "http://www.imdb.com/name/nm1567113",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTU1MDM5NjczOF5BMl5BanBnXkFtZTcwOTY2MDE4OA@@._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm1567113",
+      "character": "Melissa Lewis",
+      "urlCharacter": "http://www.imdb.com/character/ch0484068",
+      "main": true
+    },
+    {
+      "actorName": "Kristen Wiig",
+      "urlProfile": "http://www.imdb.com/name/nm1325419",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTg5MTA0MDA5NF5BMl5BanBnXkFtZTgwODMyMjA1NzE@._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm1325419",
+      "character": "Annie Montrose",
+      "urlCharacter": "http://www.imdb.com/character/ch0519343",
+      "main": true
+    },
+    {
+      "actorName": "Jeff Daniels",
+      "urlProfile": "http://www.imdb.com/name/nm0001099",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BODA3MDI4NDcxNV5BMl5BanBnXkFtZTYwOTgyMzY1._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm0001099",
+      "character": "Teddy Sanders",
+      "urlCharacter": "http://www.imdb.com/character/ch0523404",
+      "main": true
+    },
+    {
+      "actorName": "Michael Peña",
+      "urlProfile": "http://www.imdb.com/name/nm0671567",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTczNzcxNTE5NV5BMl5BanBnXkFtZTcwOTE4MTMzMQ@@._V1_UY44_CR1,0,32,44_AL_.jpg",
+      "actorId": "nm0671567",
+      "character": "Rick Martinez",
+      "urlCharacter": "http://www.imdb.com/character/ch0528558",
+      "main": true
+    },
+    {
+      "actorName": "Sean Bean",
+      "urlProfile": "http://www.imdb.com/name/nm0000293",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTkzMzc4MDk5OF5BMl5BanBnXkFtZTcwODg3MjUxNw@@._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm0000293",
+      "character": "Mitch Henderson",
+      "urlCharacter": "http://www.imdb.com/character/ch0522296",
+      "main": true
+    },
+    {
+      "actorName": "Kate Mara",
+      "urlProfile": "http://www.imdb.com/name/nm0544718",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTQ5NjIxNTY2MF5BMl5BanBnXkFtZTcwNjA1NDg3Mw@@._V1._CR207.1875,88.62216186523438,468,617.9999847412109_UY44_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm0544718",
+      "character": "Beth Johanssen",
+      "urlCharacter": "http://www.imdb.com/character/ch0519336",
+      "main": true
+    },
+    {
+      "actorName": "Sebastian Stan",
+      "urlProfile": "http://www.imdb.com/name/nm1659221",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTcxNDY0NDg3NV5BMl5BanBnXkFtZTcwODk0MTg0OQ@@._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm1659221",
+      "character": "Chris Beck",
+      "urlCharacter": "http://www.imdb.com/character/ch0523541",
+      "main": true
+    },
+    {
+      "actorName": "Aksel Hennie",
+      "urlProfile": "http://www.imdb.com/name/nm0377336",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTc1MDE4MzM3N15BMl5BanBnXkFtZTgwMjQ5ODY3NjE@._V1_UY44_CR6,0,32,44_AL_.jpg",
+      "actorId": "nm0377336",
+      "character": "Alex Vogel",
+      "urlCharacter": "http://www.imdb.com/character/ch0523542",
+      "main": true
+    },
+    {
+      "actorName": "Chiwetel Ejiofor",
+      "urlProfile": "http://www.imdb.com/name/nm0252230",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BNzA5MDEyMTY3Nl5BMl5BanBnXkFtZTgwODQ0MjcxMDE@._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm0252230",
+      "character": "Vincent Kapoor",
+      "urlCharacter": "http://www.imdb.com/character/ch0513030",
+      "main": true
+    },
+    {
+      "actorName": "Benedict Wong",
+      "urlProfile": "http://www.imdb.com/name/nm0938950",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTY5MjQyNzU4MV5BMl5BanBnXkFtZTcwNTc2MjQxOA@@._V1_UY44_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm0938950",
+      "character": "Bruce Ng",
+      "urlCharacter": "http://www.imdb.com",
+      "main": true
+    },
+    {
+      "actorName": "Mackenzie Davis",
+      "urlProfile": "http://www.imdb.com/name/nm4496875",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTY3MTk2MDM4NF5BMl5BanBnXkFtZTcwMzE1MzMxOQ@@._V1_UY44_CR5,0,32,44_AL_.jpg",
+      "actorId": "nm4496875",
+      "character": "Mindy Park",
+      "urlCharacter": "http://www.imdb.com/character/ch0513729",
+      "main": true
+    },
+    {
+      "actorName": "Donald Glover",
+      "urlProfile": "http://www.imdb.com/name/nm2255973",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BNTU2NTY3NjIzNV5BMl5BanBnXkFtZTcwOTUwMzYwNg@@._V1_UY44_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm2255973",
+      "character": "Rich Purnell",
+      "urlCharacter": "http://www.imdb.com/character/ch0513031",
+      "main": true
+    },
+    {
+      "actorName": "Nick Mohammed",
+      "urlProfile": "http://www.imdb.com/name/nm2945137",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMjM0MzcyMDk5M15BMl5BanBnXkFtZTgwNDI0MTYzODE@._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm2945137",
+      "character": "Tim Grimes",
+      "urlCharacter": "http://www.imdb.com",
+      "main": true
+    },
+    {
+      "actorName": "Shu Chen",
+      "urlProfile": "http://www.imdb.com/name/nm3481199",
+      "urlPhoto": "http://ia.media-imdb.com/images/M/MV5BMTgzMDY3ODM1OV5BMl5BanBnXkFtZTgwNjM3NDg4NjE@._V1_UX32_CR0,0,32,44_AL_.jpg",
+      "actorId": "nm3481199",
+      "character": "Zhu Tao",
+      "urlCharacter": "http://www.imdb.com",
+      "main": true
+    }
+  ],
+  "idIMDB": "tt3659388",
+  "urlIMDB": "http://www.imdb.com/title/tt3659388",
+  "technical": {
+    "runtime": [
+      "2 hr 24 min (144 min)"
+    ],
+    "soundMix": [
+      "Dolby Digital",
+      "Dolby Atmos",
+      "Dolby Surround 7.1"
+    ],
+    "color": [
+      "Color"
+    ],
+    "aspectRatio": [
+      "2.35 : 1"
+    ],
+    "camera": [
+      "GoPro HERO4",
+      "Red Epic Dragon, Fujinon Premier Cabrio, Angenieux Optimo and Optimo DP Lenses",
+      "Red Scarlet Dragon, Fujinon Premier Cabrio, Angenieux Optimo and Optimo DP Lenses"
+    ],
+    "laboratory": [
+      "Company 3, Los Angeles (CA), USA (digital intermediate)",
+      "Fluent Image, London, UK"
+    ],
+    "filmLength": null,
+    "negativeFormat": [
+      "H.264",
+      "Redcode RAW"
+    ],
+    "cinematographicProcess": [
+      "Digital Intermediate (2K) (master format)",
+      "H.264 (4K) (source format) (some shots)",
+      "Redcode RAW (6K) (also dual-strip 3-D) (source format)"
+    ],
+    "printedFilmFormat": [
+      "35 mm (anamorphic) (Kodak Vision 2383)",
+      "D-Cinema (also 3-D version)"
+    ]
+  },
+  "rating": "8,1",
+  "metascore": "80",
+  "filmingLocations": [
+    "Hungary"
+  ],
+  "rated": "PG-13",
+  "movieTrivia": [
+    "The Mars exteriors were shot in Wadi Rum, Jordan, which has a red colored desert. Another Mars mission film, Red Planet (2000), was shot there.",
+    "The writer of the novel, Andy Weir, first published his book for free on his own blog for fun. Then people asked him to put it in a downloadable form, then to put it on Amazon for Kindle download which he did at the then minimum price of $0.99.",
+    "Ridley Scott claimed that Matt Damon's solo scenes were shot for five weeks straight, after which Damon was relieved from the schedule. Consequently, Damon did not meet most of his co-stars until the cast was reunited to promote the film.",
+    "NASA was consulted in order to get aspects of space and space travel, specifically in relation to Mars, with the most accuracy. NASA is federally funded, yet charges no one, including private for-profit organizations, any fees for use of and access to its archives and consultancy.",
+    "Rich Purnell slips and falls after he finds a way to rescue Mark Watney and tells his boss \"I need more coffee.\" Donald Glover revealed in an interview that he slipped for real and just got up and continued to act, and the footage was retained in the final edits for the movie.",
+    "In the beginning, it is mentioned that a compromised space suit would cause decompression, giving someone about a minute to live. This is scientifically correct; contrary to popular belief, acute decompression in space or a planet with very low pressure like Mars does not cause the body to immediately explode or expand. Major effects include confusion, loss of consciousness and some subdermal bleeding, but it is generally agreed that a healthy human body can survive one minute in vacuum without life-threatening consequences.",
+    "A real potato farm was installed on the studio lot with potatoes in all stages of growth so they could be used for filming.",
+    "In the film, when Mark learns that his communications with NASA are being broadcast all over the world, he responds by typing something the audience does not see, yet from the reactions of the characters, it is clearly something inappropriate or obscene. In the book, this message is \"Look, a pair of boobs! --> ( . Y . )\"",
+    "The atmospheric pressure on the Martian surface averages 600 Pa (0.087 psi), about 0.6% of Earth's mean sea level pressure of 100 kPa (14.69 psi). It is so low that a \"fierce storm\", as they put it, would be something akin to a very light breeze messing up your hair. Author Andy Weir admitted this was his biggest inaccuracy in the story. Due to the low air density sound would not travel like it does on Earth and you would have to stand next to someone and scream for them to hear you, providing you could survive the freezing cold temperature, poisonous atmosphere and lack of pressure.",
+    "As Beck is about to take a dangerous trip outside the Hermes, Beth tells him to be careful because \"In space...\", an unfinished quote of the famous tagline (\"In space, no one can hear you scream\") from director Ridley Scott's Alien (1979)",
+    "The name of the mission is Ares 3, a homage to the Greek god of war, Ares, whose Roman name is Mars. The name of the large ship traveling back and forth between Earth and Mars is Hermes, named after the Greek god who was the messenger and emissary. Hermes was seen as the patron and protector of travelers. The Roman variation for Hermes is Mercury.",
+    "The \"cloak-and-dagger\" meeting to propose the Rich Purnell Manuever is dubbed Project Elrond after the Council of Elrond in the \"Lord of the Rings\" series. When this name is questioned, the first character to explain it is Henderson, played by Sean Bean. Bean played Boromir in The Lord of the Rings: The Fellowship of the Ring (2001) and was present during said council.",
+    "In the novel, Mark Watney has two Masters degrees, one in botany and one in mechanical engineering. In the film, however, he has a PhD in botany and no engineering background is mentioned, although he is shown to have a knowledge of engineering and maintenance of the mission equipment.",
+    "One of Mars's panoramic shots shows Olympus Mons, the largest discovered volcano in the solar system. It is almost three times larger than Mount Everest and covers an area about the size of Missouri.",
+    "The suits in the film use a very complex and actual functioning lighting system.",
+    "When designing the space suits in the movie, the costume designer looked at many of NASA's actual Mars suits and said they were \"exactly like a Buzz Lightyear suit\". From how bulky they were, Ridley Scott even disliked them, so the final designs of the suits were based on images of actual suits but aimed for a more practical approach.",
+    "The mission to Mars in the film emulates actual missions that NASA is planning for the future.",
+    "Drew Goddard, who wrote the screenplay for the film, was also at one point set to direct, but left that role to go direct The Sinister Six film. After that, Ridley Scott read the script and jumped into the project, rather than making a Prometheus (2012) sequel.",
+    "On September 28, 2015 (four days before the film's scheduled US release), NASA announced that it had found evidence that briny water still flows on the surface of Mars.",
+    "The constellation Orion can be seen in almost every shot of space throughout the entire movie. It is even visible in the background of most scenes through the windows of the hab and Hermes.",
+    "Watney digs up a radioactive power source in The Martian (2015) to use for heat. It's called a radioisotope thermoelectric generator (RTG), and NASA relies on them for long-distance space missions. RTGs are essentially batteries powered by radioactive plutonium-238. As the plutonium naturally decays, it generates heat, and the battery casing turns the escaping warmth into electricity. Plutonium-238 is pretty much impossible to turn into a nuclear weapon, according to the Environmental Protection Agency. Its radiation is not the kind of dangerous, skin-piercing radiation that humans have to worry about (unless it is inhaled). Still, a nuclear battery is dangerous to have around because it's very hot.",
+    "Much of the research and development on Prometheus (2012) was used on this film, especially the space suits.",
+    "Here's what Mars is like, according to NASA: Mars has a reddish-orange glow during the day from all the dust. Sunrises and sunsets appear blue because Mars has almost no atmosphere. One day or \"sol\" on Mars is about 37 minutes longer than an Earth day. The natural human circadian rhythm (or sleep-wake cycle) is about 24 hours and 11 minutes, but experiments have shown that humans have no problems adapting to cycles varying from 23 hours 30 minutes to 24 hours 36 minutes; so humans would not experience major disruptions of their biological clock on Mars. One Martian year is nearly two Earth years. That's because Mars orbits the Sun much farther away than Earth, so it takes a lot longer for the red planet to complete one lap. The average surface temperature on Mars is a chilly minus-80 degrees Fahrenheit (minus 62 degrees Celsius). But temperatures can swing from a low of about minus-195 degrees Fahrenheit (minus-126 degrees Celsius) in winter, to a comfortable 68 degrees Fahrenheit (20 degrees Celsius) during the summer. Gravity on Mars is only about 40% that of Earth's, so a person would be 60% lighter (but not Moon-bouncing light). Mars has barely any atmosphere - about 1% of the density of the cozy atmospheric blanket around Earth. That's not enough to protect the surface from dangerous space radiation. Dust storms can envelop the planet for days at a time. In the novel, these storms cause important plot points other than the initial stranding of Watney.",
+    "Shot in only 72 days.",
+    "The original cover page of the draft of the script was aboard an actual NASA ship Orion when it launched. On the cover was a drawing of Matt Damon's character on Mars saying, \"I'm gonna science the shit out of this planet\".",
+    "Author Andy Weir originally wrote the novel as a serial on his blog. Writing in this serialized approach allowed him to build the story as he went, essentially crafting each plot point around something that could go wrong, and then working out how Mark would get around it. Weir noted that he could not figure his way around failure of the crucial life support systems, so if the oxygenator, water reclaimer, or RTG failed, Mark would have died.",
+    "Author Andy Weir wrote his own computer programs using real Earth and Mars alignment data to determine the best theoretical date for the Ares 3 mission to launch.",
+    "About 20 sets were constructed, which isn't many in comparison to other films, but they were much more \"technical\". To put that in perspective to other Ridley Scott films, he used 70 on Exodus: Gods and Kings (2014) and over 100 on American Gangster (2007).",
+    "The \"steely-eye missile man\" is a reference to flight controller John Aaron's actions following two lightning strikes to the Apollo 12 rocket in its first minute after liftoff. The electrical surge caused numerous problems in the telemetry system of the craft, which if unresolved would force a mission abort. Aaron recognized the telemetry problem as similar to one seen in testing a year before, and advised that the crew to switch the Signal Conditioning Electronics (SCE) system to the auxiliary position. This control was so obscure that neither the Capsule Commander, nor the Mission Commander knew what, or even where it was, but pilot Alan Bean did, following Aaron's advice. Altering the setting immediately fixed the problem, allowing the mission to continue. Aaron's quick, calm, and effective response to the crisis earned him the appellation, widely considered to be the highest praise possible within NASA. This can also be a reference to the movie Apollo 13 (1995).",
+    "One of the key plot elements is the force of the wind on Mars, which in the movie is shown to be strong enough to topple a large rocket and carry big objects. In fact, the Martian atmosphere is so thin, that even the fastest wind would be felt like a breeze to humans.",
+    "Matt Damon admitted that the scene where Mark was getting emotional upon hearing Commander Lewis' voice was genuine. The other actors had wrapped and gone home, and their pre-recorded voices were actually being played to Damon from inside his spacesuit. When Damon began to think about how he his character been all alone on Mars for two years, alongside how he was only hearing pre-recorded voices of his co-stars who has already finished their scenes, he began to tear up. Ridley Scott was so impressed with Damon's performance, that he only did one take of the scene, which was used in the film.",
+    "Shooting schedules were so specific that Kate Mara and Sebastian Stan would arrive on set before sunrise and leave after the sun had already set, they applied this \"isolation\" to help with their characters during filming.",
+    "Irrfan Khan was the original choice for the role of Vincent Kapoor (originally Venkat Kapoor, of Indian origins). Because of his prior commitment to the Bollywood movie Piku (2015), he wasn't available. Chiwetel Ejiofor was then cast for the role.",
+    "The buildings that represent the NASA HQ and the Chinese space centre in the film are Budapest's two famous cultural hubs that are only 3 tram stops from each other in real life.",
+    "Small changes were made to the script during filming, in part to have better scientific accuracy. Producer Mark Huffam said, \"We're working with 90% of the script that we started with\".",
+    "Ridley Scott claimed that one of the most difficult scenes to direct was how to explain to the audience the hexadecimal system Watney uses as a code to communicate with Earth, which Scott admitted was hard for himself to understand.",
+    "All of the exteriors on Mars were shot inside the Korda Studios in Budapest, Hungary. Production designer Arthur Max: \"We built it in Budapest in the Korda Studios, which has the biggest - the reason we went there was because it has the biggest stage in the world currently. It's as big an area as the advanced stage in Pinewood, the previous record holder. But it's 20-odd feet higher. So we also could then put up the biggest green screen in the world, a four-walled green screen. It was enough space to do a big Martian landscape, drive our rover around at speed, reset, go right around, build our habitat and later put our ascent vehicle legs.\" [Variety 2015]",
+    "Matt Damon plays a character named Mark Watney. \"Mark\" is the English version of the Latin name \"Marcus,\" which means \"of Mars.\"",
+    "The gate of the NASA building shown in the movie is actually the gate of the Korda Studios in Etyek, near Budapest, Hungary where many scenes of the movie were shot.",
+    "The tent-like shelter Watney spends most of his time inside is called a \"hab\" - short for Mars Lander Habitat. NASA already has working prototypes of Mars habs, complete with oxygenators, water reclaimers, and airlocks to protect astronauts from the nearly airless, radiation-bombarded surface of Mars. The space agency also recently hosted a competition to see who could design the best 3D-printable Mars Hab. Some of the designs might actually end up on the red planet some day.",
+    "The average surface temperature on Mars is a frigid -63C (-81°F) compared with Earth's average of 14C (57°F). The length of a Martian day is 24 hours 37 minutes. The length of a Martian year is significantly longer than Earth's at 687 days. The gravity on Mars' surface is 62% lower than it is on Earth. At just 0.38 of the Earth standard (3.7 vs 9.8 m/s^2), a person who has a mass of 100 kg (220 lbs.) on Earth would have the same 100-kg mass on Mars but the weight on earth of 980 N would only be 373 N on Mars.",
+    "The rocket technology in this movie is based on real life plasma rockets designed and built by Ad Astra Rocket company. The company was founded by former NASA astronaut Franklin Chang-Diaz, a Costa Rican citizen.",
+    "The name of the missions to Mars are Ares. In the real life, NASA was developing launch vehicles called Ares I and Ares V, for the crew and cargo of the Constellation Program. The program was cancelled In 2010 and replaced by the Space Launch System; with more lift capability.",
+    "The forward antenna on the Hermes (the one with the large round dish flanked by two smaller ones) is the same as the AE-35 antenna on the spaceship Discovery, that was featured as a pivotal plot point in 2001: A Space Odyssey (1968).",
+    "Andy Weir (who wrote the novel) stated that the only moment from the book he was disappointed to not see used in the final film was when Mark Watney makes an audio log that goes \"How come Aquaman can control whales? They're mammals! Makes no sense.\" after Teddy Sanders wondered what Watney was thinking about up on Mars.it can be found in the extra content in blu-Ray release.",
+    "The first scene in The Martian (2015) takes place on Mars. NASA estimates it would take about six to eight months with space travel technology we have now. In The Martian (2015) Watney and the rest of the crew use the fictional Hermes spacecraft to reach the red planet. Hermes is \"the most complex and expensive object ever built,\" astrophysicist Neil deGrasse Tyson says in a promotional video for the film. On a real trip to Mars, we'll have to worry about the astronauts losing muscle mass and bone density while spending so much time in a micro-gravity environment. Space is also filled with dangerous cosmic radiation that can rip through a human's very DNA. The Hermes has artificial gravity and a radiation shield to make the journey more comfortable for the crew. NASA is working on developing both of those things, but it has a long way to go.",
+    "In the scene concerning Project Elrond, Sanders says he wants his codename to be Glorfindel. Glorfindel appears briefly in The Lord of the Rings, though his one scene was given to Arwen for the film version. An elf called Glorfindel also appears in The Silmarillion, though it has never been established whether J.R.R. Tolkien intended these to be the same individual.",
+    "The landscape and environment of Mars was created through a combination of location filming and CGI.",
+    "The exterior Martian scenes were shot at a slower speed to simulate Mars' gravity, which is 38% of Earth's gravity. Therefore, anything on the surface of Mars needed to appear lighter and have a slight bounce to it. However, the frame rate that was desired would not allow the cameras to run in synch. To negate this, the film was shot at 48 frame per second during exterior scenes, which was then sped up to the standard 24 frame per second. This meant that much audio had to be re-recorded in post. As a result of this, synching up audio with Mark's lips filmed at a slower frame rate would have been impossible. Ridley Scott chose to have mark \"narrate\" the scenes instead of having him talk in the suit to avoid this problem.",
+    "The movie starts on Sol 18 but the book starts on Sol 6.",
+    "This is never directly mentioned in the film, but the events of the film take place over a two year period beginning in 2035 and ending in 2036 according to the book.",
+    "The text on the computer screen where the astronauts have their first remote conversation from ship to planet displays just like Mother, the computer from the film Alien (1979), also directed by Ridley Scott.",
+    "Saved two million dollars in the budget by completing filming ahead of schedule.",
+    "The soundtrack quotes the ping at the beginning of Echoes by Pink Floyd and the horns at the beginning of the soundtrack of Patton (1970) by Jerry Goldsmith. Echoes mentions sand (and is pretty spacey) and part of Patton takes place in the deserts of North Africa, reminiscent of the Martian landscape.",
+    "Cate Blanchett was Ridley Scott's original choice for the role of Commander Lewis, which would have marked a reunion between the actress and director after Robin Hood (2010), but Blanchett couldn't take it due to a scheduling conflict. The role went to Jessica Chastain instead.",
+    "The character identified as \"CNN Reporter\" in the cast list is played by CNN's actual Berlin-based correspondent, Frederik Pleitgen. \"Fred,\" as he's known, is German, but speaks with a flawless American accent thanks in part to a German undergraduate and graduate education that focused on North America, and postgraduate studies in the U.S.",
+    "The rocket seen above the escalators at NASA is a Mercury Redstone.",
+    "NASA found water on Mars the week this movie came out in the UK.",
+    "Whenever Mark boots up a computer (ie. when finding the MAV) a sequence of source code is seen appearing on a screen. The code is written in PVS (Prototype Verification System), an experimental macro language which NASA actually uses and it's very plausible to appear on a future spacecraft. This particular chunk of code is from the already existing NASA PVS Library, and actually you can find that very piece of code as open source if you type a part of it into Google.",
+    "At the end of the movie when Mark Watney is in the lecture hall, the motto inscribed on the floor is \"Per aspera ad astra\", a Latin phrase which means \"Through hardships to the stars\", \"A rough road leads to the stars\" or \"To the stars through difficulties\". As well as being the motto of several air forces and institutions around the world, it is the motto inscribed on the Apollo 1 memorial plaque.",
+    "Matt Damon has been nominated for the Academy Award for Best Actor in a Leading Role for his performance in this film. This makes him the only nominee in the Best Actor category of the 88th Academy Awards who was nominated for playing a fictional character. All the other Best Actor nominees were nominated for playing historical figures.",
+    "With the exception of a few interior shots and close up shots, all of the EVA suit helmet visors (both the glass visor, and the retractable shiny gold sun visor) were created digitally. This was to minimize complications with the shiny visors reflecting green screens, studio lights, cameras, and crew members.",
+    "Mark Watney spends a total of 568 Martian sols on Mars. Of those, 543 were spend stuck there after Ares III evacuated. In terms of Earth days, Mark spent 578 Earth days (roughly 1 year, 7 months) stuck on Mars. In terms of the entire Ares III mission, starting from Earth departure and including the emergency Martian evacuation and the Earth/Martian gravity assists to rescue Mark, the total length was 772 sols. This means the entire Ares III mission as a whole lasted 795 earth days (or roughly 2 years and 2 months).",
+    "Marvel superhero Iron Man is mentioned in the film. Several of the actors in this film have starred in or are set to star in various Marvel adaptations: Sebastian Stan portrays Bucky Barnes/Winter Soldier in the Captain America films, Kate Mara portrayed Sue Storm/Invisible Woman in Fantastic Four (2015) and a U.S. Marshall in Iron Man 2 (2010), Michael Peña portrayed Luis in Ant-Man (2015), Donald Glover portrays Miles Morales/Spider-Man on the animated series Ultimate Spider-Man (2012), and Chiwetel Ejiofor is set to play Baron Mordo in the upcoming Doctor Strange (2016).",
+    "The film makes reference to the Chinese space program, but not to the Russian (and predecessor Soviet) space program. The Chinese space program is in fact a spin off of the Russian one, and uses similar modules to this day. In the book, the only mention of the Soviet space program is an unflattering reference to the \"module\" that Watney has to use to try and leave Mars and its lack of protection. This is despite the fact that the first man in space, Yuri Gagarin was Russian/Soviet.",
+    "The plot lines of the returning craft's requirement to be perpendicular to the surface of Mars in order to be able to leave the planet and a botanist/astronaut growing Earth plants in the Martian soil were seen before in George Pals Conquest of Space (1955). A space burial scene from Conquest of Space (1955) was somewhat duplicated in Alien, directed by Ridley Scott, who also directed this movie..",
+    "Sol is a Latin word for sun.",
+    "Mark Watney requests Martinez not perform any barrel rolls. This is a standing order for Boeing test pilots. Tex Johnson did it using the Dash 80 (the first 707) in August 1955 at the Seattle Seafair festival.",
+    "When going through Johanssen's laptop, Mark finds she has copies of \"Zork II\" and \"The Leather Goddesses of Phobos\". These were 1980s computer games called interactive fiction by Infocom, in which text was used to describe scenes and the player typed in actions to make things happen. \"Zork\" is perhaps the most famous of those games, and the fact that Johanssen had its sequel, plus the Mars-based Goddesses game, indicates that she was a serious fan of the games (which were very popular in the 80s). Infocom had numerous titles that took place in space, and can still be found on the internet if you look hard enough.",
+    "In the novel, Mark Watney also displays a markedly tasteful dislike for disco music.",
+    "Filming the NASA scenes took three weeks.",
+    "The space suit Matt Damon wears in this movie is remarkably similar to the one he wears in Interstellar (2014).",
+    "Although this film used one of the biggest green screens in history to film the exterior shots outside the Hab, the entire green screen had to be blocked out and covered over with dark materials when filming the storm sequence at the beginning. This was to allow actual use of sand and high-power fans to properly simulate a Martian storm for the actors. Filming this on a green screen would have proven difficult for two main reasons. One, the green screen is too bright and the sand blowing around would have been impossible to see, even after the CGI backgrounds were added. Two, the scene was set in the middle of the night, in a storm. Therefore, no background VFX were necessary.",
+    "Mark Watney digs up a Radioisotope Thermoelectric Generator (RTG) in order to provide warmth to the interior of the rover for the long journey to Schiaparelli Basin. Once the RTG heats up the cab, Watney immediately plays an appropriate selection from Commander Lewis's dreaded disco collection: \"Hot Stuff\" by Donna Summer.",
+    "For the Iris-1 probe launch, footage of an Atlas V 541 Mars Science Laboratory is shown lifting off. The in-flight breakup is footage of a Delta 3614 that broke up in flight carrying the GOES-G satellite in 1986. The difference is obvious in the blue color of the core booster and the evenly spaced solid rocket motors around its circumference. No Atlas V vehicles have broken up in flight.",
+    "During technical checks before launching the rescue probe, a technician declares the signal is 'five by five'. As well as being a term to describe the strength and clarity of a radio signal, this was also a phrase repeatedly uttered by the character Faith in the TV series Buffy the Vampire Slayer (1997), a show that counted the screenwriter Drew Goddard as one of its staff writers.",
+    "The actor Sean Bean who plays Mitch Henderson and who also played Boromir in the Lord of the Rings is present on the scene when they are discussing the \"Elrond Project\" which was named after a Lord of the Rings character.",
+    "Apollo astronaut Eugene Cernan praised the film. Ceman was on the moon in December 1972. He is the subject of the documentary The Last Man on the Moon (2014).",
+    "This, along with Brooklyn, were the only feature films from the Best Motion Picture of the Year category to not win any awards at the 88th Academy Awards.",
+    "Andy Weir has mentioned that the there is a hierarchy to the crew. In order from highest to lowest command, it goes Lewis, Martinez, Vogel, Beck, Johanssen, and Watney.",
+    "Michael Peña and Kate Mara have previously appeared in Shooter (2007).",
+    "Martínez translates to \"son of Martin\", Martin derives directly from the name Mars (Spanish: Marte).",
+    "Matt Damon and Jessica Chastain also starred together inInterstellar (2014).",
+    "The film cast includes one Oscar winner: Matt Damon; and three Oscar nominees: Chiwetel Ejiofor, Jessica Chastain and Kristen Wiig.",
+    "In comparison to the previous Ridley Scott space epic Prometheus (2012), which was given 34 weeks to have the post production completed, production issues on The Martian set filming back four weeks, giving the post-production crew a tight 24 weeks to complete the film.",
+    "Kate Mara's sister, Rooney Mara, appeared in The Girl with the Dragon Tattoo (2011) for David Fincher, director of Alien³ (1992). Noomi Rapace, who played her role in the original The Girl with the Dragon Tattoo (2009), also appeared in Ridley Scott's Alien (1979) prequel, Prometheus (2012).",
+    "This is the second movie containing the word 'Martian' in the title and starring 'Jeff Daniels' after My Favorite Martian (1999).",
+    "Jeff Daniels's breakthrough role was in Terms of Endearment (1983), where he also played a Houstonian, and Jack Nicholson played an astronaut.",
+    "When NASA and Watney first establish written communication, Watney drops an F-bomb. He is warned to watch his language because everything he types is being broadcast globally. In the film, his response is not shown, only the reaction of others. In the novel, his response is, \"Look! A pair of boobs! -> (.Y.) \"",
+    "In the movie, Watney has no way to communicate with NASA, so he finds and digs up Pathfinder - a spacecraft NASA really launched to Mars back in the 1990s. After a little hacking, he uses the robot to communicate with NASA using a replica back on Earth. In the real world, NASA builds a working replica of every spacecraft in case something happens to it after launch. That way, engineers can troubleshoot problems and come up with fixes on Earth. A real-life Pathfinder replica would need to be \"turned on and dusted off,\" Green told Tech Insider, but it does exist. So NASA really could theoretically use it to communicate with a stranded Martian astronaut.",
+    "In the novel, when Watney is rescued, he mentions that if this were a Hollywood movie, the entire crew would gather in the airlock and high-five each other. This is exactly what happens at the end of the movie.",
+    "Matt Damon was willing to lose a massive amount of weight for the scene towards the end of the movie but Ridley Scott forbade it. Instead a body double was used.",
+    "Andy Weir personally created software to calculate the ship's arrival times (on Earth and on Mars) down to the exact minute in his novel.",
+    "Mark Watney's journey to Ares 4 was much more arduous in the book. He had to deal with a dust storm that could have greatly impeded the solar panels from being fully charged. His rover and trailer also rolled over while descending the slope of Schiaparelli.",
+    "In the novel, Mark Watney did not cut a hole in the hand of his suit to propel himself towards Hermes; it was only an idea that was shot down by Commander Lewis. He stayed strapped in.",
+    "During the closing credits, a Chinese astronaut is shown on a later mission to Mars. This is a nod to a plot point from the novel, not shown in the film, in which the Chinese Space Agency barters to get a Chinese astronaut on the next Mars mission in exchange for the use of their space probe.",
+    "Dust storms on Mars happen often, and they can occasionally produce lightning. However, the wind in a real dust storm on Mars looks nothing like that shown in the movie. The air on Mars is simply too thin for the wind to do that much damage, Jim Greene, NASA's planetary science director, told The New York Times. Even a scary-sounding 100 mph gust would carry almost no force.",
+    "A rare instance where Sean Bean's character does not die, rather he just gets asked to resign.",
+    "In both the movie and the novel, Watney grows his own food by planting potato eyes in the ground. He fertilizes the plants with human waste and creates liquid water for the crop out of rocket fuel. Given what is already known about Martian soil, there's no reason why this wouldn't work in real life, Bruce Bugbee, a botanist who's worked with NASA, told Tech Insider. NASA is already making progress on farming in space. In 2015, for the first time ever, astronauts on board the International Space Station tried some of the lettuce they grew in microgravity.",
+    "In the novel, it is revealed that the Hermes crew has a contingency for if they mangle the supply mission in the Rich Purnell Maneuver - it is decided that since Johannsen is the smallest of the crew and would thus require the least amount of food, the rest of the crew will commit suicide so that A) they don't waste valuable food supplies, and B) she can eat them for protein, leaving her the sole survivor. When the supply run is a success, Martinez asks who she was going to eat first, saying he thinks he'd taste best; Johannsen floats away from him, and he calls out, \"What? I thought you liked Mexican!\"",
+    "After flying out of Mars' atmosphere near the end, Watney (Matt Damon) mentions he has chest pain, probably because the G-forces broke some of his ribs. This is no doubt due to spaceflight osteopenia, a condition where the bones become less dense after spending longer periods in low or zero gravity. Since Mars' gravity is only 38 % of that on Earth, Watney's extended stay has caused his bones to become brittle, possibly worsened by lack of vitamins and minerals from food. The subdermal hemorrhages seen on his back may also be the result of vitamin shortage, especially vitamin K, which potatoes only provide in very low quantities.",
+    "The same alarm sound from the Nostromo (the ship in Alien (1979)) can be heard after the main hatch is blown on the Hermes during the rescue.",
+    "Mark puts the fragments together after his self-surgery to make sure no additional fragments are missing (and therefore still stuck in the wound, which would increase the risk of sepsis).",
+    "The supply rocket is lost because protein cargo liquefied. Liquid payloads are safe if they are tightly contained in full containers, but they present serious stability problems if they are permitted to slosh. Sloshing allows liquid cargo to shift with much greater force than its actual weight. Naval damage control principles, for example, consider both the buoyancy loss due to flooding and the stability loss due to partially flooded compartments, and it can be advantageous to completely flood a compromised compartment in order to eliminate sloshing.",
+    "In the novel, Mark Watney accidentally destroys the Pathfinder's circuitry and thereby eliminated his communication vector with NASA. The entire trip to the Ares 4 MAV was done in total blackout, with the exception of one way communication from Mark to NASA. This was done by using visual Morse code with martian rocks. Mark would 'spell' out his message while waiting for the batteries to recharge during daylight hours. Near the end of the movie, the director of NASA says that they had \"limited contact with Watney,\" potentially referencing this event.",
+    "In the film, the romantic interest between astronauts Beth Johanssen and Chris Beck is not revealed until just before the climactic rescue of Watney, and is kept secret from the rest of the crew. In the book, not only does Watney know that there is romantic tension between the two of them, but so does Commander Lewis; during their return to Mars, she allows them to share quarters on the grounds that the mission had already gone so far off the rails that it would only improve morale to do so.",
+    "The film ends with Mark back on Earth acting as a teacher to a group of prospective astronauts. None of this is in the novel, which ends with the crew having rescued Watney, and beginning the trip back to Earth. Watney entering in his log, \"This is the happiest day of my life.\"",
+    "In the novel, Mark emails the Hermes crew sporadically while he still has contact; he emails Beck and tells him to hurry up and \"tell Johannsen how you feel.\" It is revealed in those emails though that Mark considers Martinez to be his best friend.",
+    "In the novel, it's Beck who rescues Watney in space, but in the film it's Commander Lewis.",
+    "This will mark the second time Jessica Chastain and Matt Damon have worked together on a space-related film in which Damon plays an astronaut stranded on another planet. The other is Interstellar (2014), although in that film, they shared no scenes together.",
+    "Body Count: 0.",
+    "The Gloria Gaynor song \"I Will Survive\" that plays during the end credits is not only relevant due to its status as a loathed disco song and that Watney managed to survive all those months on the inhospitable surface of Mars; the song is also appropriate because it contains the phrase \"And so you're back from outer space\".",
+    "In the book, the trips to Pathfinder and Ares 4 took a lot more effort in which Watney almost died several times. Moreover, prepping the rover with the drill for example took several days; this was time-compressed for the film.",
+    "This movie does not have any human antagonist character; however, Mars itself could be considered the antagonist, and writer Drew Goddard considers 'circumstance' to be the antagonist. There was some consideration into making Teddy Sanders into a villainous character who didn't take Watney's situation seriously and refused to listen to his advisers, but this was quickly discarded in favor of keeping Sanders in place as a good man whose disputes about how to rescue Watney are reasonable (the script did highlight that after launching his own plan in defiance of Sanders' decision, Mitch Henderson did resign from NASA as ordered, as he is not there with Sanders and the other high-level officials when the new Ares mission launches in the film's final scenes).",
+    "The movie and book make small allusions to each other about differences in one from the other. In the movie, Teddy cuts off Bruce and tells him he will say that the overtime alone will be a nightmare when they've decided to build the first Iris probe. That's exactly what Bruce says in the book. During the ending monologue in the book, Mark Watney says that if this were a movie, everyone would have been waiting for him in the airlock giving him high fives, which is exactly what happens in the movie.",
+    "In the movie, the rocket used for launching supply probe to Mars for astronaut Mark Watney is an Atlas V (500 series), which exploded shortly after what appeared to be a successful launch. In reality, Atlas V rockets have never failed as of the making of the movie. One launch may be considered a partial failure because the payload was not delivered to the correct orbit, but the customer declared it a success anyway.",
+    "When Watney is sitting on a bench back on Earth at the end of the movie and says \"hello there\" to a little plant sprouting from the path between his feet, it's a potato plant, just like the ones he grew on Mars that saved his life.",
+    "The footage used for the Iris 1 launch is that of the the Mars Science Laboratory on an Atlas V-541 rocket. A time lapse of gantry retraction of this same rocket is shown in the trailer. The Mars Science Laboratory logo is visible on the payload fairing beneath the NASA \"meatball\" and above the US flag and Atlas 'A' logo.",
+    "Mark Watney makes several comments about flying around like Iron Man near the end of the film. Sebastian Stan, who plays Beck, also plays Bucky Barnes from the Marvel Cinematic Universe and fights against Iron Man in Captain America: Civil War (2016).",
+    "In Destination Moon (1950) and Red Planet (2000) dumping equipment from the spaceship was also used to lighten the load and save an astronaut's life.",
+    "Matt Damon's previous space-travel movie, Interstellar (2014) also features Matthew McConaughey. McConaughey appeared in a previous space-travel movie, Contact (1997). That film also featured Tom Skerritt and John Hurt, who previous appeared together in another space-travel movie, Alien (1979), directed by Ridley Scott."
+  ],
+  "votes": "398 101",
+  "type": "Movie"
+}
