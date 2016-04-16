@@ -28,9 +28,6 @@ public class MafApiService {
     @InjectLogger
     private Logger logger;
 
-    @Autowired
-    private MovieRepository movieRepository;
-
     @InjectRetrofitService
     private ImdbService imdbService;
 
@@ -47,6 +44,7 @@ public class MafApiService {
     public Movie updateMovie(Movie movie) {
         //Get the most recent data from the API
         ApiMovie apiMovie = getApiMovie(movie.getImdbId());
+        logger.info("Updating movie: " + movie.getImdbId());
         return updateHandler.update(movie, apiMovie);
     }
 

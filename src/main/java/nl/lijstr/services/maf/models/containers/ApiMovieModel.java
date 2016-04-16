@@ -7,6 +7,7 @@ import nl.lijstr.services.maf.models.ApiMovie;
 /**
  * Created by Stoux on 03/12/2015.
  */
+@NoArgsConstructor
 public class ApiMovieModel extends ApiBaseModel<ApiMovieModel.MoviesHolder> {
 
     /**
