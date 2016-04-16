@@ -93,13 +93,13 @@ public class FieldConvertersTest {
         exec("0/100", 0);
         exec("15/100", 15);
         exec("100/100", 100);
+        exec("99", 99);
 
         //Act - Invalid
         execInvalid("-1/100");
         execInvalid("101/100");
         execInvalid("99/99");
         execInvalid("9999");
-        execInvalid("99");
         execInvalid("AA/100");
     }
 
