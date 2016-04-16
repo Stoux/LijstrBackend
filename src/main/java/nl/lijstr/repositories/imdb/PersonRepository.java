@@ -4,7 +4,7 @@ import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.repositories.abs.BasicRepository;
 
 /**
- * A basic IMDB Actor/Person
+ * A basic IMDB Actor/Person repository.
  */
 public interface PersonRepository extends BasicRepository<Person> {
 

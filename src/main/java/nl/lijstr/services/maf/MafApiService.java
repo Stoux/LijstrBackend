@@ -37,12 +37,18 @@ public class MafApiService {
     @Autowired
     private MovieUpdateHandler updateHandler;
 
+    /**
+     * Trigger a movie to be updated by using the latest data from MyApiFilms.
+     *
+     * @param movie The movie
+     *
+     * @return The updated movie
+     */
     public Movie updateMovie(Movie movie) {
         //Get the most recent data from the API
         ApiMovie apiMovie = getApiMovie(movie.getImdbId());
         return updateHandler.update(movie, apiMovie);
     }
-
 
     private ApiMovie getApiMovie(String imdbId) {
         Call<ApiMovieModel> movieCall = imdbService.getMovie(TOKEN, imdbId, "json", "en-us", 1, 1, 1);

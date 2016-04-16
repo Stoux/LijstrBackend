@@ -4,7 +4,11 @@ import lombok.*;
 import nl.lijstr.services.maf.models.ApiAbout;
 
 /**
- * Created by Stoux on 03/12/2015.
+ * The base class for any ApiCall.
+ * <p>
+ * Contains the data and about (version, etc).
+ *
+ * @param <X> The data class
  */
 public abstract class ApiBaseModel<X> {
 

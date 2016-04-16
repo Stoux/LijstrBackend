@@ -10,7 +10,7 @@ import nl.lijstr.services.maf.models.ApiMovie;
 public class ApiMovieModel extends ApiBaseModel<ApiMovieModel.MoviesHolder> {
 
     /**
-     * Get the Movie
+     * Get the Movie.
      *
      * @return The model
      */
@@ -22,6 +22,9 @@ public class ApiMovieModel extends ApiBaseModel<ApiMovieModel.MoviesHolder> {
         }
     }
 
+    /**
+     * Subclass that contains the list of movies.
+     */
     public static class MoviesHolder {
         @Getter
         private List<ApiMovie> movies;

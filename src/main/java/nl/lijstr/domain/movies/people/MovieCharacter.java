@@ -1,7 +1,6 @@
 package nl.lijstr.domain.movies.people;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -19,22 +18,24 @@ import nl.lijstr.domain.movies.Movie;
 @Entity
 public class MovieCharacter extends AbstractActor {
 
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Movie movie;
+
     /**
      * Create a {@link MovieCharacter}.
      *
+     * @param movie         The movie
      * @param person        The person
      * @param character     The name of the character
      * @param characterUrl  An optional URL to the character's IMDB page
      * @param photoUrl      An optional URL to the character's picture
      * @param mainCharacter is a main character
      */
-    public MovieCharacter(Movie movie, Person person, String character, String characterUrl, String photoUrl, boolean mainCharacter) {
+    public MovieCharacter(Movie movie, Person person, String character, String characterUrl, String photoUrl,
+                          boolean mainCharacter) {
         super(person, character, characterUrl, photoUrl, mainCharacter);
         this.movie = movie;
     }
-
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Movie movie;
 
 }

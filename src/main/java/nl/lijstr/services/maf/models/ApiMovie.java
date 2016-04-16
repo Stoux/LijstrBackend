@@ -31,7 +31,7 @@ public class ApiMovie {
     @SerializedName("votes")
     private String nrOfVotes;
 
-    //This movie is rated {X}
+    //This movie is rated X
     @SerializedName("rated")
     private String ageRating;
 
@@ -52,7 +52,9 @@ public class ApiMovie {
     private List<ApiActor> actors;
     private List<String> genres;
 
-
+    /**
+     * Technical subclass.
+     */
     @ToString
     @Getter
     public static class Technical {

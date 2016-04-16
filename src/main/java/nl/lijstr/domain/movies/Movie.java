@@ -27,15 +27,6 @@ import nl.lijstr.services.modify.annotations.NotModifiable;
 @ModifiableWithHistory
 public class Movie extends IdCmModel {
 
-    /**
-     * Create a new Movie by it's IMDB ID.
-     *
-     * @param imdbId The ID
-     */
-    public Movie(String imdbId) {
-        this.imdbId = imdbId;
-    }
-
     @Setter(value = AccessLevel.NONE)
     @NotModifiable
     @Column(unique = true, nullable = false)
@@ -92,5 +83,15 @@ public class Movie extends IdCmModel {
     @JsonIgnore
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieTrivia> trivia;
+
+
+    /**
+     * Create a new Movie by it's IMDB ID.
+     *
+     * @param imdbId The ID
+     */
+    public Movie(String imdbId) {
+        this.imdbId = imdbId;
+    }
 
 }

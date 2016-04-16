@@ -49,7 +49,14 @@ public class MovieUpdateHandler {
     @Autowired
     private ImdbBean imdbBean;
 
-
+    /**
+     * Update a movie using the data from an API.
+     *
+     * @param movie    The movie
+     * @param apiMovie The API mapped movie
+     *
+     * @return the updated movie
+     */
     public Movie update(Movie movie, ApiMovie apiMovie) {
         //Check if save IMDB id
         if (!movie.getImdbId().equals(apiMovie.getImdbId())) {
