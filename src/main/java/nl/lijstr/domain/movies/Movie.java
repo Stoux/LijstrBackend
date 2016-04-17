@@ -95,6 +95,7 @@ public class Movie extends IdCmModel {
     @OneToMany(mappedBy = "movie")
     private List<MovieRating> movieRatings;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "movie")
     private List<MovieUserMeta> movieUserMetaList;
 

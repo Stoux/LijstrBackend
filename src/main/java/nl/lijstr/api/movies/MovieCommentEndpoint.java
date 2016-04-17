@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(value = "/movies/{movieId:\\d+}/comments", produces = "application/json")
-public class MovieCommentsEndpoint extends AbsService {
+public class MovieCommentEndpoint extends AbsService {
 
     @Autowired
     private MovieCommentRepository repository;
