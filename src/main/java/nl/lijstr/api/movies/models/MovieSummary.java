@@ -2,11 +2,12 @@ package nl.lijstr.api.movies.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.*;
+import nl.lijstr.common.StrUtils;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
@@ -26,11 +27,13 @@ public class MovieSummary {
     private String imdbId;
     private String title;
     private int year;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String ageRating;
 
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, String> genres;
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, String> languages;
 
     private List<MovieShortRating> latestRatings;
@@ -41,10 +44,14 @@ public class MovieSummary {
      * @param movie            The movie
      * @param includeGenres    Should include a map of genres
      * @param includeLanguages Should include a map of languages
+     * @param includeAgeRating Should include the movie's age rating
      *
      * @return the summary
      */
-    public static MovieSummary convert(Movie movie, boolean includeGenres, boolean includeLanguages) {
+    public static MovieSummary convert(Movie movie,
+                                       boolean includeGenres,
+                                       boolean includeLanguages,
+                                       boolean includeAgeRating) {
         List<MovieShortRating> shortRatings = movie.getLatestMovieRatings().stream()
                 .map(MovieShortRating::new)
                 .collect(Collectors.toList());
@@ -54,8 +61,11 @@ public class MovieSummary {
                 .imdbId(movie.getImdbId())
                 .title(movie.getTitle())
                 .year(movie.getYear())
-                .ageRating(movie.getAgeRating())
                 .latestRatings(shortRatings);
+
+        if (includeAgeRating) {
+            builder.ageRating(StrUtils.useOrDefault(movie.getAgeRating(), "N/A"));
+        }
 
         if (includeGenres) {
             builder.genres(Utils.toMap(movie.getGenres(), Genre::getId, Genre::getGenre));
