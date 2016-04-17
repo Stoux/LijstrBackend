@@ -34,15 +34,38 @@ public final class Utils {
 
     /**
      * Transform a Collection of items to a Map.
-     * @param items The items
+     *
+     * @param items             The items
      * @param itemToKeyFunction Get the key from an item
-     * @param <X> The item class
-     * @param <Y> The key class
+     * @param <X>               The item class
+     * @param <Y>               The key class
+     *
      * @return the map
      */
     public static <X, Y> Map<Y, X> toMap(Collection<X> items, Function<X, Y> itemToKeyFunction) {
-        final Map<Y, X> map = new HashMap<>();
-        items.forEach(i -> map.put(itemToKeyFunction.apply(i), i));
+        return toMap(items, itemToKeyFunction, i -> i);
+    }
+
+    /**
+     * Convert a List of items to a Map.
+     *
+     * @param items               The items
+     * @param itemToKeyFunction   A function to get the key from an item
+     * @param itemToValueFunction A function to get the value from an item
+     * @param <X>                 The item class
+     * @param <Y>                 The key class
+     * @param <Z>                 The value class
+     *
+     * @return the map
+     */
+    public static <X, Y, Z> Map<Y, Z> toMap(Collection<X> items,
+                                            Function<X, Y> itemToKeyFunction,
+                                            Function<X, Z> itemToValueFunction) {
+        final Map<Y, Z> map = new HashMap<>();
+        items.forEach(i -> map.put(
+                itemToKeyFunction.apply(i),
+                itemToValueFunction.apply(i)
+        ));
         return map;
     }
 

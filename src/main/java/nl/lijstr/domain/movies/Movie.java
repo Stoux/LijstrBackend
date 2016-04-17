@@ -15,6 +15,7 @@ import nl.lijstr.domain.movies.people.MovieWriter;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
+import org.hibernate.annotations.Where;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -84,6 +85,18 @@ public class Movie extends IdCmModel {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieTrivia> trivia;
 
+    @OneToMany(mappedBy = "movie")
+    private List<MovieComment> movieComments;
+
+    @Where(clause = "latest='1'")
+    @OneToMany(mappedBy = "movie")
+    private List<MovieRating> latestMovieRatings;
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieRating> movieRatings;
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieUserMeta> movieUserMetaList;
 
     /**
      * Create a new Movie by it's IMDB ID.

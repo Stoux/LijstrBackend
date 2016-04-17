@@ -98,6 +98,7 @@ public class FieldModifierService {
 
 
     private boolean isSame(Object originalValue, Object modifiedValue) {
+        //Could be replaced with a single statement but found it less clear
         if (originalValue == null && modifiedValue == null) {
             return true;
         }

@@ -5,7 +5,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import lombok.*;
 import nl.lijstr.domain.base.IdModel;
-import nl.lijstr.domain.interfaces.ImdbIdentifiable;
 import nl.lijstr.domain.interfaces.PersonBound;
 
 /**

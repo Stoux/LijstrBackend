@@ -5,7 +5,6 @@ import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
-import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
 import nl.lijstr.services.maf.models.ApiMovie;
 import nl.lijstr.services.maf.models.containers.ApiMovieModel;
