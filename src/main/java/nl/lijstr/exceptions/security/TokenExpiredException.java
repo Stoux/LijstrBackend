@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
 public class TokenExpiredException extends LijstrException {
 
+    /**
+     * Create a {@link TokenExpiredException}.
+     * This is often used when an JSON Web Token has expired.
+     */
     public TokenExpiredException() {
         super("The token has expired.");
     }

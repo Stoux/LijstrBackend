@@ -17,7 +17,7 @@ public class MovieRatingEndpoint extends AbsService {
     private MovieRatingRepository repository;
 
     /**
-     * Add a new comment
+     * Add a new comment.
      *
      * @param movieId     The ID of the movie
      * @param movieRating The new Rating

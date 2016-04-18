@@ -6,6 +6,7 @@ import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.exceptions.db.NotFoundException;
 import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.security.model.JwtUser;
+import nl.lijstr.security.spring.JwtAuthenticationToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -83,8 +84,8 @@ public abstract class AbsService {
      */
     protected JwtUser getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication instanceof JwtUser) {
-            return (JwtUser) authentication;
+        if (authentication != null && authentication instanceof JwtAuthenticationToken) {
+            return ((JwtAuthenticationToken) authentication).getJwtUser();
         } else {
             throw new AuthenticationCredentialsNotFoundException("No JSON Web Tokens user found");
         }

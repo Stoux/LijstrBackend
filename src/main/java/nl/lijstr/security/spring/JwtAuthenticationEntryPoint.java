@@ -1,17 +1,17 @@
 package nl.lijstr.security.spring;
 
 import java.io.IOException;
-import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+/**
+ * A {@link AuthenticationEntryPoint} that handles error handling when an user tries to access a restricted page.
+ */
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
-
-    private static final long serialVersionUID = -8970718410437077606L;
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request,

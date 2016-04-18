@@ -8,10 +8,11 @@ import nl.lijstr.api.movies.models.post.PostedMovieRequest;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRequest;
 import nl.lijstr.domain.users.Permission;
+import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
-import nl.lijstr.repositories.users.UserRepository;
+import nl.lijstr.repositories.movies.MovieRequestRepository;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.services.maf.MafApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,8 @@ public class MovieEndpoint extends AbsRestService<Movie> {
 
     @Autowired
     private MovieRepository movieRepository;
-
     @Autowired
-    private UserRepository userRepository;
+    private MovieRequestRepository movieRequestRepository;
 
     /**
      * Create a new MovieEndpoint.
@@ -53,6 +53,7 @@ public class MovieEndpoint extends AbsRestService<Movie> {
      * @param includeGenres    Should include genres
      * @param includeLanguages Should include languages
      * @param includeAgeRating Should include age rating
+     *
      * @return the list
      */
     @RequestMapping("/summaries")
@@ -71,7 +72,7 @@ public class MovieEndpoint extends AbsRestService<Movie> {
      *
      * @param postedRequest The data
      */
-    @Secured(Permission.ROLE_MOVIE)
+    @Secured(Permission.MOVIE)
     @Transactional
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     public void requestMovie(@RequestBody() PostedMovieRequest postedRequest) {
@@ -79,7 +80,8 @@ public class MovieEndpoint extends AbsRestService<Movie> {
         checkIfMovieNotAdded(postedRequest.getImdbId());
         checkIfMovieExists(postedRequest.getImdbId());
         MovieRequest request = new MovieRequest(postedRequest.getImdbId(), postedRequest.getYoutubeId());
-        //TODO: Add to DB
+        request.setUser(new User(user.getId()));
+        movieRequestRepository.save(request);
     }
 
     /**
@@ -87,7 +89,7 @@ public class MovieEndpoint extends AbsRestService<Movie> {
      *
      * @param postedRequest The data
      */
-    @Secured(Permission.ROLE_MOVIE_MOD)
+    @Secured(Permission.MOVIE_MOD)
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public void addMovie(@RequestBody() PostedMovieRequest postedRequest) {
@@ -100,11 +102,10 @@ public class MovieEndpoint extends AbsRestService<Movie> {
         Movie newMovie = new Movie(
                 postedRequest.getImdbId(),
                 postedRequest.getYoutubeId(),
-                userRepository.findOne(user.getId())
+                new User(user.getId())
         );
         final Movie movie = movieRepository.save(newMovie);
         apiService.updateMovie(movie);
-
     }
 
     private void checkIfMovieNotAdded(String imdbId) {

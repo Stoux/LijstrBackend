@@ -3,9 +3,8 @@ package nl.lijstr.security.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -36,7 +35,7 @@ public class JwtUser implements UserDetails {
      * Collection of permissions.
      */
     @SerializedName("a")
-    private Collection<? extends GrantedAuthority> authorities;
+    private List<JwtGrantedAuthority> authorities;
 
     /**
      * Unrestricted access till a certain date.
@@ -55,7 +54,7 @@ public class JwtUser implements UserDetails {
 
     /**
      * A validating key.
-     *
+     * <p>
      * This allows a user to reset all tokens (that have passed their accessTill value).
      */
     @SerializedName("vk")

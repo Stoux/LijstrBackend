@@ -3,7 +3,6 @@ package nl.lijstr.security.util;
 import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 /**
@@ -18,7 +17,8 @@ public class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime>, J
     }
 
     @Override
-    public LocalDateTime deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public LocalDateTime deserialize(JsonElement jsonElement, Type type,
+                                     JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         return LocalDateTime.ofEpochSecond(jsonElement.getAsLong(), 0, ZoneOffset.UTC);
     }
 }

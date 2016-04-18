@@ -1,11 +1,7 @@
 package nl.lijstr.domain.users;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import nl.lijstr.domain.base.IdModel;
 
 /**
@@ -17,10 +13,9 @@ import nl.lijstr.domain.base.IdModel;
 @Entity
 public class Permission extends IdModel {
 
-    public static final String ROLE_ADMIN = "ROLE_ADMIN";
-
-    public static final String ROLE_MOVIE = "ROLE_MOVIE";
-    public static final String ROLE_MOVIE_MOD = "ROLE_MOVIE_MOD";
+    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String MOVIE = "ROLE_MOVIE";
+    public static final String MOVIE_MOD = "ROLE_MOVIE_MOD";
 
     private String permission;
 

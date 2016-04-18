@@ -1,7 +1,6 @@
 package nl.lijstr.api.movies.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import nl.lijstr.domain.movies.Movie;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class MovieSummary {
 
-    @JsonIgnore
     private long id;
     private String imdbId;
     private String title;

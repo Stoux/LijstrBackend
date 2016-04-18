@@ -3,7 +3,6 @@ package nl.lijstr.security.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.time.LocalDateTime;
@@ -16,11 +15,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+/**
+ * A JSON Web Tokens Spring component that has various methods that ease the JWT flow.
+ */
 @Component
 public class JwtTokenHandler {
 
-    private static final long ACCESS_MINUTES = 30;
-    private static final long REMEMBER_ME_MINUTES = 60 * 24 * 30;
+    private static final long ACCESS_MINUTES = 30L;
+    private static final long REMEMBER_ME_MINUTES = 60L * 24L * 30L;
 
     private static final String JSON_PREFIX = "-";
     private static final int JSON_PREFIX_LENGTH = JSON_PREFIX.length();
@@ -33,6 +35,9 @@ public class JwtTokenHandler {
 
     private final Gson gsonInstance;
 
+    /**
+     * Create a new {@link JwtTokenHandler}.
+     */
     public JwtTokenHandler() {
         gsonInstance = new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())

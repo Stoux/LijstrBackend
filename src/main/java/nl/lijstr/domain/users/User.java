@@ -1,9 +1,10 @@
 package nl.lijstr.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
@@ -55,5 +56,15 @@ public class User extends IdCmModel {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<GrantedPermission> grantedPermissions;
+
+    /**
+     * Create a User by it's ID.
+     * This is intended to be used as a reference object (for relations).
+     *
+     * @param id The ID
+     */
+    public User(long id) {
+        this.id = id;
+    }
 
 }

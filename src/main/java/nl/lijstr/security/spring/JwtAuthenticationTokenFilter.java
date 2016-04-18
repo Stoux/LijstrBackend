@@ -11,12 +11,15 @@ import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.security.util.JwtTokenHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 
+/**
+ * A {@link UsernamePasswordAuthenticationFilter} that intercepts authentication requests.
+ * It allows for the possibility to login using JSON Web Tokens.
+ */
 @Component
 public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -28,6 +31,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @SuppressWarnings("squid:UnusedPrivateMethod")
     @PostConstruct
     private void setManager() {
         setAuthenticationManager(authenticationManager);
@@ -48,14 +52,12 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 
         //Try to login
         JwtUser user = jwtTokenUtil.parseToken(authToken);
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(user);
+        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         //Finish
         chain.doFilter(request, response);
     }
-
 
 }

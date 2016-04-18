@@ -3,7 +3,6 @@ package nl.lijstr.api.abs;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import nl.lijstr.domain.base.IdModel;
-import nl.lijstr.exceptions.db.NotFoundException;
 import nl.lijstr.repositories.abs.BasicRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

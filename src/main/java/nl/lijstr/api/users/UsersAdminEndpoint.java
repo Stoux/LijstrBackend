@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Can be used by admins to control user data.
  */
 @RestController
-@Secured(Permission.ROLE_ADMIN)
+@Secured(Permission.ADMIN)
 @RequestMapping(value = "/users", produces = "application/json")
 public class UsersAdminEndpoint extends AbsCrudRestService<User> {
 

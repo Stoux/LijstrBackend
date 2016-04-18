@@ -3,6 +3,7 @@ package nl.lijstr.domain.movies;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -119,6 +120,17 @@ public class Movie extends IdCmModel {
         this.imdbId = imdbId;
         this.youtubeUrl = youtubeUrl;
         this.addedBy = addedBy;
+
+        this.genres = new ArrayList<>();
+        this.languages = new ArrayList<>();
+        this.characters = new ArrayList<>();
+        this.writers = new ArrayList<>();
+        this.directors = new ArrayList<>();
+        this.trivia = new ArrayList<>();
+        this.movieComments = new ArrayList<>();
+        this.latestMovieRatings = new ArrayList<>();
+        this.movieRatings = new ArrayList<>();
+        this.movieUserMetaList = new ArrayList<>();
     }
 
 }
