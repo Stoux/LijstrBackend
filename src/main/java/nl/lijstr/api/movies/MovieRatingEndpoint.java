@@ -1,4 +1,4 @@
-package nl.lijstr.api.movies.models;
+package nl.lijstr.api.movies;
 
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.domain.movies.MovieRating;
@@ -27,5 +27,5 @@ public class MovieRatingEndpoint extends AbsService {
         //TODO: Get user
         //TODO: Add rating
     }
-    
+
 }
