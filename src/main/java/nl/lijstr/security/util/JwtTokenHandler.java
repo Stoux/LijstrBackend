@@ -1,0 +1,115 @@
+package nl.lijstr.security.util;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.time.LocalDateTime;
+import nl.lijstr.exceptions.security.AccessExpiredException;
+import nl.lijstr.exceptions.security.TokenExpiredException;
+import nl.lijstr.security.model.AuthenticationToken;
+import nl.lijstr.security.model.JwtUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
+
+@Component
+public class JwtTokenHandler {
+
+    private static final long ACCESS_MINUTES = 30;
+    private static final long REMEMBER_ME_MINUTES = 60 * 24 * 30;
+
+    private static final String JSON_PREFIX = "-";
+    private static final int JSON_PREFIX_LENGTH = JSON_PREFIX.length();
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    private final Gson gsonInstance;
+
+    public JwtTokenHandler() {
+        gsonInstance = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+                .create();
+    }
+
+    /**
+     * Parse a token into a validated JwtUser.
+     * This method throws {@link RuntimeException}s if the authentication failed.
+     *
+     * @param token The token
+     *
+     * @return the user
+     */
+    public JwtUser parseToken(String token) {
+        //Parse the token & convert it
+        return parseTokenIntoUser(token, true);
+    }
+
+    private JwtUser parseTokenIntoUser(String token, boolean checkAccess) {
+        Jws<String> jws = Jwts.parser()
+                .setSigningKey(secret)
+                .parsePlaintextJws(token);
+
+        JwtUser user = gsonInstance.fromJson(jws.getBody().substring(JSON_PREFIX_LENGTH), JwtUser.class);
+        if (user.getValidTill().isBefore(LocalDateTime.now())) {
+            throw new TokenExpiredException();
+        }
+
+        if (checkAccess && user.getAccessTill().isBefore(LocalDateTime.now())) {
+            throw new AccessExpiredException();
+        }
+
+        return user;
+    }
+
+    /**
+     * Generate a token based on a JwtUser.
+     *
+     * @param user       The user
+     * @param rememberMe Should be active for a rememberMe length
+     *
+     * @return the token
+     */
+    public AuthenticationToken generateToken(JwtUser user, boolean rememberMe) {
+        user.setAccessTill(LocalDateTime.now().plusMinutes(ACCESS_MINUTES));
+        user.setValidTill(rememberMe ? LocalDateTime.now().plusMinutes(REMEMBER_ME_MINUTES) : user.getAccessTill());
+
+        String token = Jwts.builder()
+                .setPayload(JSON_PREFIX + gsonInstance.toJson(user))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+
+        return new AuthenticationToken(token, user.getAccessTill(), user.getValidTill());
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @param token The token
+     *
+     * @return The new token
+     */
+    public AuthenticationToken refreshToken(String token) {
+        //Validate the token
+        JwtUser user = parseTokenIntoUser(token, false);
+
+        //Refresh the user (updates permissions etc)
+        JwtUser refreshedUser = (JwtUser) userDetailsService.loadUserByUsername(user.getUsername());
+
+        //Check the validating key
+        if (user.getValidatingKey() != refreshedUser.getValidatingKey()) {
+            throw new TokenExpiredException();
+        }
+
+        boolean rememberMe = !(user.getAccessTill().isEqual(user.getValidTill()));
+        return generateToken(refreshedUser, rememberMe);
+    }
+
+}

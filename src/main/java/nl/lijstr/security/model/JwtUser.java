@@ -48,6 +48,11 @@ public class JwtUser implements UserDetails {
     @Setter
     @SerializedName("at")
     private LocalDateTime accessTill;
+
+    @Setter
+    @SerializedName("vt")
+    private LocalDateTime validTill;
+
     /**
      * A validating key.
      *

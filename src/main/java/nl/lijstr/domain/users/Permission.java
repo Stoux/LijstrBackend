@@ -1,5 +1,6 @@
 package nl.lijstr.domain.users;
 
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import nl.lijstr.domain.base.IdModel;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Permission extends IdModel {
 
     public static final String ROLE_ADMIN = "ROLE_ADMIN";

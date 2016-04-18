@@ -1,6 +1,5 @@
 package nl.lijstr.security.spring;
 
-import io.jsonwebtoken.Claims;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
@@ -9,14 +8,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.security.model.JwtUser;
-import nl.lijstr.security.util.JwtTokenUtil;
+import nl.lijstr.security.util.JwtTokenHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -27,7 +23,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
     private static final String TOKEN_HEADER = "Authorization";
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtTokenHandler jwtTokenUtil;
 
     @Autowired
     private AuthenticationManager authenticationManager;
