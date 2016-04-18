@@ -27,9 +27,10 @@ public class JwtUserDetailsService implements UserDetailsService {
             return new JwtUser(
                     user.getId(),
                     user.getUsername(),
-                    null, //TODO: Add permissions
+                    user.getHashedPassword(),
+                    user.getGrantedPermissions(),
                     null, //TODO: Set valid till
-                    1 //TODO: Set validatingKey
+                    user.getValidatingKey()
             );
         }
     }

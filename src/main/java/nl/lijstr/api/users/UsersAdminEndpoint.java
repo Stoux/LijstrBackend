@@ -1,7 +1,7 @@
 package nl.lijstr.api.users;
 
 import nl.lijstr.api.abs.AbsCrudRestService;
-import nl.lijstr.configs.security.Permissions;
+import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.repositories.users.UserRepository;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Can be used by admins to control user data.
  */
 @RestController
-@Secured(Permissions.ADMIN)
+@Secured(Permission.ROLE_ADMIN)
 @RequestMapping(value = "/users", produces = "application/json")
 public class UsersAdminEndpoint extends AbsCrudRestService<User> {
 

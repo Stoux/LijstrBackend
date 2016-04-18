@@ -1,6 +1,7 @@
 package nl.lijstr.domain.users;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmUserModel;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,11 +16,12 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 public class GrantedPermission extends IdCmUserModel implements GrantedAuthority {
 
-    private String permission;
+    @ManyToOne
+    private Permission permission;
 
     @Override
     public String getAuthority() {
-        return permission;
+        return permission.toString();
     }
 
 }

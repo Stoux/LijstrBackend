@@ -29,6 +29,9 @@ public class JwtUser implements UserDetails {
      */
     @SerializedName("u")
     private String username;
+
+    private transient String password;
+
     /**
      * Collection of permissions.
      */
@@ -69,12 +72,6 @@ public class JwtUser implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public String getPassword() {
-        return null;
     }
 
     @JsonIgnore

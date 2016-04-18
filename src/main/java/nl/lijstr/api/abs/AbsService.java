@@ -5,8 +5,12 @@ import nl.lijstr.common.Utils;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.exceptions.db.NotFoundException;
 import nl.lijstr.repositories.abs.BasicRepository;
+import nl.lijstr.security.model.JwtUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
@@ -19,7 +23,6 @@ public abstract class AbsService {
      * Create an OK Response with the given message.
      *
      * @param message The message
-     *
      * @return the response
      */
     protected ResponseEntity<Map> ok(String message) {
@@ -37,7 +40,6 @@ public abstract class AbsService {
      * @param id              ID of the item
      * @param itemName        The name of the item (for the NFE)
      * @param <X>             The class of the item
-     *
      * @return the item
      */
     protected <X extends IdModel> X findOne(BasicRepository<X> basicRepository, long id, String itemName) {
@@ -74,5 +76,18 @@ public abstract class AbsService {
         }
     }
 
+    /**
+     * Get the currently logged in user from the Security context.
+     *
+     * @return the user
+     */
+    protected JwtUser getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication instanceof JwtUser) {
+            return (JwtUser) authentication;
+        } else {
+            throw new AuthenticationCredentialsNotFoundException("No JSON Web Tokens user found");
+        }
+    }
 
 }

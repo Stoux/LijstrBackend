@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import nl.lijstr.exceptions.security.AccessExpiredException;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,7 @@ public class JwtTokenUtil implements Serializable {
 
         //Validate it
         if (user.getAccessTill().isBefore(LocalDateTime.now())) {
-            //TODO: Throw no unrestricted access
+            throw new AccessExpiredException();
         }
 
         return user;

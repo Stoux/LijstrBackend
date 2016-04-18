@@ -1,13 +1,16 @@
 package nl.lijstr.api.movies;
 
 import nl.lijstr.api.abs.AbsService;
+import nl.lijstr.domain.users.Permission;
 import nl.lijstr.repositories.movies.MovieCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Stoux on 17/04/2016.
  */
+@Secured(Permission.ROLE_MOVIE)
 @RestController
 @RequestMapping(value = "/movies/{movieId:\\d+}/comments", produces = "application/json")
 public class MovieCommentEndpoint extends AbsService {

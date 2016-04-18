@@ -37,11 +37,7 @@ public abstract class AbsRestService<X extends IdModel> extends AbsService {
      */
     @RequestMapping("/{id}")
     public X getById(@PathVariable("id") final long id) {
-        X foundItem = basicRepository.findOne(id);
-        if (foundItem == null) {
-            throw new NotFoundException(itemName, id);
-        }
-        return foundItem;
+        return findOne(basicRepository, id, itemName);
     }
 
     /**

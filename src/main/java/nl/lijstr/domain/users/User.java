@@ -28,10 +28,6 @@ public class User extends IdCmModel {
     @NotNull
     private String hashedPassword;
 
-    @Transient
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-
     private String displayName;
 
     @Column(unique = true)
@@ -40,6 +36,8 @@ public class User extends IdCmModel {
     //Has an avatar
     private boolean avatar;
 
+    //Validating password key, used to invalidate JSON Web Tokens
+    private int validatingKey;
 
     //Relations
     @JsonIgnore
@@ -54,14 +52,8 @@ public class User extends IdCmModel {
     @OneToMany(mappedBy = "user")
     private List<PasswordReset> passwordResets;
 
-    @SuppressWarnings("squid:UnusedPrivateMethod")
-    @PrePersist
-    @PreUpdate
-    private void fillPassword() {
-        if (password != null) {
-            //TODO: Improve
-            setHashedPassword(new StringBuilder(password).reverse().toString());
-        }
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<GrantedPermission> grantedPermissions;
 
 }

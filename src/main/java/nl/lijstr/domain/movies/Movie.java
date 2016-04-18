@@ -108,4 +108,17 @@ public class Movie extends IdCmModel {
         this.imdbId = imdbId;
     }
 
+    /**
+     * Create a new Movie by it's IMDB ID.
+     *
+     * @param imdbId     The ID
+     * @param youtubeUrl The YouTube trailer URL
+     * @param addedBy    The user who added this movie
+     */
+    public Movie(String imdbId, String youtubeUrl, User addedBy) {
+        this.imdbId = imdbId;
+        this.youtubeUrl = youtubeUrl;
+        this.addedBy = addedBy;
+    }
+
 }

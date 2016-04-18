@@ -38,7 +38,7 @@ public class MovieUpdateEndpoint extends AbsService {
      *
      * @param imdbId The ID of the movie
      */
-    @RequestMapping(value = "/{imdbId:tt[0-9]+}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{imdbId:tt\\d{7}}", method = RequestMethod.PUT)
     public void updateMovie(@PathVariable("imdbId") String imdbId) {
         Movie movie = movieRepository.findByImdbId(imdbId);
         checkIfFound(movie, "Movie", imdbId);
