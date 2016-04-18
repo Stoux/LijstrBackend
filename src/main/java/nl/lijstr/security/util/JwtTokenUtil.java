@@ -20,7 +20,7 @@ public class JwtTokenUtil implements Serializable {
     private static final long ACCESS_MINUTES = 30;
     private static final long REMEMBER_ME_MINUTES = 60 * 24 * 30;
 
-    @Value("${jwt.secret}") //TODO: Secret
+    @Value("${jwt.secret}")
     private String secret;
 
     private Gson gsonInstance = new Gson();

@@ -11,6 +11,7 @@ import nl.lijstr.services.maf.models.containers.ApiMovieModel;
 import nl.lijstr.services.maf.retrofit.ImdbService;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -21,8 +22,8 @@ import retrofit2.Response;
 @Service
 public class MafApiService {
 
-    //TODO: Move this to the properties
-    public static final String TOKEN = "MOVE-TO-PROPERTIES";
+    @Value("${maf.token}")
+    private String token;
 
     @InjectLogger
     private Logger logger;
@@ -48,7 +49,7 @@ public class MafApiService {
     }
 
     private ApiMovie getApiMovie(String imdbId) {
-        Call<ApiMovieModel> movieCall = imdbService.getMovie(TOKEN, imdbId, "json", "en-us", 1, 1, 1);
+        Call<ApiMovieModel> movieCall = imdbService.getMovie(token, imdbId, "json", "en-us", 1, 1, 1);
         ApiMovieModel model = executeCall(movieCall);
         return model.getMovie();
     }
