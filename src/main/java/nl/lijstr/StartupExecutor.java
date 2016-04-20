@@ -1,14 +1,13 @@
 package nl.lijstr;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
+import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.users.PermissionRepository;
 import nl.lijstr.repositories.users.UserRepository;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -21,6 +20,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class StartupExecutor implements ApplicationListener<ContextRefreshedEvent> {
+
+    @InjectLogger
+    private Logger logger;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,6 +43,7 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     }
 
     private void addPermissions() {
+        logger.info("Checking User permissions...");
         //Get all permissions
         List<Permission> allPermissions = permissionRepository.findAll();
         Set<String> requiredPermissions = new HashSet<>(Arrays.asList(Permission.list()));
@@ -52,25 +55,31 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
 
         //Add any new ones
         for (String requiredPermission : requiredPermissions) {
+            logger.info("Adding missing permission: {}", requiredPermission);
             permissionRepository.saveAndFlush(new Permission(requiredPermission));
         }
     }
 
     private void addAdmin() {
-        if (userRepository.exists(1L)) {
+        if (userRepository.findByUsername("admin") == null) {
             return;
         }
 
+        logger.info("No Admin account detected");
+
         User user = new User("admin", "Admin", adminMail);
-        user.setId(1L);
         user.setHashedPassword(passwordEncoder.encode(adminPassword));
-        User admin = userRepository.saveAndFlush(user);
+        user.setGrantedPermissions(new ArrayList<>());
 
         String[] perms = new String[]{Permission.ADMIN, Permission.USER};
         for (String name : perms) {
             Permission permission = permissionRepository.findByName(name);
-            admin.getGrantedPermissions().add(new GrantedPermission(user, permission));
+            user.getGrantedPermissions().add(new GrantedPermission(user, permission));
         }
+
+        User admin = userRepository.saveAndFlush(user);
+        logger.info("Added Admin account. ID: {}", user.getId());
+
     }
 
 }
