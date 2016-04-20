@@ -62,9 +62,9 @@ public class MovieRating extends IdCmUserMovieModel {
          * @return the seen value
          */
         public static Seen fromBoolean(Boolean val) {
-            if (val == Boolean.TRUE) {
+            if (Boolean.TRUE.equals(val)) {
                 return YES;
-            } else if (val == Boolean.FALSE) {
+            } else if (Boolean.FALSE.equals(val)) {
                 return NO;
             } else {
                 return UNKNOWN;

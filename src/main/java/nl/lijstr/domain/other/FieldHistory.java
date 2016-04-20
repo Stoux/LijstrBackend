@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import javax.persistence.Entity;
 import lombok.*;
 import nl.lijstr.domain.base.IdCreatedModel;
-import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
 /**

@@ -61,7 +61,7 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     }
 
     private void addAdmin() {
-        if (userRepository.findByUsername("admin") == null) {
+        if (userRepository.findByUsername("admin") != null) {
             return;
         }
 
@@ -78,7 +78,7 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
         }
 
         User admin = userRepository.saveAndFlush(user);
-        logger.info("Added Admin account. ID: {}", user.getId());
+        logger.info("Added Admin account. ID: {}", admin.getId());
 
     }
 

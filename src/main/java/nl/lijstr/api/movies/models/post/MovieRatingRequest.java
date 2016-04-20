@@ -3,9 +3,7 @@ package nl.lijstr.api.movies.models.post;
 import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.validator.constraints.Range;
 
 /**
  * Created by Stoux on 20/04/2016.
