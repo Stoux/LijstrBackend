@@ -92,13 +92,15 @@ public class JwtTokenHandler {
     public AuthenticationToken generateToken(JwtUser user, boolean rememberMe) {
         user.setAccessTill(LocalDateTime.now().plusMinutes(ACCESS_MINUTES));
         user.setValidTill(rememberMe ? LocalDateTime.now().plusMinutes(REMEMBER_ME_MINUTES) : user.getAccessTill());
+        String token = generateToken(user);
+        return new AuthenticationToken(token, user.getAccessTill(), user.getValidTill(), user.getId());
+    }
 
-        String token = Jwts.builder()
+    private String generateToken(JwtUser user) {
+        return Jwts.builder()
                 .setPayload(JSON_PREFIX + gsonInstance.toJson(user))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
-
-        return new AuthenticationToken(token, user.getAccessTill(), user.getValidTill(), user.getId());
     }
 
     /**

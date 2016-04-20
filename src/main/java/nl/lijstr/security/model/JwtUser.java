@@ -44,11 +44,9 @@ public class JwtUser implements UserDetails {
      * If this value has been passed the User will have to request a new Token which is still possible
      * with the current token.
      */
-    @Setter
     @SerializedName("at")
     private LocalDateTime accessTill;
 
-    @Setter
     @SerializedName("vt")
     private LocalDateTime validTill;
 
@@ -57,8 +55,29 @@ public class JwtUser implements UserDetails {
      * <p>
      * This allows a user to reset all tokens (that have passed their accessTill value).
      */
+    @Setter
     @SerializedName("vk")
     private long validatingKey;
+
+    /**
+     * Set the accessTill.
+     * This resets the nanoseconds to 0.
+     *
+     * @param accessTill The date time
+     */
+    public void setAccessTill(LocalDateTime accessTill) {
+        this.accessTill = accessTill.withNano(0);
+    }
+
+    /**
+     * Set the validTill.
+     * This resets the nanoseconds to 0.
+     *
+     * @param validTill The date time
+     */
+    public void setValidTill(LocalDateTime validTill) {
+        this.validTill = validTill.withNano(0);
+    }
 
     @JsonIgnore
     @Override
