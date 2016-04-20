@@ -9,12 +9,12 @@ import nl.lijstr.repositories.abs.BasicRepository;
 public interface PermissionRepository extends BasicRepository<Permission> {
 
     /**
-     * Find a Permission by it's... permission.
+     * Find a Permission.
      *
-     * @param permission The permission
+     * @param permissionName The name
      *
-     * @return also the permission.. Naming.
+     * @return the permission or null
      */
-    Permission findByPermission(String permission);
+    Permission findByName(String permissionName);
 
 }

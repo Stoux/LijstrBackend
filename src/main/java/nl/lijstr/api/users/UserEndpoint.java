@@ -43,7 +43,7 @@ public class UserEndpoint extends AbsService {
      * @return the user
      */
     @RequestMapping("/{id:\\d+}")
-    public User getUserDetails(long id) {
+    public User getUserDetails(@PathVariable Long id) {
         checkUserOrAdmin(id);
         return findOne(userRepository, id, "User");
     }
@@ -56,7 +56,7 @@ public class UserEndpoint extends AbsService {
      * @return the list of permissions
      */
     @RequestMapping("/{id:\\d+}/permissions")
-    public List<GrantedPermission> getPermissions(long id) {
+    public List<GrantedPermission> getPermissions(@PathVariable Long id) {
         checkUserOrAdmin(id);
         return findOne(userRepository, id, "User").getGrantedPermissions();
     }
@@ -71,7 +71,7 @@ public class UserEndpoint extends AbsService {
      */
     @Secured(Permission.ADMIN)
     @RequestMapping(value = "/{id:\\d+}/permissions", method = RequestMethod.PUT)
-    public List<GrantedPermission> modifyPermissions(@PathVariable long id, @RequestBody PermissionList permissionList) {
+    public List<GrantedPermission> modifyPermissions(@PathVariable Long id, @RequestBody PermissionList permissionList) {
         //Validate permissions
         Set<String> allPermissions = Arrays.stream(Permission.list()).collect(Collectors.toSet());
         for (String givenPermission : permissionList.getPermissions()) {
@@ -86,7 +86,7 @@ public class UserEndpoint extends AbsService {
         Utils.updateList(
                 permissions, allPermissions, GrantedPermission::getAuthority,
                 permission -> new GrantedPermission(
-                        permissionRepository.findByPermission(permission)
+                        permissionRepository.findByName(permission)
                 )
         );
 
@@ -122,7 +122,11 @@ public class UserEndpoint extends AbsService {
      *
      * @param id The user's ID
      */
-    private void checkUserOrAdmin(long id) {
+    private void checkUserOrAdmin(Long id) {
+        if (id == null) {
+            throw new BadRequestException("ID is null");
+        }
+
         JwtUser user = getUser();
         if (user.getId() != id) {
             checkPermission(user, Permission.ADMIN);

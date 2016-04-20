@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.time.LocalDateTime;
+import java.util.function.Consumer;
 import nl.lijstr.exceptions.security.AccessExpiredException;
 import nl.lijstr.exceptions.security.TokenExpiredException;
 import nl.lijstr.security.model.AuthenticationToken;
@@ -54,19 +55,25 @@ public class JwtTokenHandler {
      */
     public JwtUser parseToken(String token) {
         //Parse the token & convert it
-        return parseTokenIntoUser(token, true);
+        return parseTokenIntoUser(token, true, null);
     }
 
-    private JwtUser parseTokenIntoUser(String token, boolean checkAccess) {
+    private JwtUser parseTokenIntoUser(String token, boolean checkAccess, Consumer<String> usernameCallback) {
         Jws<String> jws = Jwts.parser()
                 .setSigningKey(secret)
                 .parsePlaintextJws(token);
 
         JwtUser user = gsonInstance.fromJson(jws.getBody().substring(JSON_PREFIX_LENGTH), JwtUser.class);
+        if (usernameCallback != null) {
+            usernameCallback.accept(user.getUsername());
+        }
+
+        //Check if expired
         if (user.getValidTill().isBefore(LocalDateTime.now())) {
             throw new TokenExpiredException();
         }
 
+        //Check if still access
         if (checkAccess && user.getAccessTill().isBefore(LocalDateTime.now())) {
             throw new AccessExpiredException();
         }
@@ -91,19 +98,20 @@ public class JwtTokenHandler {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
 
-        return new AuthenticationToken(token, user.getAccessTill(), user.getValidTill());
+        return new AuthenticationToken(token, user.getAccessTill(), user.getValidTill(), user.getId());
     }
 
     /**
      * Refresh a token.
      *
-     * @param token The token
+     * @param token            The token
+     * @param usernameCallback A callback that can be called if a valid username is detected
      *
      * @return The new token
      */
-    public AuthenticationToken refreshToken(String token) {
+    public AuthenticationToken refreshToken(String token, Consumer<String> usernameCallback) {
         //Validate the token
-        JwtUser user = parseTokenIntoUser(token, false);
+        JwtUser user = parseTokenIntoUser(token, false, usernameCallback);
 
         //Refresh the user (updates permissions etc)
         JwtUser refreshedUser = (JwtUser) userDetailsService.loadUserByUsername(user.getUsername());

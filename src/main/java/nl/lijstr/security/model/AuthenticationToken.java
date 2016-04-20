@@ -14,5 +14,6 @@ public class AuthenticationToken {
     private String token;
     private LocalDateTime accessTill;
     private LocalDateTime validTill;
+    private Long userId;
 
 }
