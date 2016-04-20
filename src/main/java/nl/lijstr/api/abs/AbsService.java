@@ -4,7 +4,9 @@ import java.util.Map;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.exceptions.db.NotFoundException;
+import nl.lijstr.exceptions.security.UnauthorizedException;
 import nl.lijstr.repositories.abs.BasicRepository;
+import nl.lijstr.security.model.JwtGrantedAuthority;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.security.spring.JwtAuthenticationToken;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ public abstract class AbsService {
      * Create an OK Response with the given message.
      *
      * @param message The message
+     *
      * @return the response
      */
     protected ResponseEntity<Map> ok(String message) {
@@ -41,6 +44,7 @@ public abstract class AbsService {
      * @param id              ID of the item
      * @param itemName        The name of the item (for the NFE)
      * @param <X>             The class of the item
+     *
      * @return the item
      */
     protected <X extends IdModel> X findOne(BasicRepository<X> basicRepository, long id, String itemName) {
@@ -89,6 +93,21 @@ public abstract class AbsService {
         } else {
             throw new AuthenticationCredentialsNotFoundException("No JSON Web Tokens user found");
         }
+    }
+
+    /**
+     * Check if a user has a certain permission.
+     *
+     * @param jwtUser    The user
+     * @param permission The permission (use {@link nl.lijstr.domain.users.Permission} statics)
+     */
+    protected void checkPermission(JwtUser jwtUser, String permission) {
+        for (JwtGrantedAuthority authority : jwtUser.getAuthorities()) {
+            if (authority.getAuthority().equals(permission)) {
+                return;
+            }
+        }
+        throw new UnauthorizedException();
     }
 
 }

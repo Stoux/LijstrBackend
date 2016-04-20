@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenHandler {
 
-    private static final long ACCESS_MINUTES = 30L;
+    private static final long ACCESS_MINUTES = 30L * 24L;
     private static final long REMEMBER_ME_MINUTES = 60L * 24L * 30L;
 
     private static final String JSON_PREFIX = "-";

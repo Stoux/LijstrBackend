@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by Stoux on 17/04/2016.
  */
-@Secured(Permission.MOVIE)
+@Secured(Permission.MOVIE_USER)
 @RestController
 @RequestMapping(value = "/movies/{movieId:\\d+}/comments", produces = "application/json")
 public class MovieCommentEndpoint extends AbsService {

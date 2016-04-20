@@ -41,6 +41,7 @@ public class AuthenticationEndpoint extends AbsService {
     @RequestMapping(method = RequestMethod.POST)
     public AuthenticationToken authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
         //Authenticate
+        //TODO: Log the login attempt
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getUsername(),
@@ -62,7 +63,13 @@ public class AuthenticationEndpoint extends AbsService {
      */
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     public AuthenticationToken refreshToken(@RequestBody RefreshRequest refreshRequest) {
+        //TODO: Log the refresh
         return jwtTokenHandler.refreshToken(refreshRequest.getCurrentToken());
+    }
+
+    @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
+    public void resetPassword(@RequestBody String email) {
+        //TODO: Reset the password
     }
 
 }

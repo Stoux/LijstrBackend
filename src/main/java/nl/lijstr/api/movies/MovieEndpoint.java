@@ -72,7 +72,7 @@ public class MovieEndpoint extends AbsRestService<Movie> {
      *
      * @param postedRequest The data
      */
-    @Secured(Permission.MOVIE)
+    @Secured(Permission.MOVIE_USER)
     @Transactional
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     public void requestMovie(@RequestBody() PostedMovieRequest postedRequest) {

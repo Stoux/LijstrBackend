@@ -38,6 +38,7 @@ public class User extends IdCmModel {
     private boolean avatar;
 
     //Validating password key, used to invalidate JSON Web Tokens
+    @JsonIgnore
     private int validatingKey;
 
     //Relations
@@ -65,6 +66,21 @@ public class User extends IdCmModel {
      */
     public User(long id) {
         this.id = id;
+    }
+
+    /**
+     * Create a new User.
+     * @param username
+     * @param displayName
+     * @param email
+     */
+    public User(String username, String displayName, String email) {
+        this.username = username;
+        this.displayName = displayName;
+        this.email = email;
+
+        this.avatar = false;
+        this.validatingKey = 0;
     }
 
 }

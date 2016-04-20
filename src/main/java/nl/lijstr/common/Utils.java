@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -67,6 +68,35 @@ public final class Utils {
                 itemToValueFunction.apply(i)
         ));
         return map;
+    }
+
+    /**
+     * Update a List.
+     * <p>
+     * Especially useful for updating associated lists on an {@link javax.persistence.Entity}.
+     *
+     * @param currentItems        The current list
+     * @param newItems            The new list
+     * @param getAsStringFunction Get an item as {@link String}
+     * @param getOrCreateFunction Get or creates a new item
+     * @param <X>                 The class of the item
+     */
+    public static <X> void updateList(List<X> currentItems,
+                                      Collection<String> newItems,
+                                      Function<X, String> getAsStringFunction,
+                                      Function<String, X> getOrCreateFunction) {
+        final Map<String, X> itemMap = Utils.toMap(currentItems, getAsStringFunction);
+
+        for (String newItem : newItems) {
+            if (itemMap.containsKey(newItem)) {
+                itemMap.remove(newItem);
+            } else {
+                X createdItem = getOrCreateFunction.apply(newItem);
+                currentItems.add(createdItem);
+            }
+        }
+
+        itemMap.values().forEach(currentItems::remove);
     }
 
     /**

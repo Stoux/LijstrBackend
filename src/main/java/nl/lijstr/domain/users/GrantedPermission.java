@@ -1,5 +1,6 @@
 package nl.lijstr.domain.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import lombok.*;
@@ -14,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties({"user"})
 public class GrantedPermission extends IdCmUserModel implements GrantedAuthority {
 
     @ManyToOne

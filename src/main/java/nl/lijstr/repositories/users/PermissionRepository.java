@@ -1,11 +1,20 @@
 package nl.lijstr.repositories.users;
 
-import nl.lijstr.domain.users.GrantedPermission;
-import nl.lijstr.repositories.abs.BasicMultipleUserRepository;
+import nl.lijstr.domain.users.Permission;
+import nl.lijstr.repositories.abs.BasicRepository;
 
 /**
- * The basic GrantedPermission repository.
+ * The basic Permission repository.
  */
-public interface PermissionRepository extends BasicMultipleUserRepository<GrantedPermission> {
+public interface PermissionRepository extends BasicRepository<Permission> {
+
+    /**
+     * Find a Permission by it's... permission.
+     *
+     * @param permission The permission
+     *
+     * @return also the permission.. Naming.
+     */
+    Permission findByPermission(String permission);
 
 }

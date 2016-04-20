@@ -124,42 +124,24 @@ public class MovieUpdateHandler {
     }
 
     private void updateTrivia(Movie movie, ApiMovie apiMovie) {
-        updateImdbList(
+        Utils.updateList(
                 movie.getTrivia(), apiMovie.getTrivia(), MovieTrivia::getTrivia,
                 triviaFact -> new MovieTrivia(movie, triviaFact)
         );
     }
 
     private void updateGenres(Movie movie, ApiMovie apiMovie) {
-        updateImdbList(
+        Utils.updateList(
                 movie.getGenres(), apiMovie.getGenres(), Genre::getGenre,
                 imdbBean::getOrCreateGenre
         );
     }
 
     private void updateLanguages(Movie movie, ApiMovie apiMovie) {
-        updateImdbList(
+        Utils.updateList(
                 movie.getLanguages(), apiMovie.getLanguages(), SpokenLanguage::getLanguage,
                 imdbBean::getOrCreateLanguage
         );
-    }
-
-    private static <X> void updateImdbList(List<X> currentItems,
-                                           Collection<String> newItems,
-                                           Function<X, String> getAsStringFunction,
-                                           Function<String, X> getOrCreateFunction) {
-        final Map<String, X> itemMap = Utils.toMap(currentItems, getAsStringFunction);
-
-        for (String newItem : newItems) {
-            if (itemMap.containsKey(newItem)) {
-                itemMap.remove(newItem);
-            } else {
-                X createdItem = getOrCreateFunction.apply(newItem);
-                currentItems.add(createdItem);
-            }
-        }
-
-        itemMap.values().forEach(currentItems::remove);
     }
 
     private void updateWriters(final Movie movie, ApiMovie apiMovie) {
