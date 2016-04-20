@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class RateLimitException extends LijstrException {
 
-    private Long minutesTillNextAttempt;
+    private final Long minutesTillNextAttempt;
 
     /**
      * Create a new {@link RateLimitException}.

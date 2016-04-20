@@ -3,6 +3,7 @@ package nl.lijstr;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.repositories.users.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     private void addPermissions() {
         //Get all permissions
         List<Permission> allPermissions = permissionRepository.findAll();
-        HashSet<String> requiredPermissions = new HashSet<>(Arrays.asList(Permission.list()));
+        Set<String> requiredPermissions = new HashSet<>(Arrays.asList(Permission.list()));
 
         //Check which ones have been made already
         for (Permission allPermission : allPermissions) {

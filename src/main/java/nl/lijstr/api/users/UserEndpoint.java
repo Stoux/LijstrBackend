@@ -128,7 +128,7 @@ public class UserEndpoint extends AbsService {
         }
 
         JwtUser user = getUser();
-        if (user.getId() != id) {
+        if (id.equals(user.getId())) {
             checkPermission(user, Permission.ADMIN);
         }
     }

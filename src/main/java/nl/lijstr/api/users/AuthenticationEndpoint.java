@@ -60,6 +60,7 @@ public class AuthenticationEndpoint extends AbsService {
      *
      * @return the token
      */
+    @SuppressWarnings("checkstyle:com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck")
     @RequestMapping(method = RequestMethod.POST)
     public AuthenticationToken authenticate(@RequestBody AuthenticationRequest authenticationRequest,
                                             HttpServletRequest servletRequest) {
@@ -100,6 +101,7 @@ public class AuthenticationEndpoint extends AbsService {
      *
      * @return the new token
      */
+    @SuppressWarnings("checkstyle:com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck")
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     public AuthenticationToken refreshToken(@RequestBody RefreshRequest refreshRequest,
                                             HttpServletRequest servletRequest) {
