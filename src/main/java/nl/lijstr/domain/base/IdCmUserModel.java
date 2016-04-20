@@ -15,6 +15,6 @@ import nl.lijstr.domain.users.User;
 public abstract class IdCmUserModel extends IdCmModel {
 
     @ManyToOne
-    private User user;
+    protected User user;
 
 }

@@ -3,6 +3,7 @@ package nl.lijstr.domain.other;
 import java.lang.reflect.Field;
 import javax.persistence.Entity;
 import lombok.*;
+import nl.lijstr.domain.base.IdCreatedModel;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
@@ -14,7 +15,7 @@ import nl.lijstr.services.modify.annotations.NotModifiable;
 @AllArgsConstructor
 @Entity
 @NotModifiable
-public class FieldHistory extends IdModel {
+public class FieldHistory extends IdCreatedModel {
 
     private String className;
     private Long objectId;

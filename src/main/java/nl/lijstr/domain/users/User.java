@@ -2,6 +2,7 @@ package nl.lijstr.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -55,7 +56,7 @@ public class User extends IdCmModel {
     private List<PasswordReset> passwordResets;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GrantedPermission> grantedPermissions;
 
     /**

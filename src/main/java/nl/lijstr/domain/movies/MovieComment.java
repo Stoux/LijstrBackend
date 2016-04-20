@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmUserMovieModel;
+import nl.lijstr.domain.users.User;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -17,5 +18,18 @@ public class MovieComment extends IdCmUserMovieModel {
 
     @Column(nullable = false)
     private String comment;
+
+    /**
+     * Create a {@link MovieComment}.
+     *
+     * @param movie   The movie
+     * @param user    The user who made the comment
+     * @param comment The actual comment
+     */
+    public MovieComment(Movie movie, User user, String comment) {
+        this.movie = movie;
+        this.comment = comment;
+        this.user = user;
+    }
 
 }

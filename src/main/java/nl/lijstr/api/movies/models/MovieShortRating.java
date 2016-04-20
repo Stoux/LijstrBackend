@@ -1,5 +1,6 @@
 package nl.lijstr.api.movies.models;
 
+import java.math.BigDecimal;
 import lombok.*;
 import nl.lijstr.domain.movies.MovieRating;
 
@@ -9,8 +10,8 @@ import nl.lijstr.domain.movies.MovieRating;
 @Getter
 public class MovieShortRating {
 
-    private boolean seen;
-    private Double rating;
+    private int seen;
+    private BigDecimal rating;
     private String comment;
     private long user;
 
@@ -20,7 +21,7 @@ public class MovieShortRating {
      * @param movieRating The original movie rating
      */
     public MovieShortRating(MovieRating movieRating) {
-        this.seen = movieRating.isSeen();
+        this.seen = movieRating.getSeen().ordinal();
         this.rating = movieRating.getRating();
         this.comment = movieRating.getComment();
         this.user = movieRating.getUser().getId();

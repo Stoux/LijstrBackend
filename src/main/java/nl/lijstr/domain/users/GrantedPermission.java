@@ -23,6 +23,17 @@ public class GrantedPermission extends IdCmUserModel implements GrantedAuthority
     @ManyToOne
     private Permission permission;
 
+    /**
+     * Create a new {@link GrantedPermission} that is assigned to a {@link User}.
+     *
+     * @param user       The user
+     * @param permission The permission
+     */
+    public GrantedPermission(User user, Permission permission) {
+        this.user = user;
+        this.permission = permission;
+    }
+
     @Override
     public String getAuthority() {
         return permission.toString();

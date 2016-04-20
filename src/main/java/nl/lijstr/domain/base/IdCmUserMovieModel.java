@@ -16,6 +16,6 @@ public abstract class IdCmUserMovieModel extends IdCmUserModel {
 
     @JsonBackReference
     @ManyToOne
-    private Movie movie;
+    protected Movie movie;
 
 }
