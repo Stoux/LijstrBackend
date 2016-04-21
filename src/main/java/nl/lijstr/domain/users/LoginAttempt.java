@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import lombok.*;
-import nl.lijstr.domain.base.UserModel;
+import nl.lijstr.domain.base.IdUserModel;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -15,7 +15,7 @@ import nl.lijstr.domain.base.UserModel;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class LoginAttempt extends UserModel {
+public class LoginAttempt extends IdUserModel {
 
     private LocalDateTime timestamp;
     private String remoteAddress;

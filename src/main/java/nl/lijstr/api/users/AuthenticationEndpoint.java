@@ -6,7 +6,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.AuthenticationRequest;
+import nl.lijstr.api.users.models.NewPasswordRequest;
 import nl.lijstr.api.users.models.RefreshRequest;
+import nl.lijstr.api.users.models.ResetPasswordRequest;
+import nl.lijstr.beans.PasswordBean;
 import nl.lijstr.domain.users.LoginAttempt;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.security.RateLimitException;
@@ -48,6 +51,9 @@ public class AuthenticationEndpoint extends AbsService {
 
     @Autowired
     private LoginAttemptRepository loginAttemptRepository;
+
+    @Autowired
+    private PasswordBean passwordBean;
 
     @Autowired
     private JwtTokenHandler jwtTokenHandler;
@@ -158,10 +164,27 @@ public class AuthenticationEndpoint extends AbsService {
         loginAttemptRepository.saveAndFlush(loginAttempt);
     }
 
-
+    /**
+     * Request a password to be reset.
+     *
+     * @param resetRequest  The user details
+     * @param springRequest The spring request
+     */
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
-    public void resetPassword(@RequestBody String email) {
-        //TODO: Reset the password
+    public void requestPasswordReset(@RequestBody ResetPasswordRequest resetRequest, HttpServletRequest springRequest) {
+        passwordBean.requestPasswordReset(
+                resetRequest.getUsername(), resetRequest.getEmail(), springRequest
+        );
+    }
+
+    /**
+     * Reset a password using a reset token.
+     *
+     * @param newPassword The new password details
+     */
+    @RequestMapping(value = "resetPassword", method = RequestMethod.PUT)
+    public void resetPassword(@RequestBody NewPasswordRequest newPassword) {
+        passwordBean.resetPassword(newPassword.getResetToken(), newPassword.getResetToken());
     }
 
 }

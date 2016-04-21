@@ -2,7 +2,7 @@ package nl.lijstr.domain.users;
 
 import javax.persistence.Entity;
 import lombok.*;
-import nl.lijstr.domain.base.UserModel;
+import nl.lijstr.domain.base.IdUserModel;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -12,7 +12,7 @@ import nl.lijstr.domain.base.UserModel;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Notification extends UserModel {
+public class Notification extends IdUserModel {
 
     private String section;
 

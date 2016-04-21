@@ -27,4 +27,16 @@ public interface UserRepository extends BasicRepository<User> {
      */
     User findByUsernameOrEmail(String username, String email);
 
+    /**
+     * Try to find a user by their username and email.
+     * This requires both fields to match where as {@link #findByUsernameOrEmail(String, String)} only requires one
+     * to match.
+     *
+     * @param username The username
+     * @param email    The email
+     *
+     * @return The user or null
+     */
+    User findByUsernameAndEmail(String username, String email);
+
 }

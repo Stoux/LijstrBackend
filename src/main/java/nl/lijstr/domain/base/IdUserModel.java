@@ -11,7 +11,7 @@ import nl.lijstr.domain.users.User;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class UserModel extends IdModel {
+public abstract class IdUserModel extends IdModel {
 
     @ManyToOne
     private User user;

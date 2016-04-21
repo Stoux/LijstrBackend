@@ -1,5 +1,6 @@
 package nl.lijstr.configs;
 
+import java.security.SecureRandom;
 import nl.lijstr.security.JwtUserDetailsService;
 import nl.lijstr.security.spring.JwtAuthenticationEntryPoint;
 import nl.lijstr.security.spring.JwtAuthenticationTokenFilter;
@@ -49,6 +50,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoderBean() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * Creates a {@link SecureRandom}.
+     *
+     * @return the random
+     */
+    @Bean
+    public SecureRandom secureRandomBean() {
+        return new SecureRandom();
     }
 
     @Bean
