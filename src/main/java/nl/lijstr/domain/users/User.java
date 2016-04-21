@@ -7,7 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
@@ -71,9 +74,10 @@ public class User extends IdCmModel {
 
     /**
      * Create a new User.
-     * @param username
-     * @param displayName
-     * @param email
+     *
+     * @param username    The username
+     * @param displayName The displayName
+     * @param email       The email
      */
     public User(String username, String displayName, String email) {
         this.username = username;
