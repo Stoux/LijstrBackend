@@ -1,6 +1,5 @@
 package nl.lijstr.api.abs;
 
-import java.util.List;
 import javax.annotation.PostConstruct;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.repositories.abs.BasicRepository;
@@ -37,16 +36,6 @@ public abstract class AbsRestService<X extends IdModel> extends AbsService {
     @RequestMapping("/{id}")
     public X getById(@PathVariable("id") final long id) {
         return findOne(basicRepository, id, itemName);
-    }
-
-    /**
-     * Get all entities.
-     *
-     * @return the entities
-     */
-    @RequestMapping
-    public List<X> findAll() {
-        return basicRepository.findAll();
     }
 
     @SuppressWarnings("squid:UnusedPrivateMethod")

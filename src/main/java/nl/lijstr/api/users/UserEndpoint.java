@@ -18,7 +18,6 @@ import nl.lijstr.repositories.users.UserRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Secured(Permission.USER)
 @RestController
-@RequestMapping(value = "/user", produces = "application/json")
+@RequestMapping(value = "/users", produces = "application/json")
 public class UserEndpoint extends AbsService {
 
     @Autowired
@@ -81,14 +80,15 @@ public class UserEndpoint extends AbsService {
         }
 
         //Get the user in question
-        User user = userRepository.getOne(id);
+        User user = findOne(userRepository, id, "User");
         List<GrantedPermission> permissions = user.getGrantedPermissions();
         Utils.updateList(
-                permissions, allPermissions, GrantedPermission::getAuthority,
+                permissions, permissionList.getPermissions(), GrantedPermission::getAuthority,
                 permission -> new GrantedPermission(
                         permissionRepository.findByName(permission)
                 )
         );
+        userRepository.saveAndFlush(user);
 
         return permissions;
     }
@@ -96,18 +96,13 @@ public class UserEndpoint extends AbsService {
     /**
      * Add a new {@link User}.
      *
-     * @param userRequest   The create user request
-     * @param bindingResult The validation result
+     * @param userRequest The create user request
      *
      * @return the user
      */
     @Secured(Permission.ADMIN)
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "application/json")
-    public User addUser(@Valid @RequestBody CreateUserRequest userRequest, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new BadRequestException(bindingResult.toString());
-        }
-
+    public User addUser(@Valid @RequestBody CreateUserRequest userRequest) {
         User foundUser = userRepository.findByUsernameOrEmail(userRequest.getUsername(), userRequest.getEmail());
         if (foundUser != null) {
             throw new BadRequestException("Username or email already exists");
@@ -128,7 +123,7 @@ public class UserEndpoint extends AbsService {
         }
 
         JwtUser user = getUser();
-        if (id.equals(user.getId())) {
+        if (!id.equals(user.getId())) {
             checkPermission(user, Permission.ADMIN);
         }
     }

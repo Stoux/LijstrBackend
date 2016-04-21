@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Secured(Permission.ADMIN)
-@RequestMapping(value = "/users", produces = "application/json")
+@RequestMapping(value = "/usersAdmin", produces = "application/json")
 public class UsersAdminEndpoint extends AbsCrudRestService<User> {
 
     @Autowired

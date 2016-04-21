@@ -2,6 +2,7 @@ package nl.lijstr.api.movies;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsRestService;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.api.movies.models.post.PostedMovieRequest;
@@ -61,7 +62,7 @@ public class MovieEndpoint extends AbsRestService<Movie> {
      *
      * @return the list
      */
-    @RequestMapping("/summaries")
+    @RequestMapping
     public List<MovieSummary> summaries(
             @RequestParam(required = false, defaultValue = "false") final boolean includeGenres,
             @RequestParam(required = false, defaultValue = "false") final boolean includeLanguages,
@@ -80,7 +81,7 @@ public class MovieEndpoint extends AbsRestService<Movie> {
     @Secured(Permission.MOVIE_USER)
     @Transactional
     @RequestMapping(value = "/request", method = RequestMethod.POST)
-    public void requestMovie(@RequestBody() PostedMovieRequest postedRequest) {
+    public void requestMovie(@Valid @RequestBody PostedMovieRequest postedRequest) {
         JwtUser user = getUser();
         checkIfMovieNotAdded(postedRequest.getImdbId());
         OmdbObject omdb = checkIfMovieExists(postedRequest.getImdbId());
@@ -100,7 +101,7 @@ public class MovieEndpoint extends AbsRestService<Movie> {
     @Secured(Permission.MOVIE_MOD)
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
-    public void addMovie(@RequestBody() PostedMovieRequest postedRequest) {
+    public void addMovie(@Valid @RequestBody PostedMovieRequest postedRequest) {
         //Validate
         JwtUser user = getUser();
         checkIfMovieNotAdded(postedRequest.getImdbId());
