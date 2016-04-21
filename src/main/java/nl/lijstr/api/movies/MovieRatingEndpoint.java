@@ -3,6 +3,7 @@ package nl.lijstr.api.movies;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsMovieService;
 import nl.lijstr.api.movies.models.MovieShortRating;
 import nl.lijstr.api.movies.models.post.MovieRatingRequest;
@@ -41,7 +42,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
      * @return a short version of the rating
      */
     @RequestMapping(method = RequestMethod.POST)
-    public MovieShortRating add(@PathVariable Long movieId, @RequestBody MovieRatingRequest newRating) {
+    public MovieShortRating add(@PathVariable Long movieId, @Valid @RequestBody MovieRatingRequest newRating) {
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
         MovieRating addedRating = addRating(user, movie, newRating);
@@ -80,7 +81,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
      */
     @RequestMapping(value = "/{ratingId:\\d+}", method = RequestMethod.PUT)
     public MovieShortRating edit(@PathVariable Long movieId, @PathVariable Long ratingId,
-                                 @RequestBody MovieRatingRequest newRating) {
+                                 @Valid @RequestBody MovieRatingRequest newRating) {
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
 

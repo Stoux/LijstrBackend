@@ -27,14 +27,11 @@ public class JwtTokenHandler {
 
     private static final String JSON_PREFIX = "-";
     private static final int JSON_PREFIX_LENGTH = JSON_PREFIX.length();
-
+    private final Gson gsonInstance;
     @Value("${jwt.secret}")
     private String secret;
-
     @Autowired
     private UserDetailsService userDetailsService;
-
-    private final Gson gsonInstance;
 
     /**
      * Create a new {@link JwtTokenHandler}.

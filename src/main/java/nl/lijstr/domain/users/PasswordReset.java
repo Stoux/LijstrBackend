@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmUserModel;
-import nl.lijstr.domain.base.IdUserModel;
 
 /**
  * Created by Stoux on 03/12/2015.

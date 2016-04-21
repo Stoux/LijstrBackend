@@ -23,11 +23,6 @@ public class Permission extends IdModel {
     @Column(unique = true)
     private String name;
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
     /**
      * Get the list of available permissions.
      *
@@ -35,6 +30,11 @@ public class Permission extends IdModel {
      */
     public static String[] list() {
         return new String[]{ADMIN, USER, MOVIE_MOD, MOVIE_USER};
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
 

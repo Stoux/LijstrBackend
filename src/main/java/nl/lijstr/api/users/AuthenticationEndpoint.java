@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.AuthenticationRequest;
 import nl.lijstr.api.users.models.NewPasswordRequest;
@@ -68,7 +69,7 @@ public class AuthenticationEndpoint extends AbsService {
      */
     @SuppressWarnings("checkstyle:com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck")
     @RequestMapping(method = RequestMethod.POST)
-    public AuthenticationToken authenticate(@RequestBody AuthenticationRequest authenticationRequest,
+    public AuthenticationToken authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest,
                                             HttpServletRequest servletRequest) {
         LoginAttempt loginAttempt = createLoginAttempt(
                 servletRequest, authenticationRequest.getUsername(), LoginAttempt.Type.AUTHENTICATION
@@ -109,7 +110,7 @@ public class AuthenticationEndpoint extends AbsService {
      */
     @SuppressWarnings("checkstyle:com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck")
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
-    public AuthenticationToken refreshToken(@RequestBody RefreshRequest refreshRequest,
+    public AuthenticationToken refreshToken(@Valid @RequestBody RefreshRequest refreshRequest,
                                             HttpServletRequest servletRequest) {
         LoginAttempt loginAttempt = createLoginAttempt(
                 servletRequest, null, LoginAttempt.Type.TOKEN_REFRESH
@@ -171,7 +172,8 @@ public class AuthenticationEndpoint extends AbsService {
      * @param springRequest The spring request
      */
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
-    public void requestPasswordReset(@RequestBody ResetPasswordRequest resetRequest, HttpServletRequest springRequest) {
+    public void requestPasswordReset(@Valid @RequestBody ResetPasswordRequest resetRequest,
+                                     HttpServletRequest springRequest) {
         passwordBean.requestPasswordReset(
                 resetRequest.getUsername(), resetRequest.getEmail(), springRequest
         );
@@ -183,7 +185,7 @@ public class AuthenticationEndpoint extends AbsService {
      * @param newPassword The new password details
      */
     @RequestMapping(value = "resetPassword", method = RequestMethod.PUT)
-    public void resetPassword(@RequestBody NewPasswordRequest newPassword) {
+    public void resetPassword(@Valid @RequestBody NewPasswordRequest newPassword) {
         passwordBean.resetPassword(newPassword.getResetToken(), newPassword.getResetToken());
     }
 

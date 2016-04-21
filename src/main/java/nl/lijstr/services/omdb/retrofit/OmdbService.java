@@ -17,6 +17,7 @@ public interface OmdbService {
      * Get a Movie/Series by their IMDB ID.
      *
      * @param imdbId The ID
+     *
      * @return The OmdbObject call
      */
     @GET("/")

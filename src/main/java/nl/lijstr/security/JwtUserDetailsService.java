@@ -22,6 +22,12 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    private static List<JwtGrantedAuthority> convertAuthorities(List<GrantedPermission> grantedPermissions) {
+        return grantedPermissions.stream()
+                .map(grantedPermission -> new JwtGrantedAuthority(grantedPermission.getAuthority()))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -38,12 +44,6 @@ public class JwtUserDetailsService implements UserDetailsService {
                     user.getValidatingKey()
             );
         }
-    }
-
-    private static List<JwtGrantedAuthority> convertAuthorities(List<GrantedPermission> grantedPermissions) {
-        return grantedPermissions.stream()
-                .map(grantedPermission -> new JwtGrantedAuthority(grantedPermission.getAuthority()))
-                .collect(Collectors.toList());
     }
 
 }

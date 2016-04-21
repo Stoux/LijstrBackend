@@ -25,6 +25,19 @@ public class ImdbBean {
     @Autowired
     private PersonRepository personRepository;
 
+    private static <X> X getOrCreate(String findValue,
+                                     Function<String, X> findMethod,
+                                     Function<String, X> createMethod,
+                                     Function<X, X> saveMethod) {
+        X x = findMethod.apply(findValue);
+        if (x == null) {
+            x = createMethod.apply(findValue);
+            return saveMethod.apply(x);
+        } else {
+            return x;
+        }
+    }
+
     /**
      * Try to find a Genre object, otherwise create it.
      *
@@ -67,19 +80,6 @@ public class ImdbBean {
      */
     public Person addPerson(Person person) {
         return personRepository.save(person);
-    }
-
-    private static <X> X getOrCreate(String findValue,
-                                     Function<String, X> findMethod,
-                                     Function<String, X> createMethod,
-                                     Function<X, X> saveMethod) {
-        X x = findMethod.apply(findValue);
-        if (x == null) {
-            x = createMethod.apply(findValue);
-            return saveMethod.apply(x);
-        } else {
-            return x;
-        }
     }
 
 

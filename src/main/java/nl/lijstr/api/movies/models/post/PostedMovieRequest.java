@@ -1,7 +1,7 @@
 package nl.lijstr.api.movies.models.post;
 
 import javax.validation.constraints.Pattern;
-import lombok.Getter;
+import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
 
