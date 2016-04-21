@@ -15,6 +15,8 @@ import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.movies.MovieRequestRepository;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.services.maf.MafApiService;
+import nl.lijstr.services.omdb.OmdbApiService;
+import nl.lijstr.services.omdb.models.OmdbObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,9 @@ public class MovieEndpoint extends AbsRestService<Movie> {
     private MovieRepository movieRepository;
     @Autowired
     private MovieRequestRepository movieRequestRepository;
+
+    @Autowired
+    private OmdbApiService omdbApiService;
 
     /**
      * Create a new MovieEndpoint.
@@ -78,8 +83,11 @@ public class MovieEndpoint extends AbsRestService<Movie> {
     public void requestMovie(@RequestBody() PostedMovieRequest postedRequest) {
         JwtUser user = getUser();
         checkIfMovieNotAdded(postedRequest.getImdbId());
-        checkIfMovieExists(postedRequest.getImdbId());
-        MovieRequest request = new MovieRequest(postedRequest.getImdbId(), postedRequest.getYoutubeId());
+        OmdbObject omdb = checkIfMovieExists(postedRequest.getImdbId());
+        MovieRequest request = new MovieRequest(
+                postedRequest.getImdbId(), postedRequest.getYoutubeId(),
+                omdb.getTitle(), omdb.getYear(), omdb.getImdbRating()
+        );
         request.setUser(new User(user.getId()));
         movieRequestRepository.save(request);
     }
@@ -114,8 +122,8 @@ public class MovieEndpoint extends AbsRestService<Movie> {
         }
     }
 
-    private void checkIfMovieExists(String imdbId) {
-        //TODO:
+    private OmdbObject checkIfMovieExists(String imdbId) {
+        return omdbApiService.getMovie(imdbId);
     }
 
 }

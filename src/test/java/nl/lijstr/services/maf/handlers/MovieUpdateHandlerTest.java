@@ -106,7 +106,7 @@ public class MovieUpdateHandlerTest {
         assertEquals("The Martian", movie.getTitle());
         assertEquals("", movie.getOriginalTitle());
         assertEquals(Integer.valueOf(2015), movie.getYear());
-        assertEquals(LocalDate.of(2015, 10, 02), movie.getReleased());
+        assertEquals(LocalDate.of(2015, 10, 2), movie.getReleased());
         //TODO: Runtimes
         //TODO: Poster
         assertEquals(Double.valueOf(8.1), movie.getImdbRating());

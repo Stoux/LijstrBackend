@@ -21,6 +21,10 @@ public class MovieRequest extends IdCmUserModel {
     private String imdbId;
     private String youtubeUrl;
 
+    private String title;
+    private String year;
+    private String imdbRating;
+
     @ManyToOne
     private User approvedBy;
     private LocalDateTime addedOn;
@@ -30,9 +34,15 @@ public class MovieRequest extends IdCmUserModel {
      *
      * @param imdbId     The IMDB ID
      * @param youtubeUrl An optional YouTube URL
+     * @param title      The title
+     * @param year       The release year
+     * @param imdbRating The rating
      */
-    public MovieRequest(String imdbId, String youtubeUrl) {
+    public MovieRequest(String imdbId, String youtubeUrl, String title, String year, String imdbRating) {
         this.imdbId = imdbId;
         this.youtubeUrl = youtubeUrl;
+        this.title = title;
+        this.year = year;
+        this.imdbRating = imdbRating;
     }
 }

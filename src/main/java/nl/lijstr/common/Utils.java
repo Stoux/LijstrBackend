@@ -1,5 +1,6 @@
 package nl.lijstr.common;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -7,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import nl.lijstr.exceptions.LijstrException;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Common General Utilities.
@@ -97,6 +101,23 @@ public final class Utils {
         }
 
         itemMap.values().forEach(currentItems::remove);
+    }
+
+    /**
+     * Execute a Retrofit call.
+     *
+     * @param call The call
+     * @param <X>  The expected response class
+     *
+     * @return the response
+     */
+    public static <X> X executeCall(Call<X> call) {
+        try {
+            Response<X> response = call.execute();
+            return response.body();
+        } catch (IOException e) {
+            throw new LijstrException("Failed to execute call.", e);
+        }
     }
 
     /**

@@ -1,8 +1,7 @@
 package nl.lijstr.services.maf;
 
-import java.io.IOException;
+import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
-import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
@@ -14,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * A Service that provides access to the external api 'MyApiFilms.com'.
+ * An API that provides data from IMDB, TheMovieDB and more.
  */
 @Service
 public class MafApiService {
@@ -50,18 +49,8 @@ public class MafApiService {
 
     private ApiMovie getApiMovie(String imdbId) {
         Call<ApiMovieModel> movieCall = imdbService.getMovie(token, imdbId, "json", "en-us", 1, 1, 1);
-        ApiMovieModel model = executeCall(movieCall);
+        ApiMovieModel model = Utils.executeCall(movieCall);
         return model.getMovie();
     }
-
-    private <X> X executeCall(Call<X> call) {
-        try {
-            Response<X> response = call.execute();
-            return response.body();
-        } catch (IOException e) {
-            throw new LijstrException("Failed to execute call.", e);
-        }
-    }
-
 
 }
