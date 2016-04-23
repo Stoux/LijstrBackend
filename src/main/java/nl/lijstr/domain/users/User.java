@@ -2,13 +2,11 @@ package nl.lijstr.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
+import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
 /**
@@ -41,6 +39,9 @@ public class User extends IdCmModel {
     //Validating password key, used to invalidate JSON Web Tokens
     @JsonIgnore
     private int validatingKey;
+
+    @Enumerated(EnumType.ORDINAL)
+    private ApprovedFor approvedFor;
 
     //Relations
     @JsonIgnore

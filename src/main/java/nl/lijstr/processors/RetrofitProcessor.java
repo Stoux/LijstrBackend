@@ -2,11 +2,16 @@ package nl.lijstr.processors;
 
 import java.lang.reflect.Field;
 import nl.lijstr.common.Utils;
+import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.abs.AbsBeanProcessor;
+import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.retrofit.RetrofitService;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
+import okhttp3.Interceptor;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +19,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RetrofitProcessor extends AbsBeanProcessor<InjectRetrofitService> {
+
+    @InjectLogger
+    private Logger logger;
+
+    @Autowired
+    private AutowireCapableBeanFactory beanFactory;
 
     @Autowired
     private RetrofitService retrofitService;
@@ -33,7 +44,30 @@ public class RetrofitProcessor extends AbsBeanProcessor<InjectRetrofitService> {
     @Override
     protected Object getInjectObject(Object bean, Field field, InjectRetrofitService annotation) {
         RetrofitServiceAnnotation serviceAnnotation = Utils.getAnnotation(field.getType(), RetrofitServiceAnnotation.class);
-        return retrofitService.createRetrofitService(serviceAnnotation.value(), field.getType());
+
+        //Create injectors if needed
+        Interceptor interceptor = null;
+        Class<? extends Interceptor> interceptorClass = serviceAnnotation.interceptorClass();
+        if (!interceptorClass.equals(Interceptor.class)) {
+            try {
+                interceptor = interceptorClass.newInstance();
+                if (serviceAnnotation.springInjectInterceptor()) {
+                    beanFactory.autowireBean(interceptor);
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                logger.fatal("Failed to create interceptor: {}", e.getMessage());
+                logger.fatal(e);
+                throw new LijstrException("Failed to create Interceptor of class: " + interceptorClass.getName());
+            }
+        }
+
+        if (interceptor == null) {
+            return retrofitService.createRetrofitService(serviceAnnotation.value(), field.getType());
+        } else {
+            return retrofitService.createRetrofitService(serviceAnnotation.value(), field.getType(), interceptor);
+        }
     }
+
+
 
 }

@@ -45,8 +45,10 @@ public class PasswordBean {
      * @param username      The username
      * @param email         The email
      * @param springRequest The spring springRequest (for logging)
+     *
+     * @return the reset object
      */
-    public void requestPasswordReset(String username, String email, HttpServletRequest springRequest) {
+    public PasswordReset requestPasswordReset(String username, String email, HttpServletRequest springRequest) {
         //Find the user
         final User user = userRepository.findByUsernameAndEmail(username, email);
         if (user == null) {
@@ -70,9 +72,9 @@ public class PasswordBean {
                 LocalDateTime.now().plusMinutes(PASSWORD_RESET_TIME),
                 false
         );
-        passwordResetRepository.save(newReset);
+        newReset.setUser(user);
 
-        //TODO: Send a mail
+        return passwordResetRepository.save(newReset);
     }
 
     /**

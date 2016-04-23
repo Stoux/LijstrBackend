@@ -2,6 +2,7 @@ package nl.lijstr.services.retrofit;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.springframework.stereotype.Service;
@@ -27,43 +28,47 @@ public class RetrofitService {
     /**
      * Create a Retrofit Service.
      *
-     * @param endpoint The endpoint URL
-     * @param xClass   The service class
-     * @param <X>      the service
+     * @param endpoint     The endpoint URL
+     * @param xClass       The service class
+     * @param interceptors One or more interceptors
+     * @param <X>          the service
      *
      * @return the service
      */
-    public <X> X createRetrofitService(String endpoint, Class<X> xClass) {
-        Retrofit retrofit = getRetrofitEndpoint(endpoint);
+    public <X> X createRetrofitService(String endpoint, Class<X> xClass, Interceptor... interceptors) {
+        Retrofit retrofit = getRetrofitEndpoint(endpoint, interceptors);
         return retrofit.create(xClass);
     }
 
-    private Retrofit getRetrofitEndpoint(String endpoint) {
+    private Retrofit getRetrofitEndpoint(String endpoint, Interceptor[] interceptors) {
         //Check if cached
         if (endpointMap.containsKey(endpoint)) {
             return endpointMap.get(endpoint);
         }
 
         //Create it
-        Retrofit retrofit = createRetrofit(endpoint);
+        Retrofit retrofit = createRetrofit(endpoint, interceptors);
         endpointMap.put(endpoint, retrofit);
         return retrofit;
     }
 
-    private Retrofit createRetrofit(String endpoint) {
+    private Retrofit createRetrofit(String endpoint, Interceptor[] interceptors) {
         //Create the OkHttpClient
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
+        //Add interceptors
+        for (Interceptor customInterceptor : interceptors) {
+            clientBuilder.addInterceptor(customInterceptor);
+        }
+        clientBuilder.addInterceptor(interceptor);
 
         //Build the Retrofit instance
         return new Retrofit.Builder()
                 .baseUrl(endpoint)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
+                .client(clientBuilder.build())
                 .build();
     }
 
