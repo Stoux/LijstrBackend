@@ -2,6 +2,7 @@ package nl.lijstr.security;
 
 import java.util.ArrayList;
 import java.util.List;
+import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
@@ -43,7 +44,7 @@ public class JwtUserDetailsServiceTest {
     @Test
     public void loadUser() throws Exception {
         //Arrange
-        User user = new User("A", "B", "C");
+        User user = new User("A", "B", "C", ApprovedFor.EVERYONE);
         ReflectionTestUtils.setField(user, "id", 1L);
         List<GrantedPermission> permissions = new ArrayList<>();
         for (String permission : Permission.list()) {

@@ -76,11 +76,13 @@ public class User extends IdCmModel {
      * @param username    The username
      * @param displayName The displayName
      * @param email       The email
+     * @param approvedFor Approved for
      */
-    public User(String username, String displayName, String email) {
+    public User(String username, String displayName, String email, ApprovedFor approvedFor) {
         this.username = username;
         this.displayName = displayName;
         this.email = email;
+        this.approvedFor = approvedFor;
 
         this.avatar = false;
         this.validatingKey = 0;

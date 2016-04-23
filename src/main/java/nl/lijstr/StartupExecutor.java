@@ -1,6 +1,7 @@
 package nl.lijstr;
 
 import java.util.*;
+import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
@@ -67,7 +68,7 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
 
         logger.info("No Admin account detected");
 
-        User user = new User("admin", "Admin", adminMail);
+        User user = new User("admin", "Admin", adminMail, ApprovedFor.MEME);
         user.setHashedPassword(passwordEncoder.encode(adminPassword));
         user.setGrantedPermissions(new ArrayList<>());
 

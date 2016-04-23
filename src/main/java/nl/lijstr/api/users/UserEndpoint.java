@@ -10,6 +10,7 @@ import nl.lijstr.api.users.models.CreateUserRequest;
 import nl.lijstr.api.users.models.PasswordChangeRequest;
 import nl.lijstr.api.users.models.PermissionList;
 import nl.lijstr.common.Utils;
+import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
@@ -142,8 +143,12 @@ public class UserEndpoint extends AbsService {
             throw new BadRequestException("Username or email already exists");
         }
 
-        User newUser = new User(userRequest.getUsername(), userRequest.getDisplayName(), userRequest.getEmail());
+        User newUser = new User(
+                userRequest.getUsername(), userRequest.getDisplayName(), userRequest.getEmail(),
+                userRequest.getApprovedFor() == null ? ApprovedFor.EVERYONE : userRequest.getApprovedFor()
+        );
         return userRepository.saveAndFlush(newUser);
+        //TODO: Send a mail
     }
 
     /**

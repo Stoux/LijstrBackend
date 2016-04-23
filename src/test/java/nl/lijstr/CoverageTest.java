@@ -37,8 +37,9 @@ public class CoverageTest {
     }
 
     @Test
-    public void mafModelsCoverage() throws Exception {
+    public void modelsCoverage() throws Exception {
         runCoverage("nl.lijstr.services.maf.models", true);
+        runCoverage("nl.lijstr.services.omdb.models", true);
     }
 
     @Test

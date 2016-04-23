@@ -1,0 +1,14 @@
+{
+  "title": "$$title$$",
+  "user": "$$user$$",
+  "subtitle": "$$subtitle$$",
+  "message": "$$message$$",
+  "button": "$$button$$",
+  "button-url": "$$button-url$$",
+  "gif-width": "$$gif-width$$",
+  "gif-height": "$$gif-height$$",
+  "gif-src": "$$gif-src$$",
+  "gif-subtitle": "$$gif-subtitle$$",
+  "footer": "$$footer$$",
+  "footer2": "$$footer$$"
+}

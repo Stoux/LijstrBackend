@@ -1,14 +1,21 @@
 package nl.lijstr._TestUtils;
 
+import com.google.gson.Gson;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import nl.lijstr.common.Container;
+import nl.lijstr.common.Utils;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import org.apache.logging.log4j.Logger;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -165,6 +172,44 @@ public class TestUtils {
      */
     public static InputStream getTestResource(String name) {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+    }
+
+    /**
+     * Create a mocked success call.
+     *
+     * @param returnObject The object that should be returned from the call
+     * @param <X>          The object class
+     *
+     * @return the call
+     * @throws IOException Retrofit exception
+     */
+    public static <X> Call<X> successCall(X returnObject) throws IOException {
+        return createCall(Response.success(returnObject));
+    }
+
+    /**
+     * Create a mocked failing call.
+     *
+     * @param errorCode The returned errorCode
+     * @param message   The error message
+     * @param <X>       The call's model
+     *
+     * @return the call
+     * @throws IOException Retrofit exception
+     */
+    public static <X> Call<X> failedCall(int errorCode, String message) throws IOException {
+        return createCall(
+                Response.error(errorCode, ResponseBody.create(
+                        MediaType.parse("application/json"),
+                        new Gson().toJson(Utils.asMap("error", message))
+                ))
+        );
+    }
+
+    private static <X> Call<X> createCall(Response<X> mockedResponse) throws IOException {
+        Call<X> mockedCall = mock(Call.class);
+        doReturn(mockedResponse).when(mockedCall).execute();
+        return mockedCall;
     }
 
 }
