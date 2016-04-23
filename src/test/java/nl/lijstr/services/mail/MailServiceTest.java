@@ -149,4 +149,11 @@ public class MailServiceTest {
         assertEquals(memeQuote.getQuote(), htmlMap.get("footer2"));
     }
 
+    @Test
+    public void coverage() {
+        MailGunResponse mailGunResponse = new MailGunResponse();
+        assertNull(mailGunResponse.getId());
+        assertNull(mailGunResponse.getMessage());
+    }
+
 }
