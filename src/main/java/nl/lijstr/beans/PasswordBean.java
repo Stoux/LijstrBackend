@@ -106,7 +106,7 @@ public class PasswordBean {
 
         User user = reset.getUser();
         user.setHashedPassword(passwordEncoder.encode(newPassword));
-        user.setValidatingKey(user.getValidatingKey() + 1);
+        user.incrementValidatingKey();
         userRepository.save(user);
     }
 

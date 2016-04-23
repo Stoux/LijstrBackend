@@ -7,17 +7,20 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.CreateUserRequest;
+import nl.lijstr.api.users.models.PasswordChangeRequest;
 import nl.lijstr.api.users.models.PermissionList;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
+import nl.lijstr.exceptions.security.UnauthorizedException;
 import nl.lijstr.repositories.users.PermissionRepository;
 import nl.lijstr.repositories.users.UserRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,6 +36,9 @@ public class UserEndpoint extends AbsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Get the user details of a user.
@@ -91,6 +97,34 @@ public class UserEndpoint extends AbsService {
         userRepository.saveAndFlush(user);
 
         return permissions;
+    }
+
+    /**
+     * Allows a user to change their password.
+     *
+     * @param id            The user's ID
+     * @param changeRequest The change request
+     */
+    @RequestMapping(value = "/{id:\\d+}/changePassword", method = RequestMethod.PUT)
+    public void changePassword(@PathVariable Long id, @Valid @RequestBody PasswordChangeRequest changeRequest) {
+        //Get the user
+        JwtUser jwtuser = getUser();
+        if (!id.equals(jwtuser.getId())) {
+            throw new UnauthorizedException();
+        }
+        User user = findOne(userRepository, id, "User");
+
+        //Check the current password
+        if (!passwordEncoder.matches(changeRequest.getCurrentPassword(), user.getHashedPassword())) {
+            throw new BadRequestException("Password doesn't match");
+        }
+
+        //Set the new password
+        user.setHashedPassword(passwordEncoder.encode(changeRequest.getNewPassword()));
+        user.incrementValidatingKey();
+        userRepository.save(user);
+
+        //TODO: Mail the user
     }
 
     /**

@@ -86,4 +86,11 @@ public class User extends IdCmModel {
         this.validatingKey = 0;
     }
 
+    /**
+     * Increment the validating key.
+     */
+    public void incrementValidatingKey() {
+        validatingKey++;
+    }
+
 }
