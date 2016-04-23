@@ -1,6 +1,7 @@
 package nl.lijstr.services.maf;
 
 import java.io.IOException;
+import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
@@ -71,7 +72,7 @@ public class MafApiServiceTest {
             when(call.execute()).thenThrow(new IOException());
 
             //Act
-            ReflectionTestUtils.invokeMethod(mafApiService, "executeCall", call);
+            Utils.executeCall(call);
             fail();
         } catch (IOException e) {
             fail("Exception should have been caught and rethrown as a LijstrException.");

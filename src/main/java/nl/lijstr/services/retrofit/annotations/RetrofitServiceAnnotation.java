@@ -22,12 +22,14 @@ public @interface RetrofitServiceAnnotation {
 
     /**
      * An optional class that can be added as interceptor on the HttpClient under Retrofit.
+     *
      * @return the class
      */
     Class<? extends Interceptor> interceptorClass() default Interceptor.class;
 
     /**
      * Inject the interceptor with Spring autowiring.
+     *
      * @return should inject
      */
     boolean springInjectInterceptor() default false;

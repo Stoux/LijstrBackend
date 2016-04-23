@@ -40,16 +40,16 @@ public class ValidationErrors {
 
     @Getter
     @AllArgsConstructor
-    private class ValidationFieldError {
-        private String field;
-        private String message;
-        private Object rejectedValue;
+    private static class ValidationFieldError {
+        private final String field;
+        private final String message;
+        private final Object rejectedValue;
     }
 
     @Getter
     @AllArgsConstructor
-    private class ValidationError {
-        private String message;
+    private static class ValidationError {
+        private final String message;
     }
 
 }

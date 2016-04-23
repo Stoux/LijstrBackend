@@ -7,6 +7,7 @@ import lombok.*;
  */
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MailGunResponse {
 
     private String id;

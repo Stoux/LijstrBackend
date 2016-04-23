@@ -7,28 +7,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.AuthenticationRequest;
-import nl.lijstr.api.users.models.NewPasswordRequest;
 import nl.lijstr.api.users.models.RefreshRequest;
-import nl.lijstr.api.users.models.ResetPasswordRequest;
-import nl.lijstr.beans.PasswordBean;
-import nl.lijstr.domain.other.ApprovedFor;
-import nl.lijstr.domain.other.MemeQuote;
 import nl.lijstr.domain.users.LoginAttempt;
-import nl.lijstr.domain.users.PasswordReset;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.security.RateLimitException;
-import nl.lijstr.repositories.other.MemeQuoteRepository;
 import nl.lijstr.repositories.users.LoginAttemptRepository;
 import nl.lijstr.security.model.AuthenticationToken;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.security.util.JwtTokenHandler;
-import nl.lijstr.services.mail.MailService;
-import nl.lijstr.services.mail.model.MailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by Stoux on 18/04/2016.
@@ -57,13 +51,7 @@ public class AuthenticationEndpoint extends AbsService {
     private LoginAttemptRepository loginAttemptRepository;
 
     @Autowired
-    private PasswordBean passwordBean;
-
-    @Autowired
     private JwtTokenHandler jwtTokenHandler;
-
-    @Autowired
-    private MailService mailService;
 
     /**
      * Allows an user to authenticate and receive an access token.
@@ -169,49 +157,6 @@ public class AuthenticationEndpoint extends AbsService {
     private void loginFail(LoginAttempt loginAttempt, RuntimeException e) {
         loginAttempt.fail(e.getMessage());
         loginAttemptRepository.saveAndFlush(loginAttempt);
-    }
-
-    /**
-     * Request a password to be reset.
-     *
-     * @param resetRequest  The user details
-     * @param springRequest The spring request
-     */
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public void requestPasswordReset(@Valid @RequestBody ResetPasswordRequest resetRequest,
-                                     HttpServletRequest springRequest) {
-        PasswordReset passwordReset = passwordBean.requestPasswordReset(
-                resetRequest.getUsername(), resetRequest.getEmail(), springRequest
-        );
-
-        mailService.sendMail(
-                "Password reset",
-                passwordReset.getUser(),
-                new MailTemplate(
-                        "You've triggered a password reset. Press the button to enter your new password.",
-                        "/passwordReset?token=" + passwordReset.getResetToken(),
-                        "Reset password"
-                ),
-                "password-reset"
-        );
-    }
-
-    /**
-     * Reset a password using a reset token.
-     *
-     * @param newPassword The new password details
-     */
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.PUT)
-    public void resetPassword(@Valid @RequestBody NewPasswordRequest newPassword) {
-        passwordBean.resetPassword(newPassword.getResetToken(), newPassword.getResetToken());
-    }
-
-    @Autowired
-    private MemeQuoteRepository memeQuoteRepository;
-
-    @RequestMapping("/xD/{approvedFor}")
-    public List<MemeQuote> x(@PathVariable String approvedFor) {
-        return memeQuoteRepository.findRandomForApproved(ApprovedFor.valueOf(approvedFor));
     }
 
 }

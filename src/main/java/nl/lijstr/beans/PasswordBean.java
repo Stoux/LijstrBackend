@@ -27,6 +27,9 @@ public class PasswordBean {
      */
     public static final long PASSWORD_RESET_TIME = 30L;
 
+    public static final int RANDOM_ID_INT_SIZE = 256;
+    public static final int RANDOM_ID_STRING_SIZE = 64;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -64,7 +67,7 @@ public class PasswordBean {
         }
 
         //Create a new one
-        String randomId = new BigInteger(256, secureRandom).toString(64);
+        String randomId = new BigInteger(RANDOM_ID_INT_SIZE, secureRandom).toString(RANDOM_ID_STRING_SIZE);
         PasswordReset newReset = new PasswordReset(
                 springRequest.getRemoteAddr(), springRequest.getRemotePort(),
                 springRequest.getHeader("user-agent"),

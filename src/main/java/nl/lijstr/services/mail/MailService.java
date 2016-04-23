@@ -2,6 +2,7 @@ package nl.lijstr.services.mail;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +13,14 @@ import nl.lijstr.domain.other.MemeImage;
 import nl.lijstr.domain.other.MemeQuote;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.LijstrException;
+import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.repositories.other.MemeImageRepository;
 import nl.lijstr.repositories.other.MemeQuoteRepository;
 import nl.lijstr.services.mail.model.MailGunResponse;
 import nl.lijstr.services.mail.model.MailTemplate;
 import nl.lijstr.services.mail.retrofit.MailGunApiService;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -31,6 +34,9 @@ import retrofit2.Call;
  */
 @Service
 public class MailService {
+
+    @InjectLogger
+    private Logger logger;
 
     @Value("${host.app}")
     private String appHost;
@@ -51,6 +57,16 @@ public class MailService {
     @InjectRetrofitService
     private MailGunApiService mailGunApiService;
 
+    /**
+     * Send a mail using the default template.
+     *
+     * @param subject      The subject
+     * @param user         The user who is going to receive the mail
+     * @param mailTemplate Template values
+     * @param tag          Optional tag
+     *
+     * @return a Mail response
+     */
     public MailGunResponse sendMail(String subject, User user, MailTemplate mailTemplate, String tag) {
         //Build field map
         Map<String, String> fieldMap = new HashMap<>();
@@ -72,7 +88,7 @@ public class MailService {
     private String buildTemplateMail(String title, User user, String message, String button, String buttonPath) {
         //Get a random quote
         List<MemeQuote> memeQuotes = memeQuoteRepository.findRandomForApproved(user.getApprovedFor());
-        String footer = (memeQuotes.isEmpty() ? "Absolutely nothing." : memeQuotes.get(0).getQuote());
+        String footer = memeQuotes.isEmpty() ? "Absolutely nothing." : memeQuotes.get(0).getQuote();
 
         //Get random GIF
         List<MemeImage> memeImages = memeImageRepository.findRandomForApproved(user.getApprovedFor());
@@ -95,18 +111,22 @@ public class MailService {
     }
 
     private String buildTemplateText(User user, MailTemplate template) {
-        return "Hi " + user.getDisplayName() + "\r\n\r\n" +
-                template.getMessage() + "\r\n" +
-                template.getButton() + ": " + appHost + template.getButtonUrlPath() + "\r\n\r\n" +
-                "kbai";
+        return "Hi " + user.getDisplayName() + "\r\n\r\n"
+                + template.getMessage() + "\r\n"
+                + template.getButton() + ": " + appHost + template.getButtonUrlPath() + "\r\n\r\n"
+                + "kbai";
     }
 
 
     @PostConstruct
     private void getTemplateMail() {
-        try (InputStreamReader reader = new InputStreamReader(templateResource.getInputStream())) {
+        try (InputStreamReader reader = new InputStreamReader(
+                templateResource.getInputStream(), Charset.forName("UTF-8"))
+        ) {
             templateMail = FileCopyUtils.copyToString(reader);
         } catch (IOException e) {
+            logger.fatal("Failed to read template mail: {}", e.getMessage());
+            logger.fatal(e);
             throw new LijstrException("Failed to read templateMail:" + e.getMessage());
         }
     }

@@ -69,5 +69,4 @@ public class RetrofitProcessor extends AbsBeanProcessor<InjectRetrofitService> {
     }
 
 
-
 }
