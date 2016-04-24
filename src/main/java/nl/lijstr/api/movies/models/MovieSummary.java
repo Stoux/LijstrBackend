@@ -15,6 +15,7 @@ import nl.lijstr.domain.movies.Movie;
 /**
  * A summarized version of a {@link Movie}.
  */
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,6 +1,7 @@
 package nl.lijstr.api.abs;
 
 import java.util.Map;
+import nl.lijstr.beans.UserBean;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.exceptions.db.NotFoundException;
@@ -9,6 +10,7 @@ import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.security.model.JwtGrantedAuthority;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.security.spring.JwtAuthenticationToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  */
 @CrossOrigin
 public abstract class AbsService {
+
+    @Autowired
+    private UserBean userBean;
 
     /**
      * Create an OK Response with the given message.
@@ -82,17 +87,12 @@ public abstract class AbsService {
     }
 
     /**
-     * Get the currently logged in user from the Security context.
+     * Get the currently logged in user.
      *
      * @return the user
      */
     protected JwtUser getUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication instanceof JwtAuthenticationToken) {
-            return ((JwtAuthenticationToken) authentication).getJwtUser();
-        } else {
-            throw new AuthenticationCredentialsNotFoundException("No JSON Web Tokens user found");
-        }
+        return userBean.getJwtUser();
     }
 
     /**

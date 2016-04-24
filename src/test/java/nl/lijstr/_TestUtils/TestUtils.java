@@ -80,13 +80,19 @@ public class TestUtils {
         String[] splitMockedName = mockedName.split("\\$\\$");
         String fieldName = StringUtils.uncapitalize(splitMockedName[0]);
 
-        try {
-            Field field = object.getClass().getDeclaredField(fieldName);
-            ReflectionTestUtils.setField(object, field.getName(), mock);
-            return true;
-        } catch (NoSuchFieldException e) {
-            return false;
+        Class targetClass = object.getClass();
+        while(targetClass != null) {
+            try {
+                Field field = targetClass.getDeclaredField(fieldName);
+                ReflectionTestUtils.setField(object, field.getName(), mock);
+                return true;
+            } catch (NoSuchFieldException e) {
+                //Ignore this
+            }
+
+            targetClass = targetClass.getSuperclass();
         }
+        return false;
     }
 
     private static boolean insertMockByFieldType(Object object, Object mock) throws Exception {

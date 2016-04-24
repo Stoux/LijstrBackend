@@ -10,6 +10,8 @@ import org.springframework.validation.annotation.Validated;
  */
 @Getter
 @Validated
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostedMovieRequest {
 
     @NotEmpty
