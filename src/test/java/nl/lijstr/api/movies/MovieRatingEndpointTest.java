@@ -146,12 +146,6 @@ public class MovieRatingEndpointTest {
         return rating;
     }
 
-    private JwtUser createUser(long id) {
-        JwtUser user = new JwtUser();
-        ReflectionTestUtils.setField(user, "id", id);
-        return user;
-    }
-
 
     @Test
     public void edit() throws Exception {

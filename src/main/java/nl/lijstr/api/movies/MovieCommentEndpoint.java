@@ -58,7 +58,7 @@ public class MovieCommentEndpoint extends AbsMovieService {
      */
     @Transactional
     @RequestMapping(value = "/{commentId:\\d+}", method = RequestMethod.PUT)
-    public Map update(@PathVariable() Long movieId, @PathVariable() long commentId, @RequestParam() String newComment) {
+    public Map edit(@PathVariable() Long movieId, @PathVariable() long commentId, @RequestParam() String newComment) {
         //Find the comment
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);

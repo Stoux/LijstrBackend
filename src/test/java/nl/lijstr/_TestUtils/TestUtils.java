@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import nl.lijstr.common.Container;
 import nl.lijstr.common.Utils;
+import nl.lijstr.security.model.JwtUser;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.apache.logging.log4j.Logger;
@@ -81,7 +82,7 @@ public class TestUtils {
         String fieldName = StringUtils.uncapitalize(splitMockedName[0]);
 
         Class targetClass = object.getClass();
-        while(targetClass != null) {
+        while (targetClass != null) {
             try {
                 Field field = targetClass.getDeclaredField(fieldName);
                 ReflectionTestUtils.setField(object, field.getName(), mock);
@@ -216,6 +217,19 @@ public class TestUtils {
         Call<X> mockedCall = mock(Call.class);
         doReturn(mockedResponse).when(mockedCall).execute();
         return mockedCall;
+    }
+
+    /**
+     * Create a {@link JwtUser} with a certain ID.
+     *
+     * @param id The ID
+     *
+     * @return the user
+     */
+    public static JwtUser createUser(long id) {
+        JwtUser user = new JwtUser();
+        ReflectionTestUtils.setField(user, "id", id);
+        return user;
     }
 
 }
