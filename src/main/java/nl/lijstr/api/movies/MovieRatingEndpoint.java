@@ -88,7 +88,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
         //Find the rating
         MovieRating latestRating = findRatingByUser(movie.getLatestMovieRatings(), user.getId());
         if (latestRating == null || !latestRating.getId().equals(ratingId) || !isRecent(latestRating)) {
-            throw new ConflictException("Unable to find rating (either old or not yours)");
+            throw new ConflictException("Unable to find rating (either non existent, old or not yours)");
         }
 
         //Update the rating
