@@ -15,7 +15,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by Stoux on 28/01/2016.
+ * Tests for {@link RetrofitProcessor}.
+ * TODO: Add tests for new cases (involves Retrofit {@link okhttp3.Interceptor})
  */
 public class RetrofitProcessorTest {
 
