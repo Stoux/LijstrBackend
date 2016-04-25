@@ -60,7 +60,7 @@ public class PasswordResetEndpoint extends AbsService {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public void resetPassword(@Valid @RequestBody NewPasswordRequest newPassword) {
-        passwordBean.resetPassword(newPassword.getResetToken(), newPassword.getResetToken());
+        passwordBean.resetPassword(newPassword.getResetToken(), newPassword.getNewPassword());
     }
 
 }
