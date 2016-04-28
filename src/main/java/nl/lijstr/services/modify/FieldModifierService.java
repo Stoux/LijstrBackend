@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * A service that provides the ability to automatically modify fields based on annotations.
- * Used in conjunction with {@link FieldModifierService}.
+ * Used in conjunction with {@link ModelModifyService}.
  */
 @Service
 public class FieldModifierService {
