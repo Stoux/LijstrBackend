@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
  * The main LijstrBackendApplication class for starting the application.
  * This is the JAR method of starting.
  */
-@EnableCaching
 @EntityScan("nl.lijstr")
 @ComponentScan("nl.lijstr")
 @SpringBootApplication
