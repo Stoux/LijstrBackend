@@ -1,5 +1,7 @@
 package nl.lijstr.repositories.users;
 
+import java.util.List;
+import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicRepository;
 
@@ -38,5 +40,15 @@ public interface UserRepository extends BasicRepository<User> {
      * @return The user or null
      */
     User findByUsernameAndEmail(String username, String email);
+
+    /**
+     * Find all users that have a certain {@link Permission}.
+     *
+     * @param permissionName The name of the permission.
+     *
+     * @return the list of users
+     */
+    List<User> findByGrantedPermissionsPermissionName(String permissionName);
+
 
 }
