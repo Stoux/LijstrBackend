@@ -39,6 +39,9 @@ public class ApiMovie {
     private String runtime;
     private Technical technical;
 
+    @SerializedName("urlPoster")
+    private String posterUrl;
+
     //Random stuff
     private List<String> languages;
     @SerializedName("movieTrivia")

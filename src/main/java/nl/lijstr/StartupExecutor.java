@@ -1,10 +1,13 @@
 package nl.lijstr;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
+import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.users.PermissionRepository;
 import nl.lijstr.repositories.users.UserRepository;
@@ -15,12 +18,15 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 /**
  * Created by Stoux on 19/04/2016.
  */
 @Component
 public class StartupExecutor implements ApplicationListener<ContextRefreshedEvent> {
+
+    private static final String TEST_FILE = "test.txt";
 
     @InjectLogger
     private Logger logger;
@@ -34,6 +40,9 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     @Value("${admin.password}")
     private String adminPassword;
 
+    @Value("${server.image-location}")
+    private String imgFolderLocation;
+
     @Autowired
     private PermissionRepository permissionRepository;
 
@@ -41,6 +50,7 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     public void onApplicationEvent(ContextRefreshedEvent event) {
         addPermissions();
         addAdmin();
+        validateWritePermissions();
     }
 
     private void addPermissions() {
@@ -80,7 +90,52 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
 
         User admin = userRepository.saveAndFlush(user);
         logger.info("Added Admin account. ID: {}", admin.getId());
+    }
 
+    private void validateWritePermissions() {
+        logger.info("Validating image folder read/write permissions.");
+
+        //Check if the folder exists
+        File imgFolder = new File(imgFolderLocation);
+        if (!imgFolder.exists()) {
+            try {
+                if (!imgFolder.mkdirs()) throw new SecurityException("Self thrown: Unable to create folder.");
+            } catch (SecurityException e) {
+                logger.fatal("Unable to create image folder", e);
+                throw new LijstrException("Unable to create image folder");
+            }
+        }
+
+        if (!imgFolder.isDirectory()) {
+            logger.fatal("Path '{}' is not a valid directory.", imgFolderLocation);
+            throw new LijstrException("Unable to use image folder");
+        }
+
+        File testFile = new File(imgFolder, TEST_FILE);
+
+        //Delete test file if it still exists
+        logger.info("Deleting test file in case it still exists.");
+        deleteTestFile(testFile);
+
+        //Try to store a file
+        logger.info("Storing & deleting test file");
+        byte[] storeData = "Random test!".getBytes();
+        try {
+            FileCopyUtils.copy(storeData, testFile);
+        } catch (IOException e) {
+            logger.fatal("Failed to write test file: {}", e.getMessage(), e);
+            throw new LijstrException("Failed to write test file");
+        }
+
+        deleteTestFile(testFile);
+    }
+
+    private void deleteTestFile(File testFile) {
+        if (testFile.exists()) {
+            if (!testFile.delete()) {
+                throw new LijstrException("Failed to delete test file");
+            }
+        }
     }
 
 }

@@ -1,5 +1,8 @@
 package nl.lijstr.services.maf.handlers;
 
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,6 +23,7 @@ import nl.lijstr.domain.movies.people.MovieCharacter;
 import nl.lijstr.domain.movies.people.MovieDirector;
 import nl.lijstr.domain.movies.people.MovieWriter;
 import nl.lijstr.exceptions.LijstrException;
+import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
@@ -28,14 +32,20 @@ import nl.lijstr.services.maf.handlers.util.FieldModifyHandler;
 import nl.lijstr.services.maf.models.ApiActor;
 import nl.lijstr.services.maf.models.ApiMovie;
 import nl.lijstr.services.maf.models.ApiPerson;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 /**
  * Created by Stoux on 29/01/2016.
  */
 @Component
 public class MovieUpdateHandler {
+
+    @InjectLogger
+    private Logger logger;
 
     //Autowired repos
     @Autowired
@@ -48,6 +58,9 @@ public class MovieUpdateHandler {
 
     @Autowired
     private ImdbBean imdbBean;
+
+    @Value("${server.image-location}")
+    private String imgFolderLocation;
 
     /**
      * Update a movie using the data from an API.
@@ -117,7 +130,9 @@ public class MovieUpdateHandler {
         handler.modify("ageRating");
 
         //TODO: Runtimes
-        //TODO: Poster
+
+        //Fetch poster
+        updatePoster(movie, apiMovie);
 
         //Update last updated
         movie.setLastUpdated(LocalDateTime.now());
@@ -215,6 +230,38 @@ public class MovieUpdateHandler {
 
         //Delete old ones
         itemMap.values().forEach(currentItems::remove);
+    }
+
+    private void updatePoster(Movie movie, ApiMovie apiMovie) {
+        if (apiMovie.getPosterUrl().isEmpty()) {
+            movie.setPoster(false);
+            return;
+        }
+
+        try {
+            //Open the file as Input stream
+            URL posterUrl = new URL(apiMovie.getPosterUrl());
+            InputStream posterStream = posterUrl.openStream();
+
+            //Copy the file to the location
+            File imageFile = new File(imgFolderLocation + movie.getId() + ".jpg");
+            OutputStream fileStream = new FileOutputStream(imageFile);
+            FileCopyUtils.copy(posterStream, fileStream);
+
+            logger.debug(
+                    "[{}] Updated poster | Copied '{}' -> '{}'",
+                    movie.getImdbId(), apiMovie.getPosterUrl(), imageFile.getAbsolutePath()
+            );
+
+            movie.setPoster(true);
+            return;
+        } catch (MalformedURLException e) {
+            logger.warn("Invalid Poster URL: {}", apiMovie.getPosterUrl(), e);
+        } catch (IOException e) {
+            logger.warn("Failed to copy poster: {}", e.getMessage(), e);
+        }
+
+        movie.setPoster(false);
     }
 
 
