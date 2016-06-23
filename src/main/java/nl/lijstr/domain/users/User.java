@@ -25,7 +25,6 @@ public class User extends IdCmModel {
 
     @NotModifiable
     @JsonIgnore
-    @NotNull
     private String hashedPassword;
 
     private String displayName;

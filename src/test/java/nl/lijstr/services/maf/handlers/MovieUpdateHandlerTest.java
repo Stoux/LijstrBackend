@@ -20,6 +20,7 @@ import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
 import nl.lijstr.services.maf.models.ApiMovie;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,11 +52,13 @@ public class MovieUpdateHandlerTest {
     private MovieRepository movieMock;
     @Mock
     private ImdbBean imdbMock;
+    private Logger loggerMock;
 
     @Before
     public void setUp() throws Exception {
         updateHandler = new MovieUpdateHandler();
         insertMocks(updateHandler, historyMock, suggestionMock, movieMock, imdbMock);
+        loggerMock = mockLogger(updateHandler);
     }
 
     @Test
@@ -108,7 +111,7 @@ public class MovieUpdateHandlerTest {
         assertEquals(Integer.valueOf(2015), movie.getYear());
         assertEquals(LocalDate.of(2015, 10, 2), movie.getReleased());
         //TODO: Runtimes
-        //TODO: Poster
+        assertFalse(movie.isPoster());
         assertEquals(Double.valueOf(8.1), movie.getImdbRating());
         assertEquals(Integer.valueOf(80), movie.getMetacriticScore());
         assertEquals("PG-13", movie.getAgeRating());

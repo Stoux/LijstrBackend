@@ -82,7 +82,7 @@ public class UserEndpoint extends AbsService {
         Set<String> allPermissions = Arrays.stream(Permission.list()).collect(Collectors.toSet());
         for (String givenPermission : permissionList.getPermissions()) {
             if (!allPermissions.contains(givenPermission)) {
-                throw new BadRequestException("Invalid permmission: " + givenPermission);
+                throw new BadRequestException("Invalid permission: " + givenPermission);
             }
         }
 
