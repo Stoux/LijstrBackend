@@ -92,6 +92,7 @@ public class UserEndpoint extends AbsService {
         Utils.updateList(
                 permissions, permissionList.getPermissions(), GrantedPermission::getAuthority,
                 permission -> new GrantedPermission(
+                        user,
                         permissionRepository.findByName(permission)
                 )
         );
