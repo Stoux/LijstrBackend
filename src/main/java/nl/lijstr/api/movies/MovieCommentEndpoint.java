@@ -2,7 +2,9 @@ package nl.lijstr.api.movies;
 
 import java.util.Map;
 import java.util.Optional;
+
 import nl.lijstr.api.abs.AbsMovieService;
+import nl.lijstr.api.movies.models.post.PostedMovieComment;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieComment;
@@ -16,6 +18,8 @@ import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Created by Stoux on 17/04/2016.
@@ -33,16 +37,16 @@ public class MovieCommentEndpoint extends AbsMovieService {
     /**
      * Add a new comment.
      *
-     * @param movieId The ID of the movie
-     * @param comment The new comment
-     *
+     * @param movieId       The ID of the movie
+     * @param postedComment The new comment
      * @return map with comment info
      */
     @RequestMapping(method = RequestMethod.POST)
-    public Map add(@PathVariable() Long movieId, @RequestParam() String comment) {
+    public Map add(@PathVariable() Long movieId,
+                   @Valid @RequestBody PostedMovieComment postedComment) {
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
-        MovieComment movieComment = new MovieComment(movie, new User(user.getId()), comment);
+        MovieComment movieComment = new MovieComment(movie, new User(user.getId()), postedComment.getComment());
         MovieComment updatedComment = commentRepository.saveAndFlush(movieComment);
         return commentMap(updatedComment);
     }
@@ -50,15 +54,16 @@ public class MovieCommentEndpoint extends AbsMovieService {
     /**
      * Update a comment.
      *
-     * @param movieId    The ID of the movie
-     * @param commentId  The ID of the comment
-     * @param newComment The updated comment
-     *
+     * @param movieId       The ID of the movie
+     * @param commentId     The ID of the comment
+     * @param postedComment The updated comment
      * @return map with comment info
      */
     @Transactional
     @RequestMapping(value = "/{commentId:\\d+}", method = RequestMethod.PUT)
-    public Map edit(@PathVariable() Long movieId, @PathVariable() long commentId, @RequestParam() String newComment) {
+    public Map edit(@PathVariable() Long movieId,
+                    @PathVariable() long commentId,
+                    @Valid @RequestBody PostedMovieComment postedComment) {
         //Find the comment
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
@@ -78,7 +83,7 @@ public class MovieCommentEndpoint extends AbsMovieService {
 
         //Update the comment
         String oldComment = comment.getComment();
-        comment.setComment(newComment);
+        comment.setComment(postedComment.getComment());
         MovieComment updatedComment = commentRepository.saveAndFlush(comment);
 
         //=> Keep history

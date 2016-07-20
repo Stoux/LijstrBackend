@@ -3,6 +3,8 @@ package nl.lijstr.api.movies;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+
+import nl.lijstr.api.movies.models.post.PostedMovieComment;
 import nl.lijstr.beans.UserBean;
 import nl.lijstr.common.Container;
 import nl.lijstr.domain.movies.Movie;
@@ -66,7 +68,7 @@ public class MovieCommentEndpointTest {
         });
 
         //Act
-        Map commentMap = endpoint.add(1L, comment);
+        Map commentMap = endpoint.add(1L, new PostedMovieComment(comment));
 
         //Assert
         assertTrue(catchContainer.isPresent());
@@ -108,7 +110,7 @@ public class MovieCommentEndpointTest {
         });
 
         //Act
-        Map commentMap = endpoint.edit(movieId, commentId, newComment);
+        Map commentMap = endpoint.edit(movieId, commentId, new PostedMovieComment(newComment));
 
         //Assert
         assertTrue(commentContainer.isPresent());
