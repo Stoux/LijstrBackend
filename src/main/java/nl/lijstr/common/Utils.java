@@ -3,11 +3,10 @@ package nl.lijstr.common;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+import java.util.function.Supplier;
+
 import nl.lijstr.exceptions.LijstrException;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -52,7 +51,7 @@ public final class Utils {
     }
 
     /**
-     * Convert a List of items to a Map.
+     * Convert a {@link Collection} of items to a {@link Map}.
      *
      * @param items               The items
      * @param itemToKeyFunction   A function to get the key from an item
@@ -72,6 +71,26 @@ public final class Utils {
                 itemToValueFunction.apply(i)
         ));
         return map;
+    }
+
+    /**
+     * Create a {@link Set} from any other collection.
+     *
+     * @param itemCollection The collection of original items
+     * @param itemToItemFunction The convert function
+     * @param <X> The new item class
+     * @param <Y> The original item class
+     *
+     * @return A {@link Set} with X items
+     */
+    public static <X, Y> Set<X> toSet(Collection<Y> itemCollection, Function<Y, X> itemToItemFunction) {
+        Set<X> collection = new HashSet<>();
+        if (itemCollection != null) {
+            for (Y item : itemCollection) {
+                collection.add(itemToItemFunction.apply(item));
+            }
+        }
+        return collection;
     }
 
     /**

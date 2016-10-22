@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsRestService;
+import nl.lijstr.api.abs.AbsService;
+import nl.lijstr.api.movies.models.MovieDetail;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.api.movies.models.post.PostedMovieRequest;
 import nl.lijstr.domain.movies.Movie;
@@ -28,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(value = "/movies", produces = "application/json")
-public class MovieEndpoint extends AbsRestService<Movie> {
+public class MovieEndpoint extends AbsService {
 
     @Autowired
     private MafApiService apiService;
@@ -42,15 +44,27 @@ public class MovieEndpoint extends AbsRestService<Movie> {
     private OmdbApiService omdbApiService;
 
     /**
-     * Create a new MovieEndpoint.
+     * Get a {@link Movie} as detail view.
+     *
+     * @param id The ID of the movie
+     * @return the movie detail
      */
-    public MovieEndpoint() {
-        super("Movie");
+    @RequestMapping("/{id}")
+    public MovieDetail getById(@PathVariable("id") final long id) {
+        Movie movie = findOne(movieRepository, id, "movie");
+        return MovieDetail.fromMovie(movie);
     }
 
-    @Override
-    protected BasicRepository<Movie> getRestRepository() {
-        return movieRepository;
+    /**
+     * Get the original {@link Movie}.
+     *
+     * @param id The ID of the movie
+     * @return the movie
+     */
+    @RequestMapping("/{id}/original")
+    public Movie getOriginalById(@PathVariable("id") final long id) {
+        checkPermission(getUser(), Permission.MOVIE_MOD);
+        return findOne(movieRepository, id, "movie");
     }
 
     /**

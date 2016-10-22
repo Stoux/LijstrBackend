@@ -1,6 +1,9 @@
 package nl.lijstr.api.errors;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.processors.annotations.InjectLogger;
 import org.apache.logging.log4j.Logger;
@@ -55,7 +58,7 @@ public class AppErrorController implements ErrorController {
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (statusCode != null) {
             try {
                 return HttpStatus.valueOf(statusCode);
