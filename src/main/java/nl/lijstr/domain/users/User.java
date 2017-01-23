@@ -56,7 +56,6 @@ public class User extends IdCmModel {
     @OneToMany(mappedBy = "user")
     private List<PasswordReset> passwordResets;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GrantedPermission> grantedPermissions;
 

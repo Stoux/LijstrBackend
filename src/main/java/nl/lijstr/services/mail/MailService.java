@@ -92,7 +92,7 @@ public class MailService {
 
         //Get random GIF
         List<MemeImage> memeImages = memeImageRepository.findRandomForApproved(user.getApprovedFor());
-        MemeImage memeImage = memeImages.get(0);
+        MemeImage memeImage = memeImages.get(0); //TODO: What if there's no image?
 
         //Create the template
         return templateMail

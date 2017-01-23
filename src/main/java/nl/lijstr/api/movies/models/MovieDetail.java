@@ -49,8 +49,8 @@ public class MovieDetail {
 
     private Long addedBy;
 
-    private Set<Long> genres;
-    private Set<Long> languages;
+    private List<Genre> genres;
+    private List<SpokenLanguage> languages;
 
     private List<MovieRating> latestMovieRatings;
 
@@ -77,8 +77,8 @@ public class MovieDetail {
                 .ageRating(movie.getAgeRating())
                 .hasPoster(movie.isPoster())
                 .youtubeUrl(movie.getYoutubeUrl())
-                .genres(Utils.toSet(movie.getGenres(), Genre::getId))
-                .languages(Utils.toSet(movie.getLanguages(), SpokenLanguage::getId));
+                .genres(movie.getGenres())
+                .languages(movie.getLanguages());
 
         if (movie.getAddedBy() != null) {
             builder.addedBy(movie.getAddedBy().getId());
