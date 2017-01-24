@@ -150,14 +150,4 @@ public class MovieEndpointTest {
         return movie;
     }
 
-    @Test
-    public void repositoryTest() {
-        //Act
-        Object repository = ReflectionTestUtils.invokeMethod(movieEndpoint, "getRestRepository");
-
-        //Assert
-        assertNotNull(repository);
-        assertEquals(movieRepository, repository);
-    }
-
 }

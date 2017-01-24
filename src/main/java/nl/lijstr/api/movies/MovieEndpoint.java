@@ -1,9 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
-import nl.lijstr.api.abs.AbsRestService;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieDetail;
 import nl.lijstr.api.movies.models.MovieSummary;
@@ -13,7 +9,6 @@ import nl.lijstr.domain.movies.MovieRequest;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
-import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.movies.MovieRequestRepository;
 import nl.lijstr.security.model.JwtUser;
@@ -24,6 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The Movies Endpoint.
@@ -73,7 +72,6 @@ public class MovieEndpoint extends AbsService {
      * @param includeGenres    Should include genres
      * @param includeLanguages Should include languages
      * @param includeAgeRating Should include age rating
-     *
      * @return the list
      */
     @RequestMapping
