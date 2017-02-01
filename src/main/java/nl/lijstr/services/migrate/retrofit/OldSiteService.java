@@ -22,7 +22,7 @@ public interface OldSiteService {
      * @return list of movies
      */
     @GET("/film/json/list.php")
-    Call<List<OldMovie>> listMovies();
+    Call<Map<Long, OldMovie>> listMovies();
 
     /**
      * Get the old ratings for a certain movie.

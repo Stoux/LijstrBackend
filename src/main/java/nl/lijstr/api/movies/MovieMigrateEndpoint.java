@@ -1,4 +1,4 @@
-package nl.lijstr.api.movies.models;
+package nl.lijstr.api.movies;
 
 import java.util.Map;
 import nl.lijstr.api.abs.AbsService;

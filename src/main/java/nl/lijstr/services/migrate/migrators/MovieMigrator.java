@@ -121,10 +121,10 @@ public class MovieMigrator implements OldSiteMigrator {
 
 
     private Map<String, OldMovie> getOldMovieMap() {
-        Call<List<OldMovie>> listCall = oldSiteService.listMovies();
-        List<OldMovie> movies = Utils.executeCall(listCall);
+        Call<Map<Long, OldMovie>> listCall = oldSiteService.listMovies();
+        Map<Long, OldMovie> movies = Utils.executeCall(listCall);
         Map<String, OldMovie> map = new HashMap<>();
-        for (OldMovie movie : movies) {
+        for (OldMovie movie : movies.values()) {
             String id = getImdbId(movie.getImdbLink());
             map.put(id, movie);
         }
