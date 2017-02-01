@@ -3,7 +3,9 @@ package nl.lijstr.services.migrate.migrators;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import nl.lijstr.common.Container;
+import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.services.maf.MafApiService;
@@ -166,8 +168,8 @@ public class MovieMigratorTest {
     }
 
     private void whenGetOldMovies(OldMovie... movies) {
-        List<OldMovie> movieList = Arrays.asList(movies);
-        when(oldSiteService.listMovies()).thenAnswer(i -> successCall(movieList));
+        Map<Long, OldMovie> movieMap = Utils.toMap(Arrays.asList(movies), OldMovie::getId);
+        when(oldSiteService.listMovies()).thenAnswer(i -> successCall(movieMap));
     }
 
 }
