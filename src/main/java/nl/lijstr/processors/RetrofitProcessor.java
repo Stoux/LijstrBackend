@@ -8,6 +8,7 @@ import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.retrofit.RetrofitService;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
+import nl.lijstr.services.retrofit.models.TimeoutTimings;
 import okhttp3.Interceptor;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +62,16 @@ public class RetrofitProcessor extends AbsBeanProcessor<InjectRetrofitService> {
             }
         }
 
+        TimeoutTimings timings = new TimeoutTimings(
+                serviceAnnotation.connectTimeout(), serviceAnnotation.readTimeout(), serviceAnnotation.writeTimeout()
+        );
+
         if (interceptor == null) {
-            return retrofitService.createRetrofitService(serviceAnnotation.value(), field.getType());
+            return retrofitService.createRetrofitService(serviceAnnotation.value(), field.getType(), timings);
         } else {
-            return retrofitService.createRetrofitService(serviceAnnotation.value(), field.getType(), interceptor);
+            return retrofitService.createRetrofitService(
+                    serviceAnnotation.value(), field.getType(), timings, interceptor
+            );
         }
     }
 

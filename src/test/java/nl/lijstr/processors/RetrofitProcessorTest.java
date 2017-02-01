@@ -30,7 +30,7 @@ public class RetrofitProcessorTest {
         createdServices = new ArrayList<>();
 
         mockedRetrofitService = mock(RetrofitService.class);
-        when(mockedRetrofitService.createRetrofitService(anyString(), any())).thenAnswer(this::createRetrofitService);
+        when(mockedRetrofitService.createRetrofitService(anyString(), any(), any())).thenAnswer(this::createRetrofitService);
 
         retrofitProcessor = new RetrofitProcessor();
         insertMocks(retrofitProcessor, mockedRetrofitService);
@@ -113,7 +113,7 @@ public class RetrofitProcessorTest {
         //Assert
         assertEquals(bean, resultingBean);
         assertEquals(expectedListSize, createdServices.size());
-        verify(mockedRetrofitService, times(expectedListSize)).createRetrofitService(anyString(), any());
+        verify(mockedRetrofitService, times(expectedListSize)).createRetrofitService(anyString(), any(), any());
     }
 
 

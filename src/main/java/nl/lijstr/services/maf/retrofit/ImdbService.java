@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 /**
  * Created by Stoux on 28/01/2016.
  */
-@RetrofitServiceAnnotation(RetrofitEndpoints.MY_API_FILMS)
+@RetrofitServiceAnnotation(value = RetrofitEndpoints.MY_API_FILMS, readTimeout = 120)
 public interface ImdbService {
 
     /**

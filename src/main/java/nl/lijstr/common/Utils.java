@@ -135,7 +135,7 @@ public final class Utils {
             Response<X> response = call.execute();
             return response.body();
         } catch (IOException e) {
-            throw new LijstrException("Failed to execute call.", e);
+            throw new LijstrException("Failed to execute call: " + e.getMessage(), e);
         }
     }
 

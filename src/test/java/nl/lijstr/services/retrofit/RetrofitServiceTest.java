@@ -1,6 +1,7 @@
 package nl.lijstr.services.retrofit;
 
 import java.util.Map;
+import nl.lijstr.services.retrofit.models.TimeoutTimings;
 import org.junit.Before;
 import org.junit.Test;
 import retrofit2.Call;
@@ -17,6 +18,7 @@ public class RetrofitServiceTest {
 
     public static final String ENDPOINT_1 = "http://example.com";
     public static final String ENDPOINT_2 = "http://www.example2.com";
+    public static final TimeoutTimings TIMINGS = new TimeoutTimings(10, 10, 10);
     private RetrofitService retrofitService;
 
     //Mirror'd from RetrofitService
@@ -31,7 +33,7 @@ public class RetrofitServiceTest {
     @Test
     public void testCreate() throws Exception {
         //Act
-        TestEndpoint endpoint = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class);
+        TestEndpoint endpoint = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class, TIMINGS);
 
         //Assert
         assertNotNull(endpoint);
@@ -42,8 +44,8 @@ public class RetrofitServiceTest {
     @Test
     public void testCreateUseTwice() throws Exception {
         //Act
-        TestEndpoint xEndpoint = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class);
-        TestEndpoint yEndpoint = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class);
+        TestEndpoint xEndpoint = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class, TIMINGS);
+        TestEndpoint yEndpoint = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class, TIMINGS);
 
         //Assert
         assertNotNull(xEndpoint);
@@ -55,8 +57,8 @@ public class RetrofitServiceTest {
     @Test
     public void testCreateMultiple() throws Exception {
         //Act
-        TestEndpoint endpoint1 = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class);
-        TestEndpoint endpoint2 = retrofitService.createRetrofitService(ENDPOINT_2, TestEndpoint.class);
+        TestEndpoint endpoint1 = retrofitService.createRetrofitService(ENDPOINT_1, TestEndpoint.class, TIMINGS);
+        TestEndpoint endpoint2 = retrofitService.createRetrofitService(ENDPOINT_2, TestEndpoint.class, TIMINGS);
 
         //Assert
         assertNotNull(endpoint1);

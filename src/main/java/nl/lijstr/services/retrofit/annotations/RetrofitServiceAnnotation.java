@@ -34,4 +34,25 @@ public @interface RetrofitServiceAnnotation {
      */
     boolean springInjectInterceptor() default false;
 
+    /**
+     * The timeout for connecting to an endpoint.
+     *
+     * @return timeout in seconds
+     */
+    int connectTimeout() default 10;
+
+    /**
+     * The timeout for reading the response from an endpoint.
+     *
+     * @return timeout in seconds
+     */
+    int readTimeout() default 10;
+
+    /**
+     * The timeout for writing data to an endpoint.
+     *
+     * @return timeout in seconds
+     */
+    int writeTimeout() default 10;
+
 }

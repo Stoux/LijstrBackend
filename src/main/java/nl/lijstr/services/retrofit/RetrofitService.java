@@ -2,6 +2,8 @@ package nl.lijstr.services.retrofit;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import nl.lijstr.services.retrofit.models.TimeoutTimings;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -35,24 +37,25 @@ public class RetrofitService {
      *
      * @return the service
      */
-    public <X> X createRetrofitService(String endpoint, Class<X> xClass, Interceptor... interceptors) {
-        Retrofit retrofit = getRetrofitEndpoint(endpoint, interceptors);
+    public <X> X createRetrofitService(String endpoint, Class<X> xClass, TimeoutTimings timings,
+                                       Interceptor... interceptors) {
+        Retrofit retrofit = getRetrofitEndpoint(endpoint, timings, interceptors);
         return retrofit.create(xClass);
     }
 
-    private Retrofit getRetrofitEndpoint(String endpoint, Interceptor[] interceptors) {
+    private Retrofit getRetrofitEndpoint(String endpoint, TimeoutTimings timings, Interceptor[] interceptors) {
         //Check if cached
         if (endpointMap.containsKey(endpoint)) {
             return endpointMap.get(endpoint);
         }
 
         //Create it
-        Retrofit retrofit = createRetrofit(endpoint, interceptors);
+        Retrofit retrofit = createRetrofit(endpoint, timings, interceptors);
         endpointMap.put(endpoint, retrofit);
         return retrofit;
     }
 
-    private Retrofit createRetrofit(String endpoint, Interceptor[] interceptors) {
+    private Retrofit createRetrofit(String endpoint, TimeoutTimings timings, Interceptor[] interceptors) {
         //Create the OkHttpClient
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -63,6 +66,11 @@ public class RetrofitService {
             clientBuilder.addInterceptor(customInterceptor);
         }
         clientBuilder.addInterceptor(interceptor);
+
+        //Add timings
+        clientBuilder.connectTimeout((long) timings.getConnect(), TimeUnit.SECONDS)
+                .readTimeout((long) timings.getRead(), TimeUnit.SECONDS)
+                .writeTimeout((long) timings.getWrite(), TimeUnit.SECONDS);
 
         //Build the Retrofit instance
         return new Retrofit.Builder()
