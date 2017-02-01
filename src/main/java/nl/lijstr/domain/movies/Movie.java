@@ -67,6 +67,8 @@ public class Movie extends IdCmModel {
     @ManyToOne
     private User addedBy;
 
+    private Long oldSiteId;
+
     //Relations | Details
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Genre> genres;
@@ -107,6 +109,20 @@ public class Movie extends IdCmModel {
      */
     public Movie(String imdbId) {
         this.imdbId = imdbId;
+    }
+
+    /**
+     * Create a new Movie by it's IMDB ID.
+     * This movie is transferred from the old website.
+     *
+     * @param imdbId    The IMDB ID
+     * @param title     The title on the old site
+     * @param oldSiteId The ID on the old site.
+     */
+    public Movie(String imdbId, String title, Long oldSiteId) {
+        this.imdbId = imdbId;
+        this.title = title;
+        this.oldSiteId = oldSiteId;
     }
 
     /**

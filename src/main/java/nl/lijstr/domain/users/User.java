@@ -43,6 +43,9 @@ public class User extends IdCmModel {
     @Enumerated(EnumType.ORDINAL)
     private ApprovedFor approvedFor;
 
+    @Column
+    private String oldSiteUser;
+
     //Relations
     @JsonIgnore
     @OneToMany(mappedBy = "user")
