@@ -93,7 +93,7 @@ public class MovieMigrator implements OldSiteMigrator {
                     imdbId,
                     oldMovie.getId()
             );
-            return new Movie(imdbId, oldMovie.getTitle(), oldMovie.getId());
+            return new Movie(imdbId, oldMovie.getTitle(), oldMovie.getYear(), oldMovie.getId());
         }
     }
 

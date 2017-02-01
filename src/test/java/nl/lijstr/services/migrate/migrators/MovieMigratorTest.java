@@ -64,7 +64,7 @@ public class MovieMigratorTest {
     @Test
     public void migrateExisting() throws Exception {
         //Arrange
-        Movie movie = new Movie("tt0000001", "Title", 10L);
+        Movie movie = new Movie("tt0000001", "Title", 1994, 10L);
         movie.setId(1L);
         OldMovie oldMovie = new OldMovie(10L, "Title X", IMDB_LINK);
 
@@ -87,7 +87,7 @@ public class MovieMigratorTest {
     @Test
     public void migrateExistingWithoutId() throws Exception {
         //Arrange
-        Movie movie = new Movie("tt0000001", "Title", 0L);
+        Movie movie = new Movie("tt0000001", "Title", 1994, 0L);
         movie.setId(1L);
         OldMovie oldMovie = new OldMovie(10L, "Title X", IMDB_LINK);
         assertNotEquals(movie.getOldSiteId(), oldMovie.getId());

@@ -18,6 +18,8 @@ public class OldMovie {
     private Long id;
     @SerializedName("FilmTitel")
     private String title;
+    @SerializedName("FilmJaar")
+    private Integer year;
     @SerializedName("FilmIMDBLink")
     private String imdbLink;
     @SerializedName("TrailerLink")

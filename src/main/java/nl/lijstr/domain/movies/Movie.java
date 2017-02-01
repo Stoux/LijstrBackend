@@ -113,20 +113,6 @@ public class Movie extends IdCmModel {
 
     /**
      * Create a new Movie by it's IMDB ID.
-     * This movie is transferred from the old website.
-     *
-     * @param imdbId    The IMDB ID
-     * @param title     The title on the old site
-     * @param oldSiteId The ID on the old site.
-     */
-    public Movie(String imdbId, String title, Long oldSiteId) {
-        this.imdbId = imdbId;
-        this.title = title;
-        this.oldSiteId = oldSiteId;
-    }
-
-    /**
-     * Create a new Movie by it's IMDB ID.
      *
      * @param imdbId     The ID
      * @param youtubeUrl The YouTube trailer URL
@@ -147,6 +133,22 @@ public class Movie extends IdCmModel {
         this.latestMovieRatings = new ArrayList<>();
         this.movieRatings = new ArrayList<>();
         this.movieUserMetaList = new ArrayList<>();
+    }
+
+    /**
+     * Create a new Movie by it's IMDB ID.
+     * This movie is transferred from the old website.
+     *
+     * @param imdbId    The IMDB ID
+     * @param title     The title on the old site
+     * @param oldSiteId The ID on the old site.
+     */
+    public Movie(String imdbId, String title, Integer year, Long oldSiteId) {
+        this(imdbId, null, null);
+        this.imdbId = imdbId;
+        this.title = title;
+        this.year = year;
+        this.oldSiteId = oldSiteId;
     }
 
 }
