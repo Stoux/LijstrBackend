@@ -71,7 +71,7 @@ public class TestUtils {
     public static void insertMocks(Object object, Object... mocks) throws Exception {
         for (Object mock : mocks) {
             if (!insertMockByFieldName(object, mock) && !insertMockByFieldType(object, mock)) {
-                fail();
+                fail("Unable to insert mock: " + mock.getClass().getSimpleName());
             }
         }
     }

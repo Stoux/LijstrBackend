@@ -42,6 +42,18 @@ public class UserEndpoint extends AbsService {
     private PasswordEncoder passwordEncoder;
 
     /**
+     * Get all users.
+     *
+     * @return list of users
+     */
+    @Secured(Permission.ADMIN)
+    @RequestMapping()
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+
+    /**
      * Get the user details of a user.
      *
      * @param id The user's ID
