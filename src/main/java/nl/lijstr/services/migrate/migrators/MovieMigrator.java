@@ -111,7 +111,7 @@ public class MovieMigrator implements OldSiteMigrator {
 
         //Wait a bit before calling the one.
         try {
-            Thread.sleep(250);
+            Thread.sleep(750);
         } catch (InterruptedException e) {
             logger.warn("Failed to sleep. Shouldn't be called.");
         }
