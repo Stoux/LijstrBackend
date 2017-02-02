@@ -46,7 +46,7 @@ public class PasswordResetEndpoint extends AbsService {
                 passwordReset.getUser(),
                 new MailTemplate(
                         "You've triggered a password reset. Press the button to enter your new password.",
-                        "/passwordReset?token=" + passwordReset.getResetToken(),
+                        "/dashboard/reset-password?token=" + passwordReset.getResetToken(),
                         "Reset password"
                 ),
                 "password-reset"
