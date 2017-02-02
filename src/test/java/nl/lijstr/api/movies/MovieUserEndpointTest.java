@@ -3,6 +3,7 @@ package nl.lijstr.api.movies;
 import java.util.ArrayList;
 import java.util.List;
 import nl.lijstr._TestUtils.TestUtils;
+import nl.lijstr.api.users.models.UserSummary;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.users.UserRepository;
@@ -44,12 +45,11 @@ public class MovieUserEndpointTest {
         when(userRepository.findByGrantedPermissionsPermissionName(eq(permission))).thenReturn(users);
 
         //Act
-        List<User> foundUsers = endpoint.movieUsers();
+        List<UserSummary> foundUsers = endpoint.movieUsers();
 
         //Assert
         assertNotNull(foundUsers);
-        assertEquals(users, foundUsers);
-        assertEquals(user, foundUsers.get(0));
+        assertEquals(user.getId(), foundUsers.get(0).getId());
     }
 
 }

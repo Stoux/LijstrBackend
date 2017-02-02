@@ -63,7 +63,7 @@ public class MovieEndpointTest {
         Movie movie1 = createEmptyMovie(1);
         Movie movie2 = createEmptyMovie(2);
         Movie movie3 = createEmptyMovie(3);
-        when(movieRepository.findAll()).thenReturn(Arrays.asList(movie1, movie2, movie3));
+        when(movieRepository.findAllByOrderByTitleAsc()).thenReturn(Arrays.asList(movie1, movie2, movie3));
 
         //Act
         List<MovieSummary> summaries = movieEndpoint.summaries(false, false, false);

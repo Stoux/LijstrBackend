@@ -1,7 +1,9 @@
 package nl.lijstr.api.movies;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import nl.lijstr.api.abs.AbsService;
+import nl.lijstr.api.users.models.UserSummary;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.users.UserRepository;
@@ -25,8 +27,10 @@ public class MovieUserEndpoint extends AbsService {
      * @return the users
      */
     @RequestMapping
-    public List<User> movieUsers() {
-        return userRepository.findByGrantedPermissionsPermissionName(Permission.MOVIE_USER);
+    public List<UserSummary> movieUsers() {
+        return userRepository.findByGrantedPermissionsPermissionName(Permission.MOVIE_USER).stream()
+                .map(UserSummary::convert)
+                .collect(Collectors.toList());
     }
 
 }
