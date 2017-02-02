@@ -27,6 +27,9 @@ public class MovieSummary {
     private String title;
     private int year;
 
+    private Double imdbRating;
+    private Integer metacriticScore;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String ageRating;
 
@@ -60,6 +63,8 @@ public class MovieSummary {
                 .imdbId(movie.getImdbId())
                 .title(movie.getTitle())
                 .year(movie.getYear())
+                .imdbRating(movie.getImdbRating())
+                .metacriticScore(movie.getMetacriticScore())
                 .latestRatings(shortRatings);
 
         if (includeAgeRating) {
