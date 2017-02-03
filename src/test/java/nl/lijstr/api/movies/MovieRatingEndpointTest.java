@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import nl.lijstr.api.movies.models.MovieExtendedRating;
 import nl.lijstr.api.movies.models.MovieShortRating;
 import nl.lijstr.api.movies.models.post.MovieRatingRequest;
 import nl.lijstr.beans.UserBean;
@@ -56,15 +57,17 @@ public class MovieRatingEndpointTest {
         movie.setId(1L);
         JwtUser jwtUser = createUser(1L);
         MovieRatingRequest newRating = new MovieRatingRequest(MovieRating.Seen.UNKNOWN, new BigDecimal("9.1"), null);
+        long ratingId = 10L;
 
         when(userBean.getJwtUser()).thenReturn(jwtUser);
         when(movieRepository.findOne(anyLong())).thenReturn(movie);
-        when(movieRatingRepository.saveAndFlush(any())).thenAnswer(invocation -> getInvocationParam(invocation, 0));
+        whenRatingSaveReturnWithId(ratingId);
 
         //Act
-        MovieShortRating added = endpoint.add(1L, newRating);
+        MovieExtendedRating added = endpoint.add(1L, newRating);
 
         //Assert
+        assertEquals(ratingId, added.getId());
         assertEquals(newRating.getRating(), added.getRating());
         assertEquals(MovieRating.Seen.UNKNOWN.ordinal(), added.getSeen());
         assertNull(added.getComment());
@@ -79,7 +82,7 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(new ArrayList<>());
         MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
 
-        when(movieRatingRepository.saveAndFlush(any())).thenAnswer(invocation -> getInvocationParam(invocation, 0));
+        whenRatingSaveReturnWithId(1L);
 
         //Act
         MovieRating rating = ReflectionTestUtils.invokeMethod(endpoint, "addRating", user, movie, request);
@@ -109,7 +112,7 @@ public class MovieRatingEndpointTest {
             container.setItem(getInvocationParam(invocation, 0));
             return container.getItem();
         });
-        when(movieRatingRepository.saveAndFlush(any())).thenAnswer(invocation -> getInvocationParam(invocation, 0));
+        whenRatingSaveReturnWithId(1L);
 
         //Act
         MovieRating rating = ReflectionTestUtils.invokeMethod(endpoint, "addRating", user, movie, request);
@@ -161,8 +164,7 @@ public class MovieRatingEndpointTest {
 
         when(userBean.getJwtUser()).thenReturn(user);
         when(movieRepository.findOne(anyLong())).thenReturn(movie);
-        when(movieRatingRepository.saveAndFlush(any()))
-                .thenAnswer(invocation -> getInvocationParam(invocation, 0));
+        whenRatingSaveReturnWithId(1L);
 
         //Act
         MovieShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null));
@@ -207,6 +209,14 @@ public class MovieRatingEndpointTest {
 
         //Assert
         fail(failMessage);
+    }
+
+    private void whenRatingSaveReturnWithId(final long id) {
+        when(movieRatingRepository.saveAndFlush(any())).thenAnswer(invocation -> {
+            MovieRating rating = getInvocationParam(invocation, 0);
+            rating.setId(id);
+            return rating;
+        });
     }
 
 

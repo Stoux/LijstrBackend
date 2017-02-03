@@ -14,7 +14,6 @@ import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.db.ConflictException;
 import nl.lijstr.repositories.movies.MovieRatingRepository;
-import nl.lijstr.repositories.users.UserRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,24 +33,20 @@ public class MovieRatingEndpoint extends AbsMovieService {
     public static final long RECENT_MINUTES = 30L;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private MovieRatingRepository ratingRepository;
 
     /**
      * Get the latest rating a user has given on a movie.
      *
      * @param movieId The movie ID
-     * @param userId  The user's ID
      *
      * @return a container containing the rating or null (if the user hasn't given a rating)
      */
-    @RequestMapping(path = "/latest/{userId:\\d+}")
-    public DataContainer<MovieExtendedRating> getLatestRatingForUser(@PathVariable Long movieId, @PathVariable Long userId) {
+    @RequestMapping(path = "/latest/")
+    public DataContainer<MovieExtendedRating> getLatestRatingForUser(@PathVariable Long movieId) {
         Movie movie = findMovie(movieId);
-        User user = findOne(userRepository, userId, "User");
-        MovieRating rating = ratingRepository.findByMovieAndUserAndLatest(movie, user, true);
+        JwtUser user = getUser();
+        MovieRating rating = ratingRepository.findByMovieAndUserAndLatest(movie, new User(user.getId()), true);
         return new DataContainer<>(rating == null ? null : new MovieExtendedRating(rating));
     }
 
@@ -64,11 +59,11 @@ public class MovieRatingEndpoint extends AbsMovieService {
      * @return a short version of the rating
      */
     @RequestMapping(method = RequestMethod.POST)
-    public MovieShortRating add(@PathVariable Long movieId, @Valid @RequestBody MovieRatingRequest newRating) {
+    public MovieExtendedRating add(@PathVariable Long movieId, @Valid @RequestBody MovieRatingRequest newRating) {
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
         MovieRating addedRating = addRating(user, movie, newRating);
-        return new MovieShortRating(addedRating);
+        return new MovieExtendedRating(addedRating);
     }
 
     @Transactional
@@ -102,7 +97,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
      * @return the updated rating
      */
     @RequestMapping(value = "/{ratingId:\\d+}", method = RequestMethod.PUT)
-    public MovieShortRating edit(@PathVariable Long movieId, @PathVariable Long ratingId,
+    public MovieExtendedRating edit(@PathVariable Long movieId, @PathVariable Long ratingId,
                                  @Valid @RequestBody MovieRatingRequest newRating) {
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
@@ -119,7 +114,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
         latestRating.setComment(newRating.getComment());
         MovieRating updatedRating = ratingRepository.saveAndFlush(latestRating);
 
-        return new MovieShortRating(updatedRating);
+        return new MovieExtendedRating(updatedRating);
     }
 
     private MovieRating findRatingByUser(List<MovieRating> ratings, Long userId) {

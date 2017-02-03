@@ -11,7 +11,6 @@ import nl.lijstr.domain.movies.MovieRating;
 public class MovieExtendedRating extends MovieShortRating {
 
     private long id;
-    private long movie;
 
     private LocalDateTime lastModified;
     private LocalDateTime created;
@@ -24,7 +23,6 @@ public class MovieExtendedRating extends MovieShortRating {
     public MovieExtendedRating(MovieRating movieRating) {
         super(movieRating);
         this.id = movieRating.getId();
-        this.movie = movieRating.getMovie().getId();
 
         this.lastModified = movieRating.getLastModified();
         this.created = movieRating.getCreated();
