@@ -1,0 +1,32 @@
+package nl.lijstr.api.movies.models;
+
+import java.time.LocalDateTime;
+import lombok.Getter;
+import nl.lijstr.domain.movies.MovieRating;
+
+/**
+ * A representable version of a {@link MovieRating}.
+ */
+@Getter
+public class MovieExtendedRating extends MovieShortRating {
+
+    private long id;
+    private long movie;
+
+    private LocalDateTime lastModified;
+    private LocalDateTime created;
+
+    /**
+     * Create a representable version of a {@link MovieRating}.
+     *
+     * @param movieRating The original movie rating
+     */
+    public MovieExtendedRating(MovieRating movieRating) {
+        super(movieRating);
+        this.id = movieRating.getId();
+        this.movie = movieRating.getMovie().getId();
+
+        this.lastModified = movieRating.getLastModified();
+        this.created = movieRating.getCreated();
+    }
+}

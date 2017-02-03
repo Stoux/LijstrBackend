@@ -1,5 +1,6 @@
 package nl.lijstr.domain.movies;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,21 +55,9 @@ public class MovieRating extends IdCmUserMovieModel {
         NO,
         UNKNOWN;
 
-        /**
-         * Parse a {@link Boolean} into a {@link Seen} value.
-         *
-         * @param val The boolean
-         *
-         * @return the seen value
-         */
-        public static Seen fromBoolean(Boolean val) {
-            if (Boolean.TRUE.equals(val)) {
-                return YES;
-            } else if (Boolean.FALSE.equals(val)) {
-                return NO;
-            } else {
-                return UNKNOWN;
-            }
+        @JsonValue
+        public int toValue() {
+            return ordinal();
         }
 
     }

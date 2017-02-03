@@ -55,7 +55,7 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(new ArrayList<>());
         movie.setId(1L);
         JwtUser jwtUser = createUser(1L);
-        MovieRatingRequest newRating = new MovieRatingRequest(null, new BigDecimal("9.1"), null);
+        MovieRatingRequest newRating = new MovieRatingRequest(MovieRating.Seen.UNKNOWN, new BigDecimal("9.1"), null);
 
         when(userBean.getJwtUser()).thenReturn(jwtUser);
         when(movieRepository.findOne(anyLong())).thenReturn(movie);
@@ -77,7 +77,7 @@ public class MovieRatingEndpointTest {
         JwtUser user = createUser(1L);
         Movie movie = new Movie();
         movie.setLatestMovieRatings(new ArrayList<>());
-        MovieRatingRequest request = new MovieRatingRequest(true, new BigDecimal("9.1"), null);
+        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
 
         when(movieRatingRepository.saveAndFlush(any())).thenAnswer(invocation -> getInvocationParam(invocation, 0));
 
@@ -102,7 +102,7 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(Arrays.asList(
                 createRating(2, LocalDateTime.now().minusHours(1)), ownRating
         ));
-        MovieRatingRequest request = new MovieRatingRequest(true, new BigDecimal("9.1"), null);
+        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
 
         Container<MovieRating> container = new Container<>();
         when(movieRatingRepository.save(any(MovieRating.class))).thenAnswer(invocation -> {
@@ -165,7 +165,7 @@ public class MovieRatingEndpointTest {
                 .thenAnswer(invocation -> getInvocationParam(invocation, 0));
 
         //Act
-        MovieShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(true, new BigDecimal("9.1"), null));
+        MovieShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null));
 
         //Assert
         assertEquals(MovieRating.Seen.YES.ordinal(), rating.getSeen());

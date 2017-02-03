@@ -5,13 +5,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsMovieService;
+import nl.lijstr.api.movies.models.MovieExtendedRating;
 import nl.lijstr.api.movies.models.MovieShortRating;
 import nl.lijstr.api.movies.models.post.MovieRatingRequest;
+import nl.lijstr.common.DataContainer;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.db.ConflictException;
 import nl.lijstr.repositories.movies.MovieRatingRepository;
+import nl.lijstr.repositories.users.UserRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +34,26 @@ public class MovieRatingEndpoint extends AbsMovieService {
     public static final long RECENT_MINUTES = 30L;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private MovieRatingRepository ratingRepository;
+
+    /**
+     * Get the latest rating a user has given on a movie.
+     *
+     * @param movieId The movie ID
+     * @param userId  The user's ID
+     *
+     * @return a container containing the rating or null (if the user hasn't given a rating)
+     */
+    @RequestMapping(path = "/latest/{userId:\\d+}")
+    public DataContainer<MovieExtendedRating> getLatestRatingForUser(@PathVariable Long movieId, @PathVariable Long userId) {
+        Movie movie = findMovie(movieId);
+        User user = findOne(userRepository, userId, "User");
+        MovieRating rating = ratingRepository.findByMovieAndUserAndLatest(movie, user, true);
+        return new DataContainer<>(rating == null ? null : new MovieExtendedRating(rating));
+    }
 
     /**
      * Add a new rating.
@@ -63,7 +85,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
         }
 
         //Add the new rating
-        MovieRating.Seen seen = MovieRating.Seen.fromBoolean(newRating.getSeen());
+        MovieRating.Seen seen = newRating.getSeen();
         MovieRating rating = new MovieRating(
                 movie, new User(user.getId()), seen, newRating.getRating(), newRating.getComment()
         );
@@ -92,7 +114,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
         }
 
         //Update the rating
-        latestRating.setSeen(MovieRating.Seen.fromBoolean(newRating.getSeen()));
+        latestRating.setSeen(newRating.getSeen());
         latestRating.setRating(newRating.getRating());
         latestRating.setComment(newRating.getComment());
         MovieRating updatedRating = ratingRepository.saveAndFlush(latestRating);

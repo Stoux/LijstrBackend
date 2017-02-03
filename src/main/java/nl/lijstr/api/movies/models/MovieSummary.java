@@ -38,7 +38,7 @@ public class MovieSummary {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, String> languages;
 
-    private List<MovieShortRating> latestRatings;
+    private Map<Long, MovieShortRating> latestRatings;
 
     /**
      * Convert a Movie to a summarized version.
@@ -54,9 +54,9 @@ public class MovieSummary {
                                        boolean includeGenres,
                                        boolean includeLanguages,
                                        boolean includeAgeRating) {
-        List<MovieShortRating> shortRatings = movie.getLatestMovieRatings().stream()
+        Map<Long, MovieShortRating> shortRatings = movie.getLatestMovieRatings().stream()
                 .map(MovieShortRating::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(MovieShortRating::getUser, o -> o));
 
         MovieSummaryBuilder builder = MovieSummary.builder()
                 .id(movie.getId())
