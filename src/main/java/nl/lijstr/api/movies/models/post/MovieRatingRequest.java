@@ -17,10 +17,18 @@ public class MovieRatingRequest {
 
     private MovieRating.Seen seen;
 
+    @Getter(AccessLevel.NONE)
     @DecimalMin(value = "1.0", message = "A rating can't be less than 1")
     @DecimalMax(value = "10.0", message = "A rating can't be more than 10")
     private BigDecimal rating;
 
     private String comment;
 
+    public BigDecimal getRating() {
+        if (seen == MovieRating.Seen.YES) {
+            return rating;
+        } else {
+            return null;
+        }
+    }
 }

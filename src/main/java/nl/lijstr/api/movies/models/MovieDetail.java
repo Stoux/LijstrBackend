@@ -78,7 +78,8 @@ public class MovieDetail {
                 .hasPoster(movie.isPoster())
                 .youtubeUrl(movie.getYoutubeUrl())
                 .genres(movie.getGenres())
-                .languages(movie.getLanguages());
+                .languages(movie.getLanguages())
+                .latestMovieRatings(movie.getLatestMovieRatings());
 
         if (movie.getAddedBy() != null) {
             builder.addedBy(movie.getAddedBy().getId());
