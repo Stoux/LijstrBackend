@@ -23,7 +23,7 @@ public class MovieRating extends IdCmUserMovieModel {
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Seen seen;
-    @Column(precision = 2)
+    @Column(precision = 2, scale = 1)
     private BigDecimal rating;
     private String comment;
     @Column(nullable = false)
