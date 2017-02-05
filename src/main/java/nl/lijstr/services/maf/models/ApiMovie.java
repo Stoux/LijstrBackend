@@ -49,6 +49,8 @@ public class ApiMovie {
 
     private String type;
 
+    private List<ApiAka> akas;
+
     //External
     private List<ApiPerson> directors;
     private List<ApiPerson> writers;

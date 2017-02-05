@@ -15,10 +15,13 @@ import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.people.MovieCharacter;
+import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
+import nl.lijstr.services.maf.handlers.util.FieldModifyHandler;
+import nl.lijstr.services.maf.models.ApiAka;
 import nl.lijstr.services.maf.models.ApiMovie;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
@@ -27,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.util.ReflectionUtils;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;
@@ -107,7 +111,8 @@ public class MovieUpdateHandlerTest {
         //Assert - Movie details
         assertEquals(movie, updatedMovie);
         assertEquals("The Martian", movie.getTitle());
-        assertEquals("", movie.getOriginalTitle());
+        assertEquals("De Marsman", movie.getDutchTitle());
+        assertNull(movie.getOriginalTitle());
         assertEquals(Integer.valueOf(2015), movie.getYear());
         assertEquals(LocalDate.of(2015, 10, 2), movie.getReleased());
         //TODO: Runtimes
@@ -148,6 +153,46 @@ public class MovieUpdateHandlerTest {
 
         //Assert
         fail("Should have thrown a LijstrException as the IMDB IDs are not equal");
+    }
+
+    @Test
+    public void frenchTitleUpdate() {
+        //Arrange
+        Movie movie = createMovie("tt3659388");
+        ApiMovie apiMovie = loadApiMovie();
+
+        String originalTitle = apiMovie.getTitle();
+        String frenchTitle = "French is the worst";
+
+        movie.setOriginalTitle(originalTitle);
+        movie.setTitle(frenchTitle);
+
+        ApiAka french = new ApiAka();
+        ReflectionTestUtils.setField(french, "country", "France");
+        ReflectionTestUtils.setField(french, "title", frenchTitle);
+
+        apiMovie.getAkas().clear();
+        apiMovie.getAkas().add(french);
+
+        FieldModifyHandler fieldHandler = mock(FieldModifyHandler.class);
+        when(historyMock.saveAndFlush(any())).thenAnswer(i -> {
+            FieldHistory h = getInvocationParam(i, 0);
+            assertEquals(h.getClassName(), FieldHistory.getDatabaseClassName(Movie.class));
+            assertEquals(h.getObjectId(), movie.getId());
+            assertEquals(h.getOldValue(), frenchTitle);
+            assertEquals(h.getNewValue(), originalTitle);
+            return h;
+        });
+
+        //Act
+        ReflectionTestUtils.invokeMethod(
+                updateHandler, "updateTitles",
+                fieldHandler, movie, apiMovie
+        );
+
+        //Assert
+        verify(historyMock, times(1)).saveAndFlush(any());
+        assertEquals(originalTitle, movie.getTitle());
     }
 
     private Movie createMovie(String imdbId) {

@@ -344,5 +344,17 @@
     "Matt Damon's previous space-travel movie, Interstellar (2014) also features Matthew McConaughey. McConaughey appeared in a previous space-travel movie, Contact (1997). That film also featured Tom Skerritt and John Hurt, who previous appeared together in another space-travel movie, Alien (1979), directed by Ridley Scott."
   ],
   "votes": "398 101",
-  "type": "Movie"
+  "type": "Movie",
+  "akas": [
+    {
+      "country": "(original title)",
+      "title": "The Martian",
+      "comment": null
+    },
+    {
+      "country": "Netherlands",
+      "title": "De Marsman",
+      "comment": null
+    }
+  ]
 }

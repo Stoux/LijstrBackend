@@ -35,9 +35,8 @@ public class Movie extends IdCmModel {
     private String imdbId;
 
     private String title;
-    @JsonIgnore
-    @NotModifiable
     private String originalTitle;
+    private String dutchTitle;
 
     private Integer year;
     private LocalDate released;

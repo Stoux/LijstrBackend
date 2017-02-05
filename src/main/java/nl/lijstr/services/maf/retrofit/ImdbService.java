@@ -33,6 +33,7 @@ public interface ImdbService {
 
             @Query("format") String format,
             @Query("language") String language,
+            @Query("aka") int otherNames,
             @Query("technical") int technical,
             @Query("movieTrivia") int trivia,
 

@@ -1,5 +1,6 @@
 package nl.lijstr.api.movies.models;
 
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,7 +53,7 @@ public class MovieDetail {
     private List<Genre> genres;
     private List<SpokenLanguage> languages;
 
-    private List<MovieRating> latestMovieRatings;
+    private List<MovieShortRating> latestMovieRatings;
 
     /**
      * Convert a {@link Movie} to a {@link MovieDetail} object.
@@ -78,8 +79,15 @@ public class MovieDetail {
                 .hasPoster(movie.isPoster())
                 .youtubeUrl(movie.getYoutubeUrl())
                 .genres(movie.getGenres())
-                .languages(movie.getLanguages())
-                .latestMovieRatings(movie.getLatestMovieRatings());
+                .languages(movie.getLanguages());
+
+        List<MovieRating> ratings = movie.getLatestMovieRatings();
+        if (ratings != null) {
+            List<MovieShortRating> shortRatings = ratings.stream().map(MovieShortRating::new)
+                    .collect(Collectors.toList());
+            builder.latestMovieRatings(shortRatings);
+        }
+
 
         if (movie.getAddedBy() != null) {
             builder.addedBy(movie.getAddedBy().getId());

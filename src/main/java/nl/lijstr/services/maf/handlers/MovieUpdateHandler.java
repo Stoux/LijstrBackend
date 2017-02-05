@@ -4,10 +4,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -22,6 +19,7 @@ import nl.lijstr.domain.movies.MovieTrivia;
 import nl.lijstr.domain.movies.people.MovieCharacter;
 import nl.lijstr.domain.movies.people.MovieDirector;
 import nl.lijstr.domain.movies.people.MovieWriter;
+import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.movies.MovieRepository;
@@ -30,6 +28,7 @@ import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
 import nl.lijstr.services.maf.handlers.util.FieldConverters;
 import nl.lijstr.services.maf.handlers.util.FieldModifyHandler;
 import nl.lijstr.services.maf.models.ApiActor;
+import nl.lijstr.services.maf.models.ApiAka;
 import nl.lijstr.services.maf.models.ApiMovie;
 import nl.lijstr.services.maf.models.ApiPerson;
 import org.apache.logging.log4j.Logger;
@@ -97,8 +96,7 @@ public class MovieUpdateHandler {
                 new FieldModifyHandler(movie, apiMovie, historyRepository, suggestionRepository);
 
         //General info
-        handler.modify("title");
-        handler.modify("originalTitle");
+        updateTitles(handler, movie, apiMovie);
         handler.compareAndModify(
                 "year", movie.getYear(), apiMovie.getYear(),
                 FieldConverters::convertToYear, movie::setYear
@@ -137,6 +135,48 @@ public class MovieUpdateHandler {
         //Update last updated
         movie.setLastUpdated(LocalDateTime.now());
     }
+
+    private void updateTitles(FieldModifyHandler handler, Movie movie, ApiMovie apiMovie) {
+        handler.modify("title");
+        handler.modify("originalTitle");
+
+        //Find the dutch title if there's one
+        apiMovie.getAkas().stream()
+                .filter(ApiAka::isDutch)
+                .findFirst()
+                .ifPresent(aka -> {
+                    handler.compareAndModify(
+                            "dutchTitle", movie.getDutchTitle(), aka.getTitle(),
+                            s -> s, movie::setDutchTitle
+                    );
+                });
+
+        //NOTE: Due to MyApiFilms fucking up & returning french titles we have to do some extra logic...
+        if (movie.getOriginalTitle() != null) {
+            apiMovie.getAkas().stream()
+                    .filter(ApiAka::isFrench)
+                    .filter(aka -> movie.getTitle().equalsIgnoreCase(aka.getTitle()))
+                    .findFirst()
+                    .ifPresent(aka -> {
+                        //Title is french...
+                        logger.warn(
+                                "[{}] French title | Replacing '{}' with original title: '{}'",
+                                movie.getId(), movie.getTitle(), movie.getOriginalTitle()
+                        );
+
+                        //Override the title and add a changed value to the history
+                        historyRepository.saveAndFlush(new FieldHistory(
+                                FieldHistory.getDatabaseClassName(Movie.class),
+                                movie.getId(),
+                                "title",
+                                movie.getTitle(),
+                                movie.getOriginalTitle()
+                        ));
+                        movie.setTitle(movie.getOriginalTitle());
+                    });
+        }
+    }
+
 
     private void updateTrivia(Movie movie, ApiMovie apiMovie) {
         Utils.updateList(

@@ -48,7 +48,7 @@ public class MafApiService {
     }
 
     private ApiMovie getApiMovie(String imdbId) {
-        Call<ApiMovieModel> movieCall = imdbService.getMovie(token, imdbId, "json", "en-us", 1, 1, 1);
+        Call<ApiMovieModel> movieCall = imdbService.getMovie(token, imdbId, "json", "en-us", 1, 1, 1, 1);
         ApiMovieModel model = Utils.executeCall(movieCall);
         return model.getMovie();
     }

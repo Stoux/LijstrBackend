@@ -105,7 +105,7 @@ public class FieldModifyHandler {
                                         Consumer<X> setterFunction) {
         //Get the modified value
         X modifiedValue = null;
-        if (newValue != null) {
+        if (newValue != null && !(newValue instanceof String && ((String) newValue).isEmpty())) {
             modifiedValue = transformFunction.apply(newValue);
         }
 
