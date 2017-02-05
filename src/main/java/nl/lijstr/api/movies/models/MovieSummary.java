@@ -51,6 +51,8 @@ public class MovieSummary {
      * @return the summary
      */
     public static MovieSummary convert(Movie movie,
+                                       boolean useDutchTitle,
+                                       boolean useOriginalTitle,
                                        boolean includeGenres,
                                        boolean includeLanguages,
                                        boolean includeAgeRating) {
@@ -61,11 +63,19 @@ public class MovieSummary {
         MovieSummaryBuilder builder = MovieSummary.builder()
                 .id(movie.getId())
                 .imdbId(movie.getImdbId())
-                .title(movie.getTitle())
                 .year(movie.getYear())
                 .imdbRating(movie.getImdbRating())
                 .metacriticScore(movie.getMetacriticScore())
                 .latestRatings(shortRatings);
+
+        if (useDutchTitle && movie.getDutchTitle() != null) {
+            builder.title(movie.getDutchTitle());
+        } else if (useOriginalTitle && movie.getOriginalTitle() != null) {
+            builder.title(movie.getOriginalTitle());
+        } else {
+            builder.title(movie.getTitle());
+        }
+
 
         if (includeAgeRating) {
             builder.ageRating(StrUtils.useOrDefault(movie.getAgeRating(), "N/A"));

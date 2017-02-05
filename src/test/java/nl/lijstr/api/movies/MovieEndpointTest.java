@@ -66,7 +66,8 @@ public class MovieEndpointTest {
         when(movieRepository.findAllByOrderByTitleAsc()).thenReturn(Arrays.asList(movie1, movie2, movie3));
 
         //Act
-        List<MovieSummary> summaries = movieEndpoint.summaries(false, false, false);
+        List<MovieSummary> summaries = movieEndpoint.summaries(false, false,
+                false, false, false);
 
         //Assert
         assertEquals(3, summaries.size());

@@ -40,7 +40,7 @@ public class MovieSummaryTest {
         movie.setLanguages(Arrays.asList(language1, language2));
 
         //Act
-        MovieSummary summary = MovieSummary.convert(movie, true, true, true);
+        MovieSummary summary = MovieSummary.convert(movie, false, false, true, true, true);
         new MovieSummary(); //Coverage lol
 
         //Assert

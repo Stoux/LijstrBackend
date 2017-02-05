@@ -32,6 +32,8 @@ public class MovieDetail {
 
     private String imdbId;
     private String title;
+    private String originalTitle;
+    private String dutchTitle;
 
     private Integer year;
     private LocalDate released;
@@ -68,6 +70,8 @@ public class MovieDetail {
                 .lastUpdated(movie.getLastUpdated())
                 .imdbId(movie.getImdbId())
                 .title(movie.getTitle())
+                .originalTitle(movie.getOriginalTitle())
+                .dutchTitle(movie.getDutchTitle())
                 .year(movie.getYear())
                 .released(movie.getReleased())
                 .imdbRating(movie.getImdbRating())
