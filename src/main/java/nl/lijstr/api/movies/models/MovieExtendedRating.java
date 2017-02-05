@@ -8,12 +8,14 @@ import nl.lijstr.domain.movies.MovieRating;
  * A representable version of a {@link MovieRating}.
  */
 @Getter
-public class MovieExtendedRating extends MovieShortRating {
+public class MovieExtendedRating extends MovieShortRating implements TimeBased {
 
     private long id;
 
     private LocalDateTime lastModified;
     private LocalDateTime created;
+
+    private boolean latest;
 
     /**
      * Create a representable version of a {@link MovieRating}.
@@ -26,5 +28,7 @@ public class MovieExtendedRating extends MovieShortRating {
 
         this.lastModified = movieRating.getLastModified();
         this.created = movieRating.getCreated();
+
+        this.latest = movieRating.getLatest();
     }
 }
