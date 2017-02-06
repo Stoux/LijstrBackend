@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsMovieService;
 import nl.lijstr.api.movies.models.MovieExtendedRating;
-import nl.lijstr.api.movies.models.MovieShortRating;
 import nl.lijstr.api.movies.models.post.MovieRatingRequest;
 import nl.lijstr.common.DataContainer;
 import nl.lijstr.domain.movies.Movie;

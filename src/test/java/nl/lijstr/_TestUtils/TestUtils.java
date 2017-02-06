@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.function.Consumer;
 import nl.lijstr.common.Container;
 import nl.lijstr.common.Utils;
 import nl.lijstr.security.model.JwtUser;
@@ -18,8 +19,10 @@ import org.springframework.util.StringUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 /**
  * Common Test Utilities.
@@ -137,6 +140,39 @@ public class TestUtils {
     @SuppressWarnings("unchecked")
     public static <T> T getInvocationParam(InvocationOnMock invocation, int paramIndex) {
         return (T) invocation.getArguments()[paramIndex];
+    }
+
+    /**
+     * Copy the first param that was used to invoke the method, modify it and return it.
+     *
+     * @param invocationOnMock The invocation
+     * @param modify           The method to modify the copied object
+     * @param <T>              The class of the resulting object
+     *
+     * @return the object
+     * @throws Exception if unable to create a new instance
+     */
+    public static <T> T copyInvokedAndModify(InvocationOnMock invocationOnMock, Consumer<T> modify) throws Exception {
+        T t = getInvocationParam(invocationOnMock, 0);
+        T newT = (T) t.getClass().newInstance();
+        ReflectionUtils.shallowCopyFieldState(t, newT);
+        modify.accept(newT);
+        return newT;
+    }
+
+    /**
+     * Store the first param that was used to invoke the method in a container.
+     *
+     * @param invocationOnMock The invocation
+     * @param container        The container
+     * @param <T>              The class of the resulting object
+     *
+     * @return the object
+     */
+    public static <T> T storeInvoked(InvocationOnMock invocationOnMock, Container<T> container) {
+        T t = getInvocationParam(invocationOnMock, 0);
+        container.setItem(t);
+        return t;
     }
 
     /**
