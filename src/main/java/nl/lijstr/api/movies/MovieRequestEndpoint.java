@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Secured(Permission.MOVIE_USER)
 @RestController
-@RequestMapping(value = "/movies/request", produces = "application/json")
+@RequestMapping(value = "/movies/requests", produces = "application/json")
 public class MovieRequestEndpoint extends AbsService {
 
     @Autowired
