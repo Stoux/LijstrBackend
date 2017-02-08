@@ -68,8 +68,8 @@ public class MovieOutstandingEndpointTest {
 
         //Assert
         assertEquals(2, withoutRating.size());
-        assertEquals(1L, withoutRating.get(0).getId());
-        assertEquals(3L, withoutRating.get(1).getId());
+        assertEquals(2L, withoutRating.get(0).getId());
+        assertEquals(4L, withoutRating.get(1).getId());
     }
 
     private Movie createMovie(long id, long... withUsers) {
