@@ -26,6 +26,7 @@ import java.util.Set;
 public class MovieDetail {
 
     private long id;
+    private long oldSiteId;
 
     private LocalDateTime created;
     private LocalDateTime lastUpdated;
@@ -66,6 +67,7 @@ public class MovieDetail {
     public static MovieDetail fromMovie(Movie movie) {
         MovieDetailBuilder builder = MovieDetail.builder()
                 .id(movie.getId())
+                .oldSiteId(movie.getOldSiteId())
                 .created(movie.getCreated())
                 .lastUpdated(movie.getLastUpdated())
                 .imdbId(movie.getImdbId())
