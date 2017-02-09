@@ -5,15 +5,18 @@ import nl.lijstr.api.abs.AbsMovieService;
 import nl.lijstr.api.movies.models.MovieUserMetaData;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieUserMeta;
+import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.movies.MovieUserMetaRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Endpoint for user's meta data on a movie.
  */
+@Secured(Permission.MOVIE_USER)
 @RestController
 @RequestMapping(value = "/movies/{movieId:\\d+}/meta", produces = "application/json")
 public class MovieMetaEndpoint extends AbsMovieService {
