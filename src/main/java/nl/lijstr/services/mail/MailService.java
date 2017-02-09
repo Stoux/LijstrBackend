@@ -99,7 +99,7 @@ public class MailService {
                 .replace("$$title$$", title)
                 .replace("$$user$$", user.getDisplayName())
                 .replace("$$subtitle$$",
-                        user.getApprovedFor() == ApprovedFor.EVERYONE ? "There's new stuff!" : "You got shit to do")
+                        user.getApprovedFor() == ApprovedFor.EVERYONE ? "D'r is nieuw spul!" : "Je moet is ff wat doen.")
                 .replace("$$message$$", message)
                 .replace("$$button$$", button)
                 .replace("$$button-url$$", appHost + buttonPath)
