@@ -47,7 +47,7 @@ public class MovieOutstandingEndpointTest {
                 createMovie(3L, 1L, 3L),
                 createMovie(4L, 2L)
         );
-        when(movieRepository.findAll()).thenReturn(movies);
+        when(movieRepository.findAllByOrderByTitleAsc()).thenReturn(movies);
         when(userBean.getJwtUser()).thenReturn(createUser(1L));
     }
 
@@ -75,6 +75,7 @@ public class MovieOutstandingEndpointTest {
     private Movie createMovie(long id, long... withUsers) {
         Movie m = new Movie();
         m.setId(id);
+        m.setOldSiteId(id);
 
         List<MovieRating> movieRatings = new ArrayList<>();
         for (long withUser : withUsers) {

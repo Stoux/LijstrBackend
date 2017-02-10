@@ -137,7 +137,7 @@ public class MailServiceTest {
         Map htmlMap = new Gson().fromJson(htmlContainer.getItem(), Map.class);
         assertEquals(subject, htmlMap.get("title"));
         assertEquals(user.getDisplayName(), htmlMap.get("user"));
-        assertEquals("There's new stuff!", htmlMap.get("subtitle"));
+        assertEquals("D'r is nieuw spul!", htmlMap.get("subtitle"));
         assertEquals(mailTemplate.getMessage(), htmlMap.get("message"));
         assertEquals(mailTemplate.getButton(), htmlMap.get("button"));
         assertEquals(HTTP_EXAMPLE_COM + mailTemplate.getButtonUrlPath(), htmlMap.get("button-url"));

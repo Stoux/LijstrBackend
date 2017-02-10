@@ -63,7 +63,7 @@ public class MovieOutstandingEndpoint extends AbsService {
     }
 
     private Stream<Movie> filteredStream(long userId) {
-        return movieRepository.findAll().stream()
+        return movieRepository.findAllByOrderByTitleAsc().stream()
                 .filter(m -> !hasRating(userId, m));
     }
 

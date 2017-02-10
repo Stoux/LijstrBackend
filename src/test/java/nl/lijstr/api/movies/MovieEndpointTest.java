@@ -60,6 +60,7 @@ public class MovieEndpointTest {
         //Arrange
         Movie movie = new Movie("", "", new User(2L));
         movie.setId(1L);
+        movie.setOldSiteId(1L);
         when(movieRepository.findOne(eq(1L))).thenReturn(movie);
 
         //Act
