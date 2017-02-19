@@ -26,7 +26,7 @@ import java.util.Set;
 public class MovieDetail {
 
     private long id;
-    private long oldSiteId;
+    private Long oldSiteId;
 
     private LocalDateTime created;
     private LocalDateTime lastUpdated;
