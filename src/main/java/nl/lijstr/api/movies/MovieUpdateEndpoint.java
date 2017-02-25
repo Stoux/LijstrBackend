@@ -1,5 +1,6 @@
 package nl.lijstr.api.movies;
 
+import javax.transaction.Transactional;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.users.Permission;
@@ -32,6 +33,8 @@ public class MovieUpdateEndpoint extends AbsService {
     @Autowired
     private MafApiService mafApiService;
 
+    private boolean shouldRun = false;
+
     /**
      * Update the movie that was last updated.
      */
@@ -58,8 +61,19 @@ public class MovieUpdateEndpoint extends AbsService {
         mafApiService.updateMovie(movie);
     }
 
-    @Scheduled(cron = "0 0 */6 * * *")
+    //@Scheduled(cron = "0 0 */6 * * *")
+    @Scheduled(cron = "0 * * * * *")
     private void updateOldestByCron() {
+        if (!shouldRun) {
+            return;
+        }
+
+        this.shouldRun = false;
+        this.updateOldestCron();
+    }
+
+    @Transactional
+    private void updateOldestCron() {
         logger.debug("[CRON] Updating oldest movie");
         Movie movie = movieRepository.findFirstByOrderByLastUpdatedAsc();
         if (movie == null) {
@@ -67,7 +81,14 @@ public class MovieUpdateEndpoint extends AbsService {
         } else {
             logger.info("[CRON] Updating movie: {} ({})", movie.getTitle(), movie.getImdbId());
             mafApiService.updateMovie(movie);
+            logger.info("[CRON] Finished updating movie");
         }
     }
+
+    @RequestMapping(value = "/activate", method = RequestMethod.POST)
+    public void activate() {
+        this.shouldRun = true;
+    }
+
 
 }
