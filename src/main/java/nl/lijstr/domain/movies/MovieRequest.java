@@ -31,6 +31,7 @@ public class MovieRequest extends IdCmUserModel {
     private MovieRating.Seen seen;
     @Column(precision = 3, scale = 1)
     private BigDecimal rating;
+    @Column(length = 5000)
     private String comment;
 
     @ManyToOne

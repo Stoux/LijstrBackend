@@ -1,6 +1,7 @@
 package nl.lijstr.api.movies.models;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import lombok.Getter;
 import nl.lijstr.domain.movies.MovieComment;
 
@@ -16,6 +17,7 @@ public class MovieShortComment implements TimeBased {
     private LocalDateTime created;
 
     private long user;
+    @Column(length = 5000)
     private String comment;
 
     /**

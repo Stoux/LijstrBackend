@@ -25,6 +25,7 @@ public class MovieRating extends IdCmUserMovieModel {
     private Seen seen;
     @Column(precision = 3, scale = 1)
     private BigDecimal rating;
+    @Column(length = 5000)
     private String comment;
     @Column(nullable = false)
     private Boolean latest;

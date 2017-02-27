@@ -1,5 +1,6 @@
 package nl.lijstr.api.movies.models.post;
 
+import javax.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 public class PostedMovieComment {
 
     @NotEmpty
+    @Column(length = 5000)
     private String comment;
 
 }

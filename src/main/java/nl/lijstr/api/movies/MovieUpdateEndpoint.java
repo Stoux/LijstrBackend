@@ -61,9 +61,12 @@ public class MovieUpdateEndpoint extends AbsService {
         mafApiService.updateMovie(movie);
     }
 
+    /**
+     * Update the oldest movie.
+     */
     //@Scheduled(cron = "0 0 */6 * * *")
     @Scheduled(cron = "0 * * * * *")
-    private void updateOldestByCron() {
+    public void updateOldestByCron() {
         if (!shouldRun) {
             return;
         }

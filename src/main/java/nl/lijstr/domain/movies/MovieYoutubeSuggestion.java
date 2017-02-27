@@ -1,5 +1,6 @@
 package nl.lijstr.domain.movies;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmUserMovieModel;
@@ -15,6 +16,7 @@ import nl.lijstr.domain.base.IdCmUserMovieModel;
 public class MovieYoutubeSuggestion extends IdCmUserMovieModel {
 
     private String youtubeUrl;
+    @Column(length = 5000)
     private String comment;
 
 }
