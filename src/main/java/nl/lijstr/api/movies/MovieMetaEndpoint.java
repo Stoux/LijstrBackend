@@ -1,5 +1,7 @@
 package nl.lijstr.api.movies;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsMovieService;
 import nl.lijstr.api.movies.models.MovieUserMetaData;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Secured(Permission.MOVIE_USER)
 @RestController
-@RequestMapping(value = "/movies/{movieId:\\d+}/meta", produces = "application/json")
+@RequestMapping(value = "/movies", produces = "application/json")
 public class MovieMetaEndpoint extends AbsMovieService {
 
     @Autowired
@@ -31,7 +33,7 @@ public class MovieMetaEndpoint extends AbsMovieService {
      *
      * @return the meta data
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = "/{movieId:\\d+}/meta", method = RequestMethod.GET)
     public MovieUserMetaData getForUser(@PathVariable() long movieId) {
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
@@ -50,7 +52,7 @@ public class MovieMetaEndpoint extends AbsMovieService {
      * @param movieId  The movieId
      * @param metaData The new meta data
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(path = "/{movieId:\\d+}/meta", method = RequestMethod.PUT)
     public void update(@PathVariable() long movieId, @Valid @RequestBody MovieUserMetaData metaData) {
         User user = new User(getUser().getId());
         Movie movie = findMovie(movieId);
@@ -64,6 +66,19 @@ public class MovieMetaEndpoint extends AbsMovieService {
             MovieUserMeta meta = new MovieUserMeta(user, movie, metaData.isWantToWatch());
             metaRepository.saveAndFlush(meta);
         }
+    }
+
+    /**
+     * Get all the movies a user want's to watch.
+     *
+     * @return ID of the movies
+     */
+    @RequestMapping(path = "/wantToWatch", method = RequestMethod.GET)
+    public List<Long> getWantToWatchMovies() {
+        User user = new User(getUser().getId());
+        return metaRepository.findByUserAndWantToWatch(user, true).stream()
+                .map(meta -> meta.getMovie().getId())
+                .collect(Collectors.toList());
     }
 
 
