@@ -1,5 +1,6 @@
 package nl.lijstr.api.movies;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,6 +11,7 @@ import nl.lijstr.api.movies.models.TimeBased;
 import nl.lijstr.domain.movies.Movie;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,7 +29,9 @@ public class MovieTimelineEndpoint extends AbsMovieService {
      * @return a list of comments and ratings.
      */
     @RequestMapping()
-    public List<TimeBased> list(@PathVariable() Long movieId) {
+    public List<TimeBased> list(@PathVariable() Long movieId,
+                                @RequestParam(required = false, defaultValue = "true") final boolean includeComments,
+                                @RequestParam(required = false, defaultValue = "true") final boolean includeRatings) {
         Movie movie = findMovie(movieId);
 
         //TODO: Only fetch a part of the timeline instead of the whole thing in 1 go.
@@ -36,10 +40,16 @@ public class MovieTimelineEndpoint extends AbsMovieService {
         //  => Fetch the returned IDs from their respective tables
 
         //Build the list of entities
-        Stream<TimeBased> commentStram = movie.getMovieComments().stream().map(MovieShortComment::new);
-        Stream<TimeBased> ratingSteam = movie.getMovieRatings().stream().map(MovieExtendedRating::new);
-        return Stream.concat(commentStram, ratingSteam)
-                .sorted()
+        List<Stream<TimeBased>> list = new ArrayList<>();
+        if (includeComments) {
+            list.add(movie.getMovieComments().stream().map(MovieShortComment::new));
+        }
+        if (includeRatings) {
+            list.add(movie.getMovieRatings().stream().map(MovieExtendedRating::new));
+        }
+
+        //Merge the streams
+        return list.stream().flatMap(s -> s).sorted()
                 .collect(Collectors.toList());
     }
 
