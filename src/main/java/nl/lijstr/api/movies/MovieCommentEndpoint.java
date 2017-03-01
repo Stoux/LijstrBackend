@@ -9,6 +9,7 @@ import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieComment;
 import nl.lijstr.domain.other.FieldHistory;
+import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.db.NotFoundException;
 import nl.lijstr.exceptions.security.UnauthorizedException;
@@ -16,6 +17,7 @@ import nl.lijstr.repositories.movies.MovieCommentRepository;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ import javax.validation.Valid;
 /**
  * Created by Stoux on 17/04/2016.
  */
+@Secured(Permission.MOVIE_USER)
 @RestController
 @RequestMapping(value = "/movies/{movieId:\\d+}/comments", produces = "application/json")
 public class MovieCommentEndpoint extends AbsMovieService {
