@@ -9,8 +9,8 @@ import java.util.stream.DoubleStream;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import nl.lijstr.api.abs.AbsService;
+import nl.lijstr.api.movies.models.MovieAddedDetail;
 import nl.lijstr.api.movies.models.MovieStats;
-import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.common.PageResult;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
@@ -121,14 +121,14 @@ public class MovieStatsEndpoint extends AbsService {
      * @return the movies
      */
     @RequestMapping(value = "/added", method = RequestMethod.GET)
-    public PageResult<MovieSummary> recentlyAddedMovies(
+    public PageResult<MovieAddedDetail> recentlyAddedMovies(
             @RequestParam(required = false, defaultValue = "1") @Min(1) int page,
             @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
-        Pageable p = new PageRequest(page, limit, Sort.Direction.DESC, "created");
+        Pageable p = new PageRequest(page - 1, limit, Sort.Direction.DESC, "created");
         Page<Movie> pagedResult = movieRepository.findAll(p);
 
-        List<MovieSummary> content = pagedResult.getContent().stream()
-                .map(m -> MovieSummary.convert(m, false, false, false, false, false))
+        List<MovieAddedDetail> content = pagedResult.getContent().stream()
+                .map(MovieAddedDetail::fromMovie)
                 .collect(Collectors.toList());
         return new PageResult<>(page, limit, pagedResult.getTotalElements(), pagedResult.getTotalPages(), content);
     }
