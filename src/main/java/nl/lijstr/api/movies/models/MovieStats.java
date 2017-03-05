@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import lombok.Getter;
-import lombok.Setter;
-import nl.lijstr.api.movies.MovieStatsEndpoint;
+import lombok.*;
 import nl.lijstr.domain.users.User;
 
 @Getter

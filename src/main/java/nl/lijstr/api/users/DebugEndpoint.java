@@ -1,14 +1,13 @@
 package nl.lijstr.api.users;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.common.Utils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The Users Endpoint.
@@ -21,7 +20,7 @@ public class DebugEndpoint extends AbsService {
     public Map<Object, Object> springRequest(HttpServletRequest springRequest) {
         HashMap<String, String> headers = new HashMap<>();
         Enumeration<String> headerNames = springRequest.getHeaderNames();
-        while(headerNames.hasMoreElements()) {
+        while (headerNames.hasMoreElements()) {
             String name = headerNames.nextElement();
             headers.put(name, springRequest.getHeader(name));
         }

@@ -1,8 +1,7 @@
 package nl.lijstr.api.movies.models;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.users.User;
 
@@ -20,7 +19,9 @@ public class MovieAddedDetail {
 
     /**
      * Create a Added detail from a {@link Movie}.
+     *
      * @param movie The movie
+     *
      * @return the added detial
      */
     public static MovieAddedDetail fromMovie(Movie movie) {

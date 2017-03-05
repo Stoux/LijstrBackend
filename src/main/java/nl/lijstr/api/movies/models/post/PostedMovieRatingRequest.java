@@ -1,10 +1,6 @@
 package nl.lijstr.api.movies.models.post;
 
-import javax.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotEmpty;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 /**

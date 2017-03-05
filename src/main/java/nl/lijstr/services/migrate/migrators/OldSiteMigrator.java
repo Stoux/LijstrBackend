@@ -23,6 +23,7 @@ public interface OldSiteMigrator {
      * TODO: Add tests
      *
      * @param imdbLink The IMDB link
+     *
      * @return the ID
      */
     default String getImdbId(String imdbLink) {

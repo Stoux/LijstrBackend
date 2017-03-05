@@ -2,7 +2,7 @@ package nl.lijstr.api.movies;
 
 import java.util.Map;
 import java.util.Optional;
-
+import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsMovieService;
 import nl.lijstr.api.movies.models.post.PostedMovieComment;
 import nl.lijstr.common.Utils;
@@ -20,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * Created by Stoux on 17/04/2016.
@@ -42,6 +40,7 @@ public class MovieCommentEndpoint extends AbsMovieService {
      *
      * @param movieId       The ID of the movie
      * @param postedComment The new comment
+     *
      * @return map with comment info
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -60,6 +59,7 @@ public class MovieCommentEndpoint extends AbsMovieService {
      * @param movieId       The ID of the movie
      * @param commentId     The ID of the comment
      * @param postedComment The updated comment
+     *
      * @return map with comment info
      */
     @Transactional

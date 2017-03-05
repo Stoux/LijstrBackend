@@ -1,6 +1,6 @@
 package nl.lijstr.services.maf.models;
 
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Different name a movie might be called (in another country).
@@ -14,6 +14,7 @@ public class ApiAka {
 
     /**
      * Check if the country is dutch (Netherlands, Nederland, Dutch)
+     *
      * @return is dutch
      */
     public boolean isDutch() {
@@ -25,6 +26,7 @@ public class ApiAka {
 
     /**
      * Check if it contains a french title (French, France, Belgium /w French comment)
+     *
      * @return is french
      */
     public boolean isFrench() {

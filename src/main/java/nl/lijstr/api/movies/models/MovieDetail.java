@@ -1,20 +1,14 @@
 package nl.lijstr.api.movies.models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import nl.lijstr.common.Utils;
+import lombok.*;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A different model based on a {@link Movie}.
@@ -62,6 +56,7 @@ public class MovieDetail {
      * Convert a {@link Movie} to a {@link MovieDetail} object.
      *
      * @param movie The movie
+     *
      * @return the detail object
      */
     public static MovieDetail fromMovie(Movie movie) {

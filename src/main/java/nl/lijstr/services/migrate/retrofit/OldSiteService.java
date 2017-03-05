@@ -1,6 +1,5 @@
 package nl.lijstr.services.migrate.retrofit;
 
-import java.util.List;
 import java.util.Map;
 import nl.lijstr.configs.RetrofitEndpoints;
 import nl.lijstr.services.migrate.models.movies.OldMovie;
@@ -28,6 +27,7 @@ public interface OldSiteService {
      * Get the old ratings for a certain movie.
      *
      * @param movieId The ID of the movie (on the old site)
+     *
      * @return map of names to ratings
      */
     @GET("/film/json/ratings.php")

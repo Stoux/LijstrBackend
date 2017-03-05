@@ -2,9 +2,7 @@ package nl.lijstr.services.migrate.models.movies;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.Map;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * Created by Stoux on 31-1-2017.

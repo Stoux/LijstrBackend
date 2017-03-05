@@ -100,7 +100,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
      */
     @RequestMapping(value = "/{ratingId:\\d+}", method = RequestMethod.PUT)
     public MovieExtendedRating edit(@PathVariable Long movieId, @PathVariable Long ratingId,
-                                 @Valid @RequestBody MovieRatingRequest newRating) {
+                                    @Valid @RequestBody MovieRatingRequest newRating) {
         JwtUser user = getUser();
         Movie movie = findMovie(movieId);
 

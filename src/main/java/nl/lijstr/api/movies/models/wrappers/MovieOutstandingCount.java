@@ -1,7 +1,6 @@
 package nl.lijstr.api.movies.models.wrappers;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Created by Stoux on 8-2-2017.

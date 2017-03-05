@@ -35,6 +35,7 @@ public class MovieEndpoint extends AbsService {
      * Get a {@link Movie} as detail view.
      *
      * @param id The ID of the movie
+     *
      * @return the movie detail
      */
     @RequestMapping("/{id}")
@@ -47,6 +48,7 @@ public class MovieEndpoint extends AbsService {
      * Get the original {@link Movie}.
      *
      * @param id The ID of the movie
+     *
      * @return the movie
      */
     @RequestMapping("/{id}/original")
@@ -61,6 +63,7 @@ public class MovieEndpoint extends AbsService {
      * @param includeGenres    Should include genres
      * @param includeLanguages Should include languages
      * @param includeAgeRating Should include age rating
+     *
      * @return the list
      */
     @RequestMapping

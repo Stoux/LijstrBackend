@@ -1,9 +1,7 @@
 package nl.lijstr.services.migrate.models.movies;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * A data object that represents a rating as given on the old site.

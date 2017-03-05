@@ -2,7 +2,7 @@ package nl.lijstr.api.movies.models;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
-import lombok.Getter;
+import lombok.*;
 import nl.lijstr.domain.movies.MovieComment;
 
 /**

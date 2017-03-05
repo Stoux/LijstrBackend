@@ -2,7 +2,6 @@ package nl.lijstr.api.movies.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.*;

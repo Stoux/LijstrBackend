@@ -5,8 +5,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Function;
-import java.util.function.Supplier;
-
 import nl.lijstr.exceptions.LijstrException;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -76,10 +74,10 @@ public final class Utils {
     /**
      * Create a {@link Set} from any other collection.
      *
-     * @param itemCollection The collection of original items
+     * @param itemCollection     The collection of original items
      * @param itemToItemFunction The convert function
-     * @param <X> The new item class
-     * @param <Y> The original item class
+     * @param <X>                The new item class
+     * @param <Y>                The original item class
      *
      * @return A {@link Set} with X items
      */

@@ -1,10 +1,7 @@
 package nl.lijstr.domain.movies;
 
 import javax.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.domain.base.IdCmUserMovieModel;
 import nl.lijstr.domain.users.User;
 

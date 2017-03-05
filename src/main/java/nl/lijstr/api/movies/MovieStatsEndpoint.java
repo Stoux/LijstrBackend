@@ -72,7 +72,7 @@ public class MovieStatsEndpoint extends AbsService {
                 MovieStats.UserStats userStats = stats.getUser(rating.getUser().getId());
                 userStats.filledIn++;
 
-                switch(rating.getSeen()) {
+                switch (rating.getSeen()) {
                     case YES:
                         userStats.seen++;
                         if (rating.getRating() == null) {

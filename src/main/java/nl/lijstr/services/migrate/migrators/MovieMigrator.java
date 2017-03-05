@@ -69,6 +69,7 @@ public class MovieMigrator implements OldSiteMigrator {
      * @param imdbId        The IMDB ID
      * @param oldMovie      The old movie
      * @param currentMovies The map of current movies (IMDB ID -> Movie)
+     *
      * @return A new movie or null if it already exists
      */
     private Movie updateExisting(String imdbId, OldMovie oldMovie, Map<String, Movie> currentMovies) {

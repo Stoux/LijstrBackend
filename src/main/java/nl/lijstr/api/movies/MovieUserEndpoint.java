@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.UserSummary;
 import nl.lijstr.domain.users.Permission;
-import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

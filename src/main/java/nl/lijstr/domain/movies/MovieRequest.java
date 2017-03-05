@@ -2,9 +2,7 @@ package nl.lijstr.domain.movies;
 
 import java.math.BigDecimal;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import nl.lijstr.domain.base.IdCmUserModel;
 import nl.lijstr.domain.users.User;
 

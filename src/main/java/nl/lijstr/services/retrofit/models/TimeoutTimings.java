@@ -1,7 +1,6 @@
 package nl.lijstr.services.retrofit.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Timings for HTTP clients.
@@ -9,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class TimeoutTimings {
-    
+
     private final int connect;
     private final int read;
     private final int write;
