@@ -276,14 +276,15 @@ public class MovieUpdateHandler {
     }
 
     private void updatePoster(Movie movie, ApiMovie apiMovie) {
-        if (apiMovie.getPosterUrl().isEmpty()) {
+        String apiPosterUrl = apiMovie.getPosterUrl();
+        if (apiPosterUrl == null || apiPosterUrl.isEmpty()) {
             movie.setPoster(false);
             return;
         }
 
         try {
             //Open the file as Input stream
-            URL posterUrl = new URL(apiMovie.getPosterUrl());
+            URL posterUrl = new URL(apiPosterUrl);
             InputStream posterStream = posterUrl.openStream();
 
             //Copy the file to the location
@@ -293,13 +294,13 @@ public class MovieUpdateHandler {
 
             logger.debug(
                     "[{}] Updated poster | Copied '{}' -> '{}'",
-                    movie.getImdbId(), apiMovie.getPosterUrl(), imageFile.getAbsolutePath()
+                    movie.getImdbId(), apiPosterUrl, imageFile.getAbsolutePath()
             );
 
             movie.setPoster(true);
             return;
         } catch (MalformedURLException e) {
-            logger.warn("Invalid Poster URL: {}", apiMovie.getPosterUrl(), e);
+            logger.warn("Invalid Poster URL: {}", apiPosterUrl, e);
         } catch (IOException e) {
             logger.warn("Failed to copy poster: {}", e.getMessage(), e);
         }
