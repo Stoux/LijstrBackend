@@ -46,7 +46,7 @@ public class AppErrorController implements ErrorController {
 
     private boolean getTraceParameter(HttpServletRequest request) {
         String parameter = request.getParameter("trace");
-        return parameter != null && !(parameter.toLowerCase().equals("false"));
+        return parameter != null && !"false".equalsIgnoreCase(parameter);
     }
 
     private Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {

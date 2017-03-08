@@ -31,6 +31,7 @@ public class MovieMigrator implements OldSiteMigrator {
         this.currentProgress = currentProgress;
     }
 
+    @Override
     public void migrate() {
         try {
             logger.info("Starting movie migration.");
@@ -114,7 +115,7 @@ public class MovieMigrator implements OldSiteMigrator {
         try {
             Thread.sleep(750);
         } catch (InterruptedException e) {
-            logger.warn("Failed to sleep. Shouldn't be called.");
+            Thread.currentThread().interrupt();
         }
 
         return saved;

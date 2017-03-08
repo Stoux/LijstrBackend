@@ -60,6 +60,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
      *
      * @return a short version of the rating
      */
+    @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public MovieExtendedRating add(@PathVariable Long movieId, @Valid @RequestBody MovieRatingRequest newRating) {
         JwtUser user = getUser();
@@ -68,7 +69,6 @@ public class MovieRatingEndpoint extends AbsMovieService {
         return new MovieExtendedRating(addedRating);
     }
 
-    @Transactional
     private MovieRating addRating(JwtUser user, Movie movie, MovieRatingRequest newRating) {
         //Check if the user already has an existing rating
         MovieRating existingRating = findRatingByUser(movie.getLatestMovieRatings(), user.getId());

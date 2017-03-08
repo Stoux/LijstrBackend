@@ -3,7 +3,6 @@ package nl.lijstr.processors.abs;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import nl.lijstr.common.Utils;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ReflectionUtils;
 
@@ -27,7 +26,7 @@ public abstract class AbsBeanProcessor<X extends Annotation> implements BeanPost
     }
 
     @Override
-    public Object postProcessBeforeInitialization(final Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(final Object bean, String beanName) {
         ReflectionUtils.doWithFields(bean.getClass(), field -> processField(bean, field));
         return bean;
     }
@@ -69,7 +68,7 @@ public abstract class AbsBeanProcessor<X extends Annotation> implements BeanPost
 
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
         return bean;
     }
 }

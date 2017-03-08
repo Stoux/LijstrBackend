@@ -22,6 +22,7 @@ public final class FieldConverters {
      *
      * @return the date or null
      */
+    @SuppressWarnings("squid:S1166") //DateTimeException can be ignored as it is expected.
     public static LocalDate convertToDate(String s) {
         String clean = cleanString(s);
         int sLength = clean.length();

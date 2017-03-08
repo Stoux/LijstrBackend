@@ -18,10 +18,12 @@ public class ApiAka {
      * @return is dutch
      */
     public boolean isDutch() {
-        if (country == null) return false;
+        if (country == null) {
+            return false;
+        }
         String lc = country.toLowerCase();
-        return (lc.contains("netherlands") || lc.contains("nederland") || lc.contains("dutch")) &&
-                !(lc.contains("antillen") || lc.contains("antilles"));
+        return containsEither(lc, "netherlands", "nederland", "dutch") &&
+            !containsEither(lc, "antillen", "antilles");
     }
 
     /**
@@ -30,11 +32,23 @@ public class ApiAka {
      * @return is french
      */
     public boolean isFrench() {
-        if (country == null) return false;
+        if (country == null) {
+            return false;
+        }
         String lc = country.toLowerCase();
         String lcComment = comment != null ? comment.toLowerCase() : "";
-        return lc.contains("french") || lc.contains("france") ||
-                (lc.contains("belgium") && lcComment.contains("french"));
+        return containsEither("french", "france") ||
+            (lc.contains("belgium") && lcComment.contains("french"));
     }
+
+    private boolean containsEither(String s, String... options) {
+        for (String option : options) {
+            if (s.contains(option)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

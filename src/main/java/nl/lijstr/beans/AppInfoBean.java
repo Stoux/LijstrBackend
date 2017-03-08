@@ -31,15 +31,16 @@ public class AppInfoBean {
                         "Project lead", "Architect", "Developer"
                 })
         );
+        String creativeInput = "Creative input";
         contributors = Arrays.asList(
                 new Contributor("Rick Fontein", null, "https://telluur.com", new String[]{
-                        "Creative input"
+                    creativeInput
                 }),
                 new Contributor("Lorenzo van Leeuwaarden", null, "http://mrbunni.nl", new String[]{
-                        "Creative input"
+                    creativeInput
                 }),
                 new Contributor("Erwin Stam", null, null, new String[]{
-                        "Creative input"
+                    creativeInput
                 })
         );
     }

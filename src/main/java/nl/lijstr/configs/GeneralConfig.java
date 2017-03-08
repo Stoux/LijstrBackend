@@ -31,14 +31,14 @@ public class GeneralConfig {
         Jackson2ObjectMapperBuilder b = new Jackson2ObjectMapperBuilder();
         b.serializerByType(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
             @Override
-            public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+            public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
                 long epoch = value.atZone(ZONE).toInstant().toEpochMilli();
                 gen.writeNumber(epoch);
             }
         });
         b.serializerByType(LocalDate.class, new JsonSerializer<LocalDate>() {
             @Override
-            public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+            public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
                 long epoch = value.atStartOfDay(ZONE).toInstant().toEpochMilli();
                 gen.writeNumber(epoch);
             }
