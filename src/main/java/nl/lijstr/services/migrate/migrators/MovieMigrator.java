@@ -115,6 +115,7 @@ public class MovieMigrator implements OldSiteMigrator {
         try {
             Thread.sleep(750);
         } catch (InterruptedException e) {
+            logger.warn("Sleep has been interrupted: {}", e.getMessage());
             Thread.currentThread().interrupt();
         }
 
