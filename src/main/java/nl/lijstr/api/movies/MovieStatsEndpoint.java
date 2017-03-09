@@ -10,12 +10,12 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieExtendedRating;
+import nl.lijstr.api.movies.models.MovieShortComment;
 import nl.lijstr.api.movies.models.MovieShortDetail;
 import nl.lijstr.api.movies.models.MovieStats;
 import nl.lijstr.api.movies.models.wrappers.MovieRecentChange;
 import nl.lijstr.common.PageResult;
 import nl.lijstr.domain.movies.Movie;
-import nl.lijstr.domain.movies.MovieComment;
 import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
@@ -163,10 +163,10 @@ public class MovieStatsEndpoint extends AbsService {
      * @return the comments
      */
     @RequestMapping(value = "/newComments", method = RequestMethod.GET)
-    public PageResult<MovieRecentChange<MovieComment>> newComments(
+    public PageResult<MovieRecentChange<MovieShortComment>> newComments(
         @RequestParam(required = false, defaultValue = "1") @Min(1) int page,
         @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
-        return getPaged(commentRepository, page, limit, c -> wrapRating(c.getMovie(), c));
+        return getPaged(commentRepository, page, limit, c -> wrapRating(c.getMovie(), new MovieShortComment(c)));
     }
 
     private <X, Y> PageResult<Y> getPaged(BasicRepository<X> repository, int page, int limit, Function<X, Y> mapper) {
