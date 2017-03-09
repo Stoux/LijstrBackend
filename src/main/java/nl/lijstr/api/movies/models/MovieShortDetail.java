@@ -10,7 +10,7 @@ import nl.lijstr.domain.users.User;
  */
 @Getter
 @AllArgsConstructor
-public class MovieAddedDetail {
+public class MovieShortDetail {
 
     private long id;
     private String title;
@@ -24,9 +24,9 @@ public class MovieAddedDetail {
      *
      * @return the added detial
      */
-    public static MovieAddedDetail fromMovie(Movie movie) {
+    public static MovieShortDetail fromMovie(Movie movie) {
         User addedBy = movie.getAddedBy();
-        return new MovieAddedDetail(
+        return new MovieShortDetail(
                 movie.getId(), movie.getTitle(), movie.getCreated(), addedBy == null ? null : addedBy.getId()
         );
     }

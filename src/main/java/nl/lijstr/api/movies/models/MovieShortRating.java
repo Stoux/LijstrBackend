@@ -1,7 +1,6 @@
 package nl.lijstr.api.movies.models;
 
 import java.math.BigDecimal;
-import javax.persistence.Column;
 import lombok.*;
 import nl.lijstr.domain.movies.MovieRating;
 
@@ -13,7 +12,6 @@ public class MovieShortRating {
 
     private int seen;
     private BigDecimal rating;
-    @Column(length = 5000)
     private String comment;
     private long user;
 
@@ -28,4 +26,5 @@ public class MovieShortRating {
         this.comment = movieRating.getComment();
         this.user = movieRating.getUser().getId();
     }
+
 }
