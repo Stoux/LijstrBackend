@@ -148,7 +148,7 @@ public class MovieStatsEndpoint extends AbsService {
      * @return the ratings
      */
     @RequestMapping(value = "/newRatings")
-    public PageResult<MovieRecentChange> newRatings(
+    public PageResult<MovieRecentChange<MovieExtendedRating>> newRatings(
         @RequestParam(required = false, defaultValue = "1") @Min(1) int page,
         @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
         return getPaged(ratingRepository, page, limit, r -> wrapRating(r.getMovie(), new MovieExtendedRating(r)));
