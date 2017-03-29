@@ -1,5 +1,7 @@
 package nl.lijstr.api.movies;
 
+import java.util.ArrayList;
+import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.common.Container;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.repositories.movies.MovieRepository;
@@ -42,6 +44,10 @@ public class MovieUpdateEndpointTest {
     public void updateOldest() throws Exception {
         //Arrange
         Movie movie = new Movie();
+        movie.setId(1L);
+        movie.setYear(1999);
+        movie.setLatestMovieRatings(new ArrayList<>());
+
         Container<Movie> container = new Container<>();
         when(movieRepository.findFirstByOrderByLastUpdatedAsc()).thenReturn(movie);
         when(mafApiService.updateMovie(any())).thenAnswer(invocation -> {
@@ -50,10 +56,11 @@ public class MovieUpdateEndpointTest {
         });
 
         //Act
-        endpoint.updateOldest();
+        MovieSummary movieSummary = endpoint.updateOldest();
 
         //Assert
         assertEquals(movie, container.getItem());
+        assertEquals(1L, movieSummary.getId());
     }
 
     @Test
@@ -88,7 +95,7 @@ public class MovieUpdateEndpointTest {
         });
 
         //Act
-        ReflectionTestUtils.invokeMethod(endpoint, "updateOldestByCron");
+        ReflectionTestUtils.invokeMethod(endpoint, "updateOldestCron");
 
         //Assert
         verify(logger, times(1)).debug(anyString());
@@ -103,7 +110,7 @@ public class MovieUpdateEndpointTest {
         when(movieRepository.findFirstByOrderByLastUpdatedAsc()).thenReturn(null);
 
         //Act
-        ReflectionTestUtils.invokeMethod(endpoint, "updateOldestByCron");
+        ReflectionTestUtils.invokeMethod(endpoint, "updateOldestCron");
 
         //Assert
         verify(logger, times(2)).debug(anyString());

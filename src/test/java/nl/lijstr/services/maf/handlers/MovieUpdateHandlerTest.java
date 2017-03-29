@@ -115,7 +115,7 @@ public class MovieUpdateHandlerTest {
         assertNull(movie.getOriginalTitle());
         assertEquals(Integer.valueOf(2015), movie.getYear());
         assertEquals(LocalDate.of(2015, 10, 2), movie.getReleased());
-        //TODO: Runtimes
+        assertEquals(Integer.valueOf(144), movie.getRuntime());
         assertFalse(movie.isPoster());
         assertEquals(Double.valueOf(8.1), movie.getImdbRating());
         assertEquals(Integer.valueOf(80), movie.getMetacriticScore());

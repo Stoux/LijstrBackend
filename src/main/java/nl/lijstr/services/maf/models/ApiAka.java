@@ -37,7 +37,7 @@ public class ApiAka {
         }
         String lc = country.toLowerCase();
         String lcComment = comment != null ? comment.toLowerCase() : "";
-        return containsEither("french", "france") ||
+        return containsEither(lc, "french", "france") ||
             (lc.contains("belgium") && lcComment.contains("french"));
     }
 

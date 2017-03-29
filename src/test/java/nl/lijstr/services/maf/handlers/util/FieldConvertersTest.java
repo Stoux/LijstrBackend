@@ -104,6 +104,19 @@ public class FieldConvertersTest {
         execInvalid("AA/100");
     }
 
+    @Test
+    public void testConvertRuntime() throws Exception {
+        //Arrange
+        this.objectFunction = FieldConverters::convertRuntime;
+
+        //Act - valid
+        exec("0 min", 0);
+        exec("1000 mins", 1000);
+
+        //Act - invalid
+        execInvalid("1 hour");
+    }
+
     @SuppressWarnings("unchecked")
     private <X> void exec(String inputString, X expected) {
         X result = (X) objectFunction.apply(inputString);

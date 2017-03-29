@@ -2,6 +2,7 @@ package nl.lijstr.services.maf.handlers.util;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import org.springframework.util.StringUtils;
 
 /**
  * Field Converters for {@link nl.lijstr.domain.movies.Movie} and {@link nl.lijstr.services.maf.models.ApiMovie}.
@@ -122,6 +123,22 @@ public final class FieldConverters {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Convert a string into an Integer by assuming runtime format.
+     * Expected format: xx min
+     *
+     * @param s The string
+     *
+     * @return The int (x) or null
+     */
+    public static Integer convertRuntime(String s) {
+        if (!StringUtils.isEmpty(s) && s.matches("^\\d+\\smins?$")) {
+            String[] split = s.split("\\s");
+            return Integer.parseInt(split[0]);
+        }
+        return null;
     }
 
     private static boolean allNumbers(String s) {

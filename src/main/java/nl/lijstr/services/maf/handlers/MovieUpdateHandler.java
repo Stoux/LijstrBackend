@@ -123,14 +123,18 @@ public class MovieUpdateHandler {
                 FieldConverters::convertMetaCriticScore, movie::setMetacriticScore
         );
 
+        //Runtimes
+        handler.compareAndModify(
+                "runtime", movie.getRuntime(), apiMovie.getRuntime(),
+                FieldConverters::convertRuntime, movie::setRuntime
+        );
+
         //Plots
         handler.modify("shortPlot");
         handler.modify("longPlot");
 
         //Age rating
         handler.modify("ageRating");
-
-        //TODO: Runtimes
 
         //Fetch poster
         updatePoster(movie, apiMovie);

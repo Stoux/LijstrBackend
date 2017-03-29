@@ -50,7 +50,7 @@ public class Movie extends IdCmModel {
     @Lob
     private String longPlot;
 
-    //TODO: Runtime (1 or versions?)
+    private Integer runtime;
 
     //Rated for X
     private String ageRating;
