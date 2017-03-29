@@ -82,39 +82,4 @@ public class MovieUpdateEndpointTest {
         assertEquals(movie, container.getItem());
     }
 
-    @Test
-    public void updateMovieUsingCron() throws Exception {
-        //Arrange
-        Movie movie = new Movie("imdbId");
-        movie.setTitle("title");
-        Container<Movie> movieContainer = new Container<>();
-        when(movieRepository.findFirstByOrderByLastUpdatedAsc()).thenReturn(movie);
-        when(mafApiService.updateMovie(any())).thenAnswer(invocationOnMock -> {
-            movieContainer.setItem(getInvocationParam(invocationOnMock, 0));
-            return movieContainer.getItem();
-        });
-
-        //Act
-        ReflectionTestUtils.invokeMethod(endpoint, "updateOldestCron");
-
-        //Assert
-        verify(logger, times(1)).debug(anyString());
-        verify(logger, times(1)).info(anyString(), eq(movie.getTitle()), eq(movie.getImdbId()));
-        assertTrue(movieContainer.isPresent());
-        assertEquals(movie, movieContainer.getItem());
-    }
-
-    @Test
-    public void updateNonExistingMovieUsingCron() throws Exception {
-        //Arrange
-        when(movieRepository.findFirstByOrderByLastUpdatedAsc()).thenReturn(null);
-
-        //Act
-        ReflectionTestUtils.invokeMethod(endpoint, "updateOldestCron");
-
-        //Assert
-        verify(logger, times(2)).debug(anyString());
-        verify(mafApiService, times(0)).updateMovie(any());
-    }
-
 }

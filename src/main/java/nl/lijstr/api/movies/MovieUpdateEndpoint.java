@@ -1,6 +1,5 @@
 package nl.lijstr.api.movies;
 
-import javax.transaction.Transactional;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.domain.movies.Movie;
@@ -33,8 +32,6 @@ public class MovieUpdateEndpoint extends AbsService {
     @Autowired
     private MafApiService mafApiService;
 
-    private boolean shouldRun = false;
-
     /**
      * Update the movie with the oldest 'lastUpdated' value.
      *
@@ -65,38 +62,5 @@ public class MovieUpdateEndpoint extends AbsService {
         logger.info("Updating movie: {} ({})", movie.getTitle(), movie.getImdbId());
         mafApiService.updateMovie(movie);
     }
-
-    /**
-     * Update the oldest movie.
-     */
-    //@Scheduled(cron = "0 0 */6 * * *")
-    @Scheduled(cron = "0 * * * * *")
-    public void updateOldestByCron() {
-        if (!shouldRun) {
-            return;
-        }
-
-        this.shouldRun = false;
-        this.updateOldestCron();
-    }
-
-    @Transactional
-    private void updateOldestCron() {
-        logger.debug("[CRON] Updating oldest movie");
-        Movie movie = movieRepository.findFirstByOrderByLastUpdatedAsc();
-        if (movie == null) {
-            logger.debug("[CRON] No movie to update found.");
-        } else {
-            logger.info("[CRON] Updating movie: {} ({})", movie.getTitle(), movie.getImdbId());
-            mafApiService.updateMovie(movie);
-            logger.info("[CRON] Finished updating movie");
-        }
-    }
-
-    @RequestMapping(value = "/activate", method = RequestMethod.POST)
-    public void activate() {
-        this.shouldRun = true;
-    }
-
 
 }
