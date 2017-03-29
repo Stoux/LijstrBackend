@@ -136,7 +136,7 @@ public class MovieStatsEndpoint extends AbsService {
     public PageResult<MovieShortDetail> recentlyAddedMovies(
         @RequestParam(required = false, defaultValue = "1") @Min(1) int page,
         @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
-        return getPaged(movieRepository, page, limit, MovieShortDetail::fromMovie);
+        return getPaged(movieRepository::findAll, page, limit, MovieShortDetail::fromMovie);
     }
 
     /**
@@ -151,7 +151,10 @@ public class MovieStatsEndpoint extends AbsService {
     public PageResult<MovieRecentChange<MovieExtendedRating>> newRatings(
         @RequestParam(required = false, defaultValue = "1") @Min(1) int page,
         @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
-        return getPaged(ratingRepository, page, limit, r -> wrapRating(r.getMovie(), new MovieExtendedRating(r)));
+        return getPaged(
+            p -> ratingRepository.findAllBySeenEquals(p, MovieRating.Seen.YES),
+            page, limit, r -> wrapRating(r.getMovie(), new MovieExtendedRating(r))
+        );
     }
 
     /**
@@ -166,12 +169,13 @@ public class MovieStatsEndpoint extends AbsService {
     public PageResult<MovieRecentChange<MovieShortComment>> newComments(
         @RequestParam(required = false, defaultValue = "1") @Min(1) int page,
         @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
-        return getPaged(commentRepository, page, limit, c -> wrapRating(c.getMovie(), new MovieShortComment(c)));
+        return getPaged(commentRepository::findAll, page, limit, c -> wrapRating(c.getMovie(), new MovieShortComment(c)));
     }
 
-    private <X, Y> PageResult<Y> getPaged(BasicRepository<X> repository, int page, int limit, Function<X, Y> mapper) {
+    private <X, Y> PageResult<Y> getPaged(Function<Pageable, Page<X>> findMethod,
+                                          int page, int limit, Function<X, Y> mapper) {
         Pageable p = new PageRequest(page - 1, limit, Sort.Direction.DESC, "created");
-        Page<X> pagedResult = repository.findAll(p);
+        Page<X> pagedResult = findMethod.apply(p);
 
         List<Y> content = pagedResult.getContent().stream()
             .map(mapper)

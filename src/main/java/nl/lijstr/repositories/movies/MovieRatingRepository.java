@@ -4,6 +4,8 @@ import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicMovieRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * A repository for Movie comments.
@@ -21,5 +23,16 @@ public interface MovieRatingRepository extends BasicMovieRepository<MovieRating>
      * @return the rating
      */
     MovieRating findByMovieAndUserAndLatest(Movie movie, User user, Boolean latest);
+
+
+    /**
+     * Find all (paged) ratings with a given Seen value.
+     *
+     * @param pageable The requested page
+     * @param seen     The requested seen value
+     *
+     * @return a paged result
+     */
+    Page<MovieRating> findAllBySeenEquals(Pageable pageable, MovieRating.Seen seen);
 
 }
