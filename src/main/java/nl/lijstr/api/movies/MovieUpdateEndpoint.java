@@ -1,5 +1,6 @@
 package nl.lijstr.api.movies;
 
+import java.util.Collections;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.domain.movies.Movie;
@@ -45,7 +46,7 @@ public class MovieUpdateEndpoint extends AbsService {
         logger.info("Updating movie: {} ({})", movie.getTitle(), movie.getImdbId());
         mafApiService.updateMovie(movie);
         return MovieSummary.convert(
-            movie, false, false, false, false, false
+            movie, false, false, false, false, false, Collections.emptySet()
         );
     }
 

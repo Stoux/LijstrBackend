@@ -3,13 +3,16 @@ package nl.lijstr.api.movies.models;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.*;
 import nl.lijstr.common.StrUtils;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
+import nl.lijstr.domain.movies.MovieRating;
 
 /**
  * A summarized version of a {@link Movie}.
@@ -29,6 +32,8 @@ public class MovieSummary {
     private Double imdbRating;
     private Integer metacriticScore;
 
+    private Integer runtime;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String ageRating;
 
@@ -37,15 +42,19 @@ public class MovieSummary {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, String> languages;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, MovieShortRating> latestRatings;
 
     /**
-     * Convert a Movie to a summarized version.
+     * Convert a Movie to a summarized version of itself.
      *
      * @param movie            The movie
+     * @param useDutchTitle    Should include the dutch title (if available)
+     * @param useOriginalTitle Should include the original title (if available)
      * @param includeGenres    Should include a map of genres
      * @param includeLanguages Should include a map of languages
      * @param includeAgeRating Should include the movie's age rating
+     * @param requestUsers     Request the ratings of the given users (can be null for all that are available)
      *
      * @return the summary
      */
@@ -54,18 +63,15 @@ public class MovieSummary {
                                        boolean useOriginalTitle,
                                        boolean includeGenres,
                                        boolean includeLanguages,
-                                       boolean includeAgeRating) {
-        Map<Long, MovieShortRating> shortRatings = movie.getLatestMovieRatings().stream()
-                .map(MovieShortRating::new)
-                .collect(Collectors.toMap(MovieShortRating::getUser, o -> o));
-
+                                       boolean includeAgeRating,
+                                       Set<Long> requestUsers) {
         MovieSummaryBuilder builder = MovieSummary.builder()
-                .id(movie.getId())
-                .imdbId(movie.getImdbId())
-                .year(movie.getYear())
-                .imdbRating(movie.getImdbRating())
-                .metacriticScore(movie.getMetacriticScore())
-                .latestRatings(shortRatings);
+            .id(movie.getId())
+            .imdbId(movie.getImdbId())
+            .year(movie.getYear())
+            .runtime(movie.getRuntime())
+            .imdbRating(movie.getImdbRating())
+            .metacriticScore(movie.getMetacriticScore());
 
         if (useDutchTitle && movie.getDutchTitle() != null) {
             builder.title(movie.getDutchTitle());
@@ -75,6 +81,16 @@ public class MovieSummary {
             builder.title(movie.getTitle());
         }
 
+        if (requestUsers == null || !requestUsers.isEmpty()) {
+            Stream<MovieRating> ratingStream = movie.getLatestMovieRatings().stream();
+            if (requestUsers != null) {
+                ratingStream = ratingStream.filter(r -> requestUsers.contains(r.getUser().getId()));
+            }
+            Map<Long, MovieShortRating> shortRatings = ratingStream
+                .map(MovieShortRating::new)
+                .collect(Collectors.toMap(MovieShortRating::getUser, o -> o));
+            builder.latestRatings(shortRatings);
+        }
 
         if (includeAgeRating) {
             builder.ageRating(StrUtils.useOrDefault(movie.getAgeRating(), "N/A"));

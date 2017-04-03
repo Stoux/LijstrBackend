@@ -1,6 +1,9 @@
 package nl.lijstr.api.movies;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
@@ -11,6 +14,7 @@ import nl.lijstr.beans.MovieAddBean;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
+import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +62,14 @@ public class MovieEndpoint extends AbsService {
     }
 
     /**
-     * Get a list of short versions of all movies.
+     * Get a list of summaries of all movies.
      *
-     * @param includeGenres    Should include genres
-     * @param includeLanguages Should include languages
-     * @param includeAgeRating Should include age rating
+     * @param useDutchTitles    Use the dutch titles if available
+     * @param useOriginalTitles Use the original titles if available
+     * @param includeGenres     Should include genres
+     * @param includeLanguages  Should include languages
+     * @param includeAgeRating  Should include age rating
+     * @param requestedUsers    A comma separated list of all the requested users which will only return their ratings
      *
      * @return the list
      */
@@ -72,11 +79,13 @@ public class MovieEndpoint extends AbsService {
             @RequestParam(required = false, defaultValue = "false") final boolean useOriginalTitles,
             @RequestParam(required = false, defaultValue = "false") final boolean includeGenres,
             @RequestParam(required = false, defaultValue = "false") final boolean includeLanguages,
-            @RequestParam(required = false, defaultValue = "false") final boolean includeAgeRating) {
+            @RequestParam(required = false, defaultValue = "false") final boolean includeAgeRating,
+            @RequestParam(required = false, name = "users") final String requestedUsers) {
+        Set<Long> users = parseUsers(requestedUsers);
         return movieRepository.findAllByOrderByTitleAsc()
                 .stream()
                 .map(m -> MovieSummary.convert(m, useDutchTitles, useOriginalTitles,
-                        includeGenres, includeLanguages, includeAgeRating))
+                        includeGenres, includeLanguages, includeAgeRating, users))
                 .collect(Collectors.toList());
     }
 
@@ -96,6 +105,27 @@ public class MovieEndpoint extends AbsService {
 
         //Add the movie
         movieAddBean.addMovie(postedRequest.getImdbId(), postedRequest.getYoutubeId(), new User(user.getId()));
+    }
+
+    @SuppressWarnings("squid:S1168")
+    private static Set<Long> parseUsers(final String requestedUsers) {
+        if (requestedUsers == null) {
+            //Explicitly return null instead of an empty array as an empty array means return everything available
+            return null;
+        }
+
+        if (requestedUsers.length() == 0) {
+            return Collections.emptySet();
+        }
+
+        if (!requestedUsers.matches("^(\\d+)(,\\d+)*$")) {
+            throw new BadRequestException("Invalid user list");
+        }
+
+        String[] split = requestedUsers.split(",");
+        return Arrays.stream(split)
+            .map(Long::parseLong)
+            .collect(Collectors.toSet());
     }
 
 }
