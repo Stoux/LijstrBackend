@@ -32,6 +32,7 @@ public class MovieDetail {
 
     private Integer year;
     private LocalDate released;
+    private Integer runtime;
 
     private Double imdbRating;
     private Long imdbVotes;
@@ -71,6 +72,7 @@ public class MovieDetail {
                 .dutchTitle(movie.getDutchTitle())
                 .year(movie.getYear())
                 .released(movie.getReleased())
+                .runtime(movie.getRuntime())
                 .imdbRating(movie.getImdbRating())
                 .imdbVotes(movie.getImdbVotes())
                 .metacriticScore(movie.getMetacriticScore())
