@@ -16,6 +16,7 @@ public class MovieStats {
     private int numberOfMovies;
     private double averageImdb;
     private double averageMetacritic;
+    private double averageRuntime;
     private Map<Integer, Integer> moviesPerYear;
     private Map<Long, UserStats> userToStats;
 

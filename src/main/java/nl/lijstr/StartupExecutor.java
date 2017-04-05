@@ -131,10 +131,8 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     }
 
     private void deleteTestFile(File testFile) {
-        if (testFile.exists()) {
-            if (!testFile.delete()) {
-                throw new LijstrException("Failed to delete test file");
-            }
+        if (testFile.exists() && !testFile.delete()) {
+            throw new LijstrException("Failed to delete test file");
         }
     }
 

@@ -67,6 +67,7 @@ public class MovieStatsEndpoint extends AbsService {
         stats.setNumberOfMovies(all.size());
         stats.setAverageImdb(avg(all, Movie::getImdbRating));
         stats.setAverageMetacritic(avg(all, Movie::getMetacriticScore));
+        stats.setAverageRuntime(avg(all, Movie::getRuntime));
 
         for (Movie movie : all) {
             stats.incrementYear(movie.getYear());
