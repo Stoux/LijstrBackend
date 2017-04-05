@@ -17,6 +17,7 @@ import nl.lijstr.exceptions.security.UnauthorizedException;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.security.model.JwtGrantedAuthority;
 import nl.lijstr.security.model.JwtUser;
+import nl.lijstr.services.omdb.models.OmdbObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +59,7 @@ public class MovieEndpointTest {
     @Test
     public void getOne() throws Exception {
         //Arrange
-        Movie movie = new Movie("", "", new User(2L));
+        Movie movie = new Movie("", "", "", new User(2L));
         movie.setId(1L);
         movie.setOldSiteId(1L);
         when(movieRepository.findOne(eq(1L))).thenReturn(movie);
@@ -118,8 +119,10 @@ public class MovieEndpointTest {
         //Arrange
         PostedMovieRequest postedRequest = new PostedMovieRequest(IMDB_ID, YOUTUBE_ID);
         Container<User> userContainer = new Container<>();
-        when(addBean.addMovie(eq(IMDB_ID), eq(YOUTUBE_ID), any())).thenAnswer(i -> {
-            userContainer.setItem(getInvocationParam(i, 2));
+        OmdbObject omdbObject = new OmdbObject("Title", "", "", "");
+        when(addBean.getMovieData(eq(IMDB_ID))).thenReturn(omdbObject);
+        when(addBean.addMovie(eq(IMDB_ID), eq("Title"), eq(YOUTUBE_ID), any())).thenAnswer(i -> {
+            userContainer.setItem(getInvocationParam(i, 3));
             return null;
         });
 

@@ -57,9 +57,9 @@ public class MovieAddBean {
      *
      * @return the added movie
      */
-    public Movie addMovie(String imdbId, String youtubeId, User addedBy) {
+    public Movie addMovie(String imdbId, String title, String youtubeId, User addedBy) {
         //Add the movie
-        Movie newMovie = new Movie(imdbId, youtubeId, addedBy);
+        Movie newMovie = new Movie(imdbId, title, youtubeId, addedBy);
         final Movie movie = movieRepository.save(newMovie);
         return mafApiService.updateMovie(movie);
     }

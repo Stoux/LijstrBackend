@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 public class MovieAddBeanTest {
 
     private static final String IMDB_ID = "tt0481522";
+    private static final String TITLE = "Movie";
     public static final String YOUTUBE = "YOUTUBE";
 
     @Mock
@@ -90,12 +91,13 @@ public class MovieAddBeanTest {
                 .thenAnswer(i -> TestUtils.<Movie>copyInvokedAndModify(i, m -> m.setOldSiteId(1L)));
 
         //Act
-        Movie movie = addBean.addMovie(IMDB_ID, YOUTUBE, u);
+        Movie movie = addBean.addMovie(IMDB_ID, TITLE, YOUTUBE, u);
 
         //Assert
         assertNotNull(movie);
         assertEquals(IMDB_ID, movie.getImdbId());
         assertEquals(YOUTUBE, movie.getYoutubeUrl());
+        assertEquals(TITLE, movie.getTitle());
         assertEquals(u, movie.getAddedBy());
 
         assertEquals(1L, movie.getId().longValue());

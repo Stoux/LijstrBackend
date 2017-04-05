@@ -114,11 +114,13 @@ public class Movie extends IdCmModel {
      * Create a new Movie by it's IMDB ID.
      *
      * @param imdbId     The ID
+     * @param title      The title
      * @param youtubeUrl The YouTube trailer URL
      * @param addedBy    The user who added this movie
      */
-    public Movie(String imdbId, String youtubeUrl, User addedBy) {
+    public Movie(String imdbId, String title, String youtubeUrl, User addedBy) {
         this.imdbId = imdbId;
+        this.title = title;
         this.youtubeUrl = youtubeUrl;
         this.addedBy = addedBy;
 
@@ -143,9 +145,7 @@ public class Movie extends IdCmModel {
      * @param oldSiteId The ID on the old site.
      */
     public Movie(String imdbId, String title, Integer year, Long oldSiteId) {
-        this(imdbId, null, null);
-        this.imdbId = imdbId;
-        this.title = title;
+        this(imdbId, title, (String) null, null);
         this.year = year;
         this.oldSiteId = oldSiteId;
     }

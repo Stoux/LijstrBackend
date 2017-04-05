@@ -144,7 +144,7 @@ public class MovieUpdateHandler {
     }
 
     private void updateTitles(FieldModifyHandler handler, Movie movie, ApiMovie apiMovie) {
-        handler.modify("title");
+//        handler.modify("title");
         handler.modify("originalTitle");
 
         //Find the dutch title if there's one
@@ -159,29 +159,29 @@ public class MovieUpdateHandler {
                 });
 
         //NOTE: Due to MyApiFilms fucking up & returning french titles we have to do some extra logic...
-        if (movie.getOriginalTitle() != null) {
-            apiMovie.getAkas().stream()
-                    .filter(ApiAka::isFrench)
-                    .filter(aka -> movie.getTitle().equalsIgnoreCase(aka.getTitle()))
-                    .findFirst()
-                    .ifPresent(aka -> {
-                        //Title is french...
-                        logger.warn(
-                                "[{}] French title | Replacing '{}' with original title: '{}'",
-                                movie.getId(), movie.getTitle(), movie.getOriginalTitle()
-                        );
-
-                        //Override the title and add a changed value to the history
-                        historyRepository.saveAndFlush(new FieldHistory(
-                                FieldHistory.getDatabaseClassName(Movie.class),
-                                movie.getId(),
-                                "title",
-                                movie.getTitle(),
-                                movie.getOriginalTitle()
-                        ));
-                        movie.setTitle(movie.getOriginalTitle());
-                    });
-        }
+//        if (movie.getOriginalTitle() != null) {
+//            apiMovie.getAkas().stream()
+//                    .filter(ApiAka::isFrench)
+//                    .filter(aka -> movie.getTitle().equalsIgnoreCase(aka.getTitle()))
+//                    .findFirst()
+//                    .ifPresent(aka -> {
+//                        //Title is french...
+//                        logger.warn(
+//                                "[{}] French title | Replacing '{}' with original title: '{}'",
+//                                movie.getId(), movie.getTitle(), movie.getOriginalTitle()
+//                        );
+//
+//                        //Override the title and add a changed value to the history
+//                        historyRepository.saveAndFlush(new FieldHistory(
+//                                FieldHistory.getDatabaseClassName(Movie.class),
+//                                movie.getId(),
+//                                "title",
+//                                movie.getTitle(),
+//                                movie.getOriginalTitle()
+//                        ));
+//                        movie.setTitle(movie.getOriginalTitle());
+//                    });
+//        }
     }
 
 

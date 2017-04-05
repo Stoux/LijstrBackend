@@ -35,6 +35,7 @@ import static org.mockito.Mockito.*;
 public class MovieRequestEndpointTest {
 
     public static final String IMDB_ID = "imdbId";
+    public static final String TITLE = "title";
     public static final String YOUTUBE_ID = "youtubeId";
     public static final String COMMENT = "comment";
     @Mock
@@ -116,7 +117,7 @@ public class MovieRequestEndpointTest {
 
         when(requestRepository.findOne(eq(2L))).thenReturn(request);
         Movie movie = new Movie(IMDB_ID);
-        when(movieAddBean.addMovie(eq(IMDB_ID), eq(YOUTUBE_ID), eq(request.getUser())))
+        when(movieAddBean.addMovie(eq(IMDB_ID), eq(TITLE), eq(YOUTUBE_ID), eq(request.getUser())))
                 .thenReturn(movie);
 
         Container<MovieRating> container = new Container<>();
@@ -179,6 +180,7 @@ public class MovieRequestEndpointTest {
         r.setId(id);
         r.setUser(new User(id));
         r.setImdbId(IMDB_ID);
+        r.setTitle(TITLE);
         r.setYoutubeUrl(YOUTUBE_ID);
         return r;
     }

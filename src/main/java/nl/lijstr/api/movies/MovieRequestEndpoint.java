@@ -93,7 +93,9 @@ public class MovieRequestEndpoint extends AbsService {
         try {
             //Add the movie and finish the request
             movieAddBean.checkIfMovieNotAdded(request.getImdbId());
-            movie = movieAddBean.addMovie(request.getImdbId(), request.getYoutubeUrl(), request.getUser());
+            movie = movieAddBean.addMovie(
+                request.getImdbId(), request.getTitle(), request.getYoutubeUrl(), request.getUser()
+            );
             request.setApprovedBy(new User(user.getId()));
             requestRepository.save(request);
         } catch (BadRequestException e) {

@@ -17,6 +17,7 @@ import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.security.model.JwtUser;
+import nl.lijstr.services.omdb.models.OmdbObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,10 +102,12 @@ public class MovieEndpoint extends AbsService {
         //Validate
         JwtUser user = getUser();
         movieAddBean.checkIfMovieNotAdded(postedRequest.getImdbId());
-        movieAddBean.getMovieData(postedRequest.getImdbId());
+        OmdbObject movieData = movieAddBean.getMovieData(postedRequest.getImdbId());
 
         //Add the movie
-        movieAddBean.addMovie(postedRequest.getImdbId(), postedRequest.getYoutubeId(), new User(user.getId()));
+        movieAddBean.addMovie(
+            postedRequest.getImdbId(), movieData.getTitle(), postedRequest.getYoutubeId(), new User(user.getId())
+        );
     }
 
     @SuppressWarnings("squid:S1168")

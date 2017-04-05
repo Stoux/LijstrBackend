@@ -40,7 +40,7 @@ public class MovieMetaEndpointTest {
 
         when(userBean.getJwtUser()).thenReturn(createUser(1L));
 
-        movie = new Movie(null, null, null);
+        movie = new Movie(null, null, (String) null, null);
         movie.setId(1L);
         when(movieRepository.findOne(eq(1L))).thenReturn(movie);
     }
