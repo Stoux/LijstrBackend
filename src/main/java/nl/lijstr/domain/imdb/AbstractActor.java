@@ -1,6 +1,7 @@
 package nl.lijstr.domain.imdb;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import lombok.*;
@@ -21,6 +22,7 @@ public abstract class AbstractActor extends IdModel implements PersonBound {
     @ManyToOne
     private Person person;
 
+    @Column(length = 1000)
     private String character;
     private String characterUrl;
     private String photoUrl;
@@ -31,4 +33,5 @@ public abstract class AbstractActor extends IdModel implements PersonBound {
     public String getImdbId() {
         return person.getImdbId();
     }
+
 }
