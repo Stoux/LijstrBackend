@@ -7,10 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.security.util.JwtTokenHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -51,7 +53,14 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
         }
 
         //Try to login
-        JwtUser user = jwtTokenUtil.parseToken(authToken);
+        JwtUser user;
+        try {
+            user = jwtTokenUtil.parseToken(authToken);
+        } catch (AuthenticationException e) {
+            unsuccessfulAuthentication(httpRequest, (HttpServletResponse) response, e);
+            return;
+        }
+
         JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(user);
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);

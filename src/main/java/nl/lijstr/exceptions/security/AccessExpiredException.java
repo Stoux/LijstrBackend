@@ -1,14 +1,11 @@
 package nl.lijstr.exceptions.security;
 
-import nl.lijstr.exceptions.LijstrException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.security.core.AuthenticationException;
 
 /**
  * Created by Leon Stam on 18-4-2016.
  */
-@ResponseStatus(HttpStatus.FORBIDDEN)
-public class AccessExpiredException extends LijstrException {
+public class AccessExpiredException extends AuthenticationException {
 
     /**
      * Create a new {@link AccessExpiredException}.
