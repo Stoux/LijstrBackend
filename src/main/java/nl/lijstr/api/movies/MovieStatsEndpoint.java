@@ -154,7 +154,7 @@ public class MovieStatsEndpoint extends AbsService {
         @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
         return getPaged(
             p -> ratingRepository.findAllBySeenEquals(p, MovieRating.Seen.YES),
-            page, limit, r -> wrapRating(r.getMovie(), new MovieExtendedRating(r))
+            page, limit, r -> wrapRating(r.getTarget(), new MovieExtendedRating(r))
         );
     }
 

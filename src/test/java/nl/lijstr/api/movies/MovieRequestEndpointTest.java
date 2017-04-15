@@ -135,7 +135,7 @@ public class MovieRequestEndpointTest {
 
         assertTrue(container.isPresent());
         MovieRating item = container.getItem();
-        assertEquals(movie, item.getMovie());
+        assertEquals(movie, item.getTarget());
         assertEquals(request.getUser(), item.getUser());
         assertEquals(MovieRating.Seen.YES, item.getSeen());
         assertEquals(BigDecimal.ONE, item.getRating());
@@ -167,7 +167,7 @@ public class MovieRequestEndpointTest {
     private void assertContainerContent(Container<MovieRating> container, Movie movie, MovieRequest request) {
         assertTrue(container.isPresent());
         MovieRating item = container.getItem();
-        assertEquals(movie, item.getMovie());
+        assertEquals(movie, item.getTarget());
         assertEquals(request.getUser(), item.getUser());
         assertEquals(MovieRating.Seen.YES, item.getSeen());
         assertEquals(BigDecimal.ONE, item.getRating());
