@@ -27,4 +27,7 @@ public class ShowSeason extends ShowBoundModel {
     @OneToMany
     private List<ShowEpisode> episodes;
 
+    @OneToMany(mappedBy = "target")
+    private List<ShowSeasonRating> seasonRatings;
+
 }

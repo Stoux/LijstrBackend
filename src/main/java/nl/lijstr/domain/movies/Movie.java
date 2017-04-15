@@ -91,10 +91,10 @@ public class Movie extends IdCmModel {
     private List<MovieComment> movieComments;
 
     @Where(clause = "latest='1'")
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "target")
     private List<MovieRating> latestMovieRatings;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "target")
     private List<MovieRating> movieRatings;
 
     @JsonIgnore

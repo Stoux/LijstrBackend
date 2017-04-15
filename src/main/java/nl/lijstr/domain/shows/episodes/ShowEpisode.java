@@ -1,8 +1,10 @@
 package nl.lijstr.domain.shows.episodes;
 
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.shows.seasons.ShowSeason;
@@ -31,5 +33,8 @@ public class ShowEpisode extends IdCmModel {
 
     private Double imdbRating;
     private Long imdbVotes;
+
+    @OneToMany(mappedBy = "target")
+    private List<ShowEpisodeRating> episodeRatings;
 
 }

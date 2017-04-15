@@ -48,7 +48,7 @@ public class MovieRatingEndpoint extends AbsMovieService {
     public DataContainer<MovieExtendedRating> getLatestRatingForUser(@PathVariable Long movieId) {
         Movie movie = findMovie(movieId);
         JwtUser user = getUser();
-        MovieRating rating = ratingRepository.findByMovieAndUserAndLatest(movie, new User(user.getId()), true);
+        MovieRating rating = ratingRepository.findByTargetAndUserAndLatestIsTrue(movie, new User(user.getId()));
         return new DataContainer<>(rating == null ? null : new MovieExtendedRating(rating));
     }
 

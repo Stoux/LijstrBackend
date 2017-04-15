@@ -16,6 +16,7 @@ import nl.lijstr.domain.shows.seasons.ShowSeason;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
+import org.hibernate.annotations.Where;
 
 /**
  * A (TV-)show / series.
@@ -42,6 +43,8 @@ public class Show extends IdCmModel {
     private Long tvMazeId;
 
     private String title;
+    private String originalTitle;
+    private String dutchTitle;
 
     @Lob
     private String shortPlot;
@@ -93,5 +96,12 @@ public class Show extends IdCmModel {
     @JsonIgnore
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShowTrivia> trivia;
+
+    @Where(clause = "latest='1'")
+    @OneToMany(mappedBy = "target")
+    private List<ShowRating> latestShowRatings;
+
+    @OneToMany(mappedBy = "target")
+    private List<ShowRating> showRatings;
 
 }
