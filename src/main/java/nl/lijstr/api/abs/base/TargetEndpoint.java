@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import nl.lijstr.api.abs.AbsService;
-import nl.lijstr.api.abs.base.model.post.PostedRequest;
+import nl.lijstr.api.abs.base.models.post.PostedRequest;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.interfaces.Target;
 import nl.lijstr.exceptions.BadRequestException;

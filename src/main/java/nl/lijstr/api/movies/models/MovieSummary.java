@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.*;
+import nl.lijstr.api.abs.base.models.ShortRating;
+import nl.lijstr.api.abs.base.models.TargetSummary;
 import nl.lijstr.common.StrUtils;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.imdb.Genre;
@@ -18,20 +20,11 @@ import nl.lijstr.domain.movies.MovieRating;
  * A summarized version of a {@link Movie}.
  */
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class MovieSummary {
+public class MovieSummary extends TargetSummary {
 
-    private long id;
-    private String imdbId;
-    private String title;
     private int year;
-
-    private Double imdbRating;
-    private Integer metacriticScore;
-
     private Integer runtime;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -42,8 +35,17 @@ public class MovieSummary {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, String> languages;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Map<Long, MovieShortRating> latestRatings;
+    @Builder
+    private MovieSummary(long id, String imdbId, String title, Double imdbRating, Integer metacriticScore,
+                        Map<Long, ShortRating> latestRatings, int year, Integer runtime, String ageRating,
+                        Map<Long, String> genres, Map<Long, String> languages) {
+        super(id, imdbId, title, imdbRating, metacriticScore, latestRatings);
+        this.year = year;
+        this.runtime = runtime;
+        this.ageRating = ageRating;
+        this.genres = genres;
+        this.languages = languages;
+    }
 
     /**
      * Convert a Movie to a summarized version of itself.
@@ -86,9 +88,9 @@ public class MovieSummary {
             if (requestUsers != null) {
                 ratingStream = ratingStream.filter(r -> requestUsers.contains(r.getUser().getId()));
             }
-            Map<Long, MovieShortRating> shortRatings = ratingStream
-                .map(MovieShortRating::new)
-                .collect(Collectors.toMap(MovieShortRating::getUser, o -> o));
+            Map<Long, ShortRating> shortRatings = ratingStream
+                .map(ShortRating::new)
+                .collect(Collectors.toMap(ShortRating::getUser, o -> o));
             builder.latestRatings(shortRatings);
         }
 

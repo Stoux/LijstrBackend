@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import nl.lijstr.api.abs.base.model.post.PostedRequest;
+import nl.lijstr.api.abs.base.models.post.PostedRequest;
 import nl.lijstr.api.movies.models.MovieDetail;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.beans.MovieAddBean;

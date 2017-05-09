@@ -2,13 +2,14 @@ package nl.lijstr.api.movies.models;
 
 import java.time.LocalDateTime;
 import lombok.*;
+import nl.lijstr.api.abs.base.models.ShortRating;
 import nl.lijstr.domain.movies.MovieRating;
 
 /**
  * A representable version of a {@link MovieRating}.
  */
 @Getter
-public class MovieExtendedRating extends MovieShortRating implements TimeBased {
+public class MovieExtendedRating extends ShortRating implements TimeBased {
 
     private long id;
 

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.*;
+import nl.lijstr.api.abs.base.models.ShortRating;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
@@ -51,7 +52,7 @@ public class MovieDetail {
     private List<Genre> genres;
     private List<SpokenLanguage> languages;
 
-    private List<MovieShortRating> latestMovieRatings;
+    private List<ShortRating> latestMovieRatings;
 
     /**
      * Convert a {@link Movie} to a {@link MovieDetail} object.
@@ -86,11 +87,10 @@ public class MovieDetail {
 
         List<MovieRating> ratings = movie.getLatestMovieRatings();
         if (ratings != null) {
-            List<MovieShortRating> shortRatings = ratings.stream().map(MovieShortRating::new)
-                    .collect(Collectors.toList());
+            List<ShortRating> shortRatings = ratings.stream().map(ShortRating::new)
+                                                    .collect(Collectors.toList());
             builder.latestMovieRatings(shortRatings);
         }
-
 
         if (movie.getAddedBy() != null) {
             builder.addedBy(movie.getAddedBy().getId());

@@ -2,6 +2,7 @@ package nl.lijstr.api.movies.models;
 
 import java.math.BigDecimal;
 import java.util.*;
+import nl.lijstr.api.abs.base.models.ShortRating;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
@@ -104,7 +105,7 @@ public class MovieSummaryTest {
         );
 
         //Assert
-        Map<Long, MovieShortRating> ratings = summary.getLatestRatings();
+        Map<Long, ShortRating> ratings = summary.getLatestRatings();
         assertEquals(2, ratings.size());
         assertTrue(ratings.containsKey(1L));
         assertEquals(1L, ratings.get(1L).getUser());

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
 /**
- * Created by Leon Stam on 21-4-2016.
+ * A response object from omdbapi.com.
  */
 @Getter
 @NoArgsConstructor
@@ -35,6 +35,15 @@ public class OmdbObject {
      */
     public boolean isSeries() {
         return "series".equals(type);
+    }
+
+    /**
+     * Check if this is a series' episode.
+     *
+     * @return is an episode
+     */
+    public boolean isSeriesEpisode() {
+        return "episode".equals(type);
     }
 
 }

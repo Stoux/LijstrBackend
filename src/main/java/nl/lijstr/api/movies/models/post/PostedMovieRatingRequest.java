@@ -1,7 +1,7 @@
 package nl.lijstr.api.movies.models.post;
 
 import lombok.*;
-import nl.lijstr.api.abs.base.model.post.PostedRequest;
+import nl.lijstr.api.abs.base.models.post.PostedRequest;
 import org.springframework.validation.annotation.Validated;
 
 /**

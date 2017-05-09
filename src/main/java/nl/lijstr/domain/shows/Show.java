@@ -3,12 +3,14 @@ package nl.lijstr.domain.shows;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
+import nl.lijstr.domain.interfaces.Target;
 import nl.lijstr.domain.shows.people.ShowCharacter;
 import nl.lijstr.domain.shows.people.ShowDirector;
 import nl.lijstr.domain.shows.people.ShowWriter;
@@ -27,7 +29,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @ModifiableWithHistory
-public class Show extends IdCmModel {
+public class Show extends IdCmModel implements Target {
 
     @Setter(value = AccessLevel.NONE)
     @NotModifiable
@@ -64,7 +66,9 @@ public class Show extends IdCmModel {
 
     private String ageRating;
     private Integer runtime;
+
     private boolean poster;
+    private String youtubeUrl;
 
     @NotModifiable
     private LocalDateTime lastUpdated;
@@ -103,5 +107,30 @@ public class Show extends IdCmModel {
 
     @OneToMany(mappedBy = "target")
     private List<ShowRating> showRatings;
+
+    /**
+     * Create a new Show by it's IMDB ID.
+     *
+     * @param imdbId     The ID
+     * @param title      The title
+     * @param youtubeUrl The YouTube trailer URL
+     * @param addedBy    The user who added this movie
+     */
+    public Show(String imdbId, String title, String youtubeUrl, User addedBy) {
+        this.imdbId = imdbId;
+        this.title = title;
+        this.youtubeUrl = youtubeUrl;
+        this.addedBy = addedBy;
+
+        this.seasons = new ArrayList<>();
+        this.genres = new ArrayList<>();
+        this.languages = new ArrayList<>();
+        this.characters = new ArrayList<>();
+        this.writers = new ArrayList<>();
+        this.directors = new ArrayList<>();
+        this.trivia = new ArrayList<>();
+        this.latestShowRatings = new ArrayList<>();
+        this.showRatings = new ArrayList<>();
+    }
 
 }

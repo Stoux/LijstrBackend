@@ -3,7 +3,7 @@ package nl.lijstr.api.movies;
 import java.util.List;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.base.TargetEndpoint;
-import nl.lijstr.api.abs.base.model.post.PostedRequest;
+import nl.lijstr.api.abs.base.models.post.PostedRequest;
 import nl.lijstr.api.movies.models.MovieDetail;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.beans.MovieAddBean;
@@ -80,8 +80,8 @@ public class MovieEndpoint extends TargetEndpoint<Movie, MovieRepository> {
             @RequestParam(required = false, defaultValue = "false") final boolean includeAgeRating,
             @RequestParam(required = false, name = "users") final String requestedUsers) {
         return summaryList(requestedUsers,
-                           (m, users) -> MovieSummary.convert(m, useDutchTitles, useOriginalTitles, includeGenres,
-                                                              includeLanguages, includeAgeRating, users));
+            (m, users) -> MovieSummary.convert(m, useDutchTitles, useOriginalTitles, includeGenres, includeLanguages,
+                includeAgeRating, users));
     }
 
     /**
@@ -100,7 +100,7 @@ public class MovieEndpoint extends TargetEndpoint<Movie, MovieRepository> {
 
         //Add the movie
         movieAddBean.addMovie(postedRequest.getImdbId(), movieData.getTitle(), postedRequest.getYoutubeId(),
-                              new User(user.getId()));
+            new User(user.getId()));
     }
 
 }

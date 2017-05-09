@@ -2,6 +2,7 @@ package nl.lijstr.services.maf;
 
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
+import nl.lijstr.domain.shows.Show;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
@@ -52,5 +53,18 @@ public class MafApiService {
         ApiMovieModel model = Utils.executeCall(movieCall);
         return model.getMovie();
     }
+
+    /**
+     * Trigger a show to be updated by using the latest data from MyApiFilms.
+     *
+     * @param show The show
+     *
+     * @return The updated show
+     */
+    public Show updateShow(Show show) {
+        //TODO: Update
+        return show;
+    }
+
 
 }

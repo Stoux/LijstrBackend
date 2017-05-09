@@ -1,4 +1,4 @@
-package nl.lijstr.api.abs.base.model.post;
+package nl.lijstr.api.abs.base.models.post;
 
 import javax.validation.constraints.Pattern;
 import lombok.*;

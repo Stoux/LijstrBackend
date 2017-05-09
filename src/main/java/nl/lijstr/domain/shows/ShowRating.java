@@ -19,6 +19,9 @@ public class ShowRating extends RatingModel<Show> {
     @Column(nullable = false)
     private Boolean ignoreRating;
 
+    @Column(precision = 3, scale = 1)
+    private BigDecimal generatedRating;
+
     /**
      * Create a new rating for a show.
      *
@@ -46,4 +49,8 @@ public class ShowRating extends RatingModel<Show> {
         this.ignoreRating = false;
     }
 
+    @Override
+    public BigDecimal getRating() {
+        return ignoreRating ? generatedRating : super.getRating();
+    }
 }

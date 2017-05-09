@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import nl.lijstr.api.movies.models.MovieExtendedRating;
-import nl.lijstr.api.movies.models.MovieShortRating;
+import nl.lijstr.api.abs.base.models.ShortRating;
 import nl.lijstr.api.movies.models.post.MovieRatingRequest;
 import nl.lijstr.beans.UserBean;
 import nl.lijstr.common.Container;
@@ -167,7 +167,7 @@ public class MovieRatingEndpointTest {
         whenRatingSaveReturnWithId(1L);
 
         //Act
-        MovieShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null));
+        ShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null));
 
         //Assert
         assertEquals(MovieRating.Seen.YES.ordinal(), rating.getSeen());
