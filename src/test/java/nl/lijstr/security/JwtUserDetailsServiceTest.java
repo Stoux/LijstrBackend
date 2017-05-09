@@ -66,7 +66,7 @@ public class JwtUserDetailsServiceTest {
         assertNull(jwtUser.getAccessTill());
         assertNull(jwtUser.getValidTill());
 
-        assertEquals(4, jwtUser.getAuthorities().size());
+        assertEquals(6, jwtUser.getAuthorities().size());
         for (JwtGrantedAuthority authority : jwtUser.getAuthorities()) {
             boolean isFound = false;
             for (GrantedPermission permission : permissions) {

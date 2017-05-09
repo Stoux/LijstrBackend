@@ -10,6 +10,7 @@ import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
+import nl.lijstr.domain.interfaces.Target;
 import nl.lijstr.domain.movies.people.MovieCharacter;
 import nl.lijstr.domain.movies.people.MovieDirector;
 import nl.lijstr.domain.movies.people.MovieWriter;
@@ -27,7 +28,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @ModifiableWithHistory
-public class Movie extends IdCmModel {
+public class Movie extends IdCmModel implements Target {
 
     @Setter(value = AccessLevel.NONE)
     @NotModifiable

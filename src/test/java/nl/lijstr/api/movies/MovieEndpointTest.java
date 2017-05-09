@@ -4,16 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import nl.lijstr.api.abs.base.model.post.PostedRequest;
 import nl.lijstr.api.movies.models.MovieDetail;
 import nl.lijstr.api.movies.models.MovieSummary;
-import nl.lijstr.api.movies.models.post.PostedMovieRequest;
 import nl.lijstr.beans.MovieAddBean;
 import nl.lijstr.beans.UserBean;
 import nl.lijstr.common.Container;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
-import nl.lijstr.exceptions.security.UnauthorizedException;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.security.model.JwtGrantedAuthority;
 import nl.lijstr.security.model.JwtUser;
@@ -48,8 +47,8 @@ public class MovieEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        movieEndpoint = new MovieEndpoint();
-        insertMocks(movieEndpoint, movieRepository, addBean, userBean);
+        movieEndpoint = new MovieEndpoint(movieRepository, addBean);
+        insertMocks(movieEndpoint, userBean);
 
         LocalDateTime access = LocalDateTime.now().plusMinutes(5);
         jwtUser = new JwtUser(1L, "User", "Pass", new ArrayList<>(), access, access, 1L);
@@ -86,15 +85,6 @@ public class MovieEndpointTest {
         assertEquals(movie, originalById);
     }
 
-    @Test(expected = UnauthorizedException.class)
-    public void getUnauthorizedOriginal() throws Exception {
-        //Act
-        movieEndpoint.getOriginalById(1L);
-
-        //Assert
-        fail("Shouldn't be allowed to get the movie");
-    }
-
     @Test
     public void summaries() throws Exception {
         //Arrange
@@ -117,7 +107,7 @@ public class MovieEndpointTest {
     @Test
     public void addMovie() throws Exception {
         //Arrange
-        PostedMovieRequest postedRequest = new PostedMovieRequest(IMDB_ID, YOUTUBE_ID);
+        PostedRequest postedRequest = new PostedRequest(IMDB_ID, YOUTUBE_ID);
         Container<User> userContainer = new Container<>();
         OmdbObject omdbObject = new OmdbObject("Title", "", "", "");
         when(addBean.getMovieData(eq(IMDB_ID))).thenReturn(omdbObject);

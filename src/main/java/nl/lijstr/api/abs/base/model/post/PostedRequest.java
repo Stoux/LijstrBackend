@@ -1,4 +1,4 @@
-package nl.lijstr.api.movies.models.post;
+package nl.lijstr.api.abs.base.model.post;
 
 import javax.validation.constraints.Pattern;
 import lombok.*;
@@ -6,13 +6,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * Created by Leon Stam on 18-4-2016.
+ * A model to request a new IMDB entity.
  */
 @Getter
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostedMovieRequest {
+public class PostedRequest {
 
     @NotEmpty
     @Pattern(regexp = "tt\\d{7}")

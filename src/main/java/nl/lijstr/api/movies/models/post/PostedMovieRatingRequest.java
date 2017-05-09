@@ -1,6 +1,7 @@
 package nl.lijstr.api.movies.models.post;
 
 import lombok.*;
+import nl.lijstr.api.abs.base.model.post.PostedRequest;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 @Getter
 @Validated
 @NoArgsConstructor
-public class PostedMovieRatingRequest extends PostedMovieRequest {
+public class PostedMovieRatingRequest extends PostedRequest {
 
     private MovieRatingRequest ratingRequest;
 
