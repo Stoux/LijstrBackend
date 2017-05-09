@@ -1,4 +1,4 @@
-package nl.lijstr.api.show.models;
+package nl.lijstr.api.shows.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import java.util.Map;

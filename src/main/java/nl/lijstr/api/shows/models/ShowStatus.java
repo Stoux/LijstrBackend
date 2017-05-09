@@ -1,4 +1,4 @@
-package nl.lijstr.api.show.models;
+package nl.lijstr.api.shows.models;
 
 /**
  * The current status of a Show (or season).

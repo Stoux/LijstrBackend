@@ -1,11 +1,11 @@
-package nl.lijstr.api.show;
+package nl.lijstr.api.shows;
 
 import java.util.List;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.base.TargetEndpoint;
 import nl.lijstr.api.abs.base.models.post.PostedRequest;
-import nl.lijstr.api.show.models.ShowDetail;
-import nl.lijstr.api.show.models.ShowSummary;
+import nl.lijstr.api.shows.models.ShowDetail;
+import nl.lijstr.api.shows.models.ShowSummary;
 import nl.lijstr.beans.ShowAddBean;
 import nl.lijstr.domain.shows.Show;
 import nl.lijstr.domain.users.Permission;

@@ -1,4 +1,4 @@
-package nl.lijstr.api.show.models;
+package nl.lijstr.api.shows.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
