@@ -40,8 +40,10 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     @Value("${admin.password}")
     private String adminPassword;
 
-    @Value("${server.image-location}")
-    private String imgFolderLocation;
+    @Value("${server.image-location.movies}")
+    private String moviesImgFolderLocation;
+    @Value("${server.image-location.shows}")
+    private String showsImgFolderLocation;
 
     @Autowired
     private PermissionRepository permissionRepository;
@@ -50,7 +52,8 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     public void onApplicationEvent(ContextRefreshedEvent event) {
         addPermissions();
         addAdmin();
-        validateWritePermissions();
+        validateWritePermissions(moviesImgFolderLocation);
+        validateWritePermissions(showsImgFolderLocation);
     }
 
     private void addPermissions() {
@@ -92,11 +95,11 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
         logger.info("Added Admin account. ID: {}", admin.getId());
     }
 
-    private void validateWritePermissions() {
-        logger.info("Validating image folder read/write permissions.");
+    private void validateWritePermissions(String forLocation) {
+        logger.info("Validating image folder read/write permissions @ {}", forLocation);
 
         //Check if the folder exists
-        File imgFolder = new File(imgFolderLocation);
+        File imgFolder = new File(forLocation);
         if (!imgFolder.exists()) {
             try {
                 if (!imgFolder.mkdirs()) throw new SecurityException("Self thrown: Unable to create folder.");
@@ -107,7 +110,7 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
         }
 
         if (!imgFolder.isDirectory()) {
-            logger.fatal("Path '{}' is not a valid directory.", imgFolderLocation);
+            logger.fatal("Path '{}' is not a valid directory.", forLocation);
             throw new LijstrException("Unable to use image folder");
         }
 

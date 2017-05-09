@@ -61,7 +61,7 @@ public class MovieUpdateHandler {
     @Autowired
     private ImdbBean imdbBean;
 
-    @Value("${server.image-location}")
+    @Value("${server.image-location.movies}")
     private String imgFolderLocation;
 
     /**
