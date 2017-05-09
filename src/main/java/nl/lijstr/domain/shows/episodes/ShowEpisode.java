@@ -1,12 +1,14 @@
 package nl.lijstr.domain.shows.episodes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
+import nl.lijstr.domain.other.DateAccuracy;
 import nl.lijstr.domain.shows.seasons.ShowSeason;
 
 /**
@@ -24,10 +26,14 @@ public class ShowEpisode extends IdCmModel {
 
     @ManyToOne
     private ShowSeason season;
+    @Column(nullable = false)
     private Integer episodeNumber;
 
-    private LocalDate airDate;
+    private LocalDateTime airDate;
+    @Enumerated(EnumType.STRING)
+    private DateAccuracy airDateAccuracy;
 
+    private String title;
     private String plot;
     private Integer runtime;
 
