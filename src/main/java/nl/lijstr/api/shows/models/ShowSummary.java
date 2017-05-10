@@ -35,6 +35,7 @@ public class ShowSummary extends TargetSummary {
         ShowSummaryBuilder builder = ShowSummary.builder()
             .id(show.getId())
             .imdbId(show.getImdbId())
+            .title(show.getTitle())
             .imdbRating(show.getImdbRating())
             .metacriticScore(show.getMetacriticScore());
 
