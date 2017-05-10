@@ -1,4 +1,4 @@
-package nl.lijstr.api.movies;
+package nl.lijstr.api.shows;
 
 import nl.lijstr.api.abs.base.TargetUserEndpoint;
 import nl.lijstr.domain.users.Permission;
@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Endpoint for movie users.
+ * Endpoint for show users.
  */
 @RestController
-@RequestMapping(value = "/movies/users/", produces = "application/json")
-public class MovieUserEndpoint extends TargetUserEndpoint {
+@RequestMapping(value = "/shows/users/", produces = "application/json")
+public class ShowUserEndpoint extends TargetUserEndpoint {
 
     @Autowired
-    public MovieUserEndpoint(UserRepository userRepository) {
-        super(userRepository, Permission.MOVIE_USER);
+    public ShowUserEndpoint(UserRepository userRepository) {
+        super(userRepository, Permission.SHOW_USER);
     }
 
 }

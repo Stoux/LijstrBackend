@@ -30,8 +30,7 @@ public class MovieUserEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        endpoint = new MovieUserEndpoint();
-        insertMocks(endpoint, userRepository);
+        endpoint = new MovieUserEndpoint(userRepository);
     }
 
     @Test
