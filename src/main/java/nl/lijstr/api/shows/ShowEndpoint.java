@@ -41,7 +41,7 @@ public class ShowEndpoint extends TargetEndpoint<Show, ShowRepository> {
      */
     @RequestMapping(DETAIL_PATH)
     public ShowDetail getById(@PathVariable("id") final long id) {
-        Show show = findOne(targetRepository, id, "movie");
+        Show show = findOne(targetRepository, id, "show");
         return ShowDetail.fromShow(show);
     }
 
@@ -71,7 +71,7 @@ public class ShowEndpoint extends TargetEndpoint<Show, ShowRepository> {
     }
 
     /**
-     * Add a new Movie to the DB.
+     * Add a new show to the DB.
      *
      * @param postedRequest The data
      *
