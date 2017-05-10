@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Locale;
 import nl.lijstr.beans.ImdbBean;
-import nl.lijstr.common.Container;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.other.DateAccuracy;
 import nl.lijstr.domain.shows.Show;
@@ -18,6 +17,7 @@ import nl.lijstr.domain.shows.seasons.ShowSeason;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
 import nl.lijstr.repositories.shows.ShowRepository;
+import nl.lijstr.services.common.ShowSeasonUpdater;
 import nl.lijstr.services.maf.handlers.util.FieldConverters;
 import nl.lijstr.services.maf.handlers.util.FieldModifyHandler;
 import nl.lijstr.services.maf.models.*;
@@ -32,7 +32,8 @@ import org.springframework.util.StringUtils;
 @Component
 public class ShowUpdateHandler extends TargetUpdateHandler<Show, ApiShow> {
 
-    private static final DateTimeFormatter EPISODE_DATE_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
+    private static final DateTimeFormatter EPISODE_DATE_FORMATTER =
+        DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
     //[3 letters of the month][A space][4 year numbers]
     private static final int MONTH_YEAR_LENGTH = 8;
 
@@ -81,76 +82,27 @@ public class ShowUpdateHandler extends TargetUpdateHandler<Show, ApiShow> {
 
     @Override
     protected Show updateOtherRelations(Show show, ApiShow apiShow) {
-        List<ShowSeason> seasons = show.getSeasons();
-        List<ApiSeason> apiSeasons = apiShow.getSeasons();
-
-        ArrayList<ApiSeason> newSeasons = new ArrayList<>();
-        for (ApiSeason apiSeason : apiSeasons) {
-            //Find the matching ShowSeason
-            Optional<ShowSeason> foundSeason = getShowSeason(seasons, apiSeason);
-
-            if (foundSeason.isPresent()) {
-                updateSeason(foundSeason.get(), apiSeason);
-            } else {
-                ShowSeason newSeason = new ShowSeason(show, apiSeason.getSeasonNumber());
-                seasons.add(newSeason);
-                newSeasons.add(apiSeason);
-            }
-        }
-
-        if (newSeasons.isEmpty()) {
-            return show;
-        }
-
-        //New seasons are added, they need to be persisted before we can add episodes to them
-        Show updatedShow = targetRepository.saveAndFlush(show);
-
-        for (ApiSeason apiSeason : apiSeasons) {
-            Optional<ShowSeason> foundSeason = getShowSeason(updatedShow.getSeasons(), apiSeason);
-            if (!foundSeason.isPresent()) {
-                logger.warn("Unable to find season {} after adding it...", apiSeason.getSeasonNumber());
-            } else {
-                updateSeason(foundSeason.get(), apiSeason);
-            }
-        }
-
-        return updatedShow;
+        return createUpdater().updateSeasons(show, apiShow.getSeasons());
     }
 
-    private Optional<ShowSeason> getShowSeason(List<ShowSeason> seasons, ApiSeason apiSeason) {
-        return seasons.stream()
-                    .filter(s -> Objects.equals(s.getSeasonNumber(), apiSeason.getSeasonNumber()))
-                    .findFirst();
+    private ShowSeasonUpdater<ApiEpisode, ApiSeason> createUpdater() {
+        return new ShowSeasonUpdater<>(logger, targetRepository, (s, as) -> {
+        }, this::updateEpisode, (s, apiSeason) -> new ShowSeason(s, apiSeason.getSeasonNumber()),
+            (season, apiEpisode) -> new ShowEpisode(apiEpisode.getImdbId(), season, apiEpisode.getEpisodeNumber()));
     }
-
-    private void updateSeason(ShowSeason showSeason, ApiSeason apiSeason) {
-        for (ApiEpisode apiEpisode : apiSeason.getEpisodes()) {
-            //Find the matching ShowEpisode
-            List<ShowEpisode> showEpisodes = showSeason.getEpisodes();
-            Optional<ShowEpisode> foundEpisode = showEpisodes.stream()
-                .filter(e -> Objects.equals(e.getEpisodeNumber(), apiEpisode.getEpisodeNumber()))
-                .findFirst();
-
-            ShowEpisode showEpisode = foundEpisode.orElseGet(() -> {
-                ShowEpisode newEpisode =
-                    new ShowEpisode(apiEpisode.getImdbId(), showSeason, apiEpisode.getEpisodeNumber());
-                showEpisodes.add(newEpisode);
-                return newEpisode;
-            });
-
-            //Update the episode
-            updateEpisode(showEpisode, apiEpisode);
-        }
-    }
-
 
     private void updateEpisode(ShowEpisode showEpisode, ApiEpisode apiEpisode) {
+        if (showEpisode.getImdbId() == null) {
+            showEpisode.setImdbId(apiEpisode.getImdbId());
+        }
+
         if (showEpisode.getTitle() == null && apiEpisode.hasValidTitle()) {
             showEpisode.setTitle(apiEpisode.getTitle());
         }
 
         if (apiEpisode.hasValidPlot()) {
-            FieldModifyHandler handler = new FieldModifyHandler(showEpisode, apiEpisode, historyRepository, suggestionRepository);
+            FieldModifyHandler handler =
+                new FieldModifyHandler(showEpisode, apiEpisode, historyRepository, suggestionRepository);
             handler.modify("plot");
         }
 

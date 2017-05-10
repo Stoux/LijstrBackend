@@ -1,12 +1,16 @@
 package nl.lijstr.beans;
 
+import java.util.Optional;
 import nl.lijstr.domain.shows.Show;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
+import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.shows.ShowRepository;
 import nl.lijstr.services.maf.MafApiService;
 import nl.lijstr.services.omdb.OmdbApiService;
 import nl.lijstr.services.omdb.models.OmdbObject;
+import nl.lijstr.services.tvmaze.TvMazeService;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +20,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShowAddBean {
 
+    @InjectLogger
+    private Logger logger;
+
     @Autowired
     private ShowRepository showRepository;
 
@@ -24,6 +31,9 @@ public class ShowAddBean {
 
     @Autowired
     private MafApiService mafApiService;
+
+    @Autowired
+    private TvMazeService tvMazeService;
 
     /**
      * Add a new show.
@@ -41,12 +51,27 @@ public class ShowAddBean {
         }
 
 
+        //Add the show
         OmdbObject omdbObject = omdbApiService.getShow(imdbId);
+        logger.info("Creating new Show: {} ({})", omdbObject.getTitle(), imdbId);
         Show newShow = new Show(imdbId, omdbObject.getTitle(), youtubeId, addedBy);
         showRepository.save(newShow);
-        return mafApiService.updateShow(newShow);
-        //TODO: Update show using TV Maze data
+
+        //Update using MAF & TvMaze
+        Show updatedShow = mafApiService.updateShow(newShow);
+        return addTvMazeData(updatedShow);
         //TODO: Update episodes ratings
+    }
+
+    private Show addTvMazeData(Show show) {
+        Optional<Long> tvMazeId = tvMazeService.getTvMazeId(show.getImdbId());
+        if (!tvMazeId.isPresent()) {
+            logger.info("No TvMaze ID found for show: {} ({})", show.getTitle(), show.getImdbId());
+            return show;
+        }
+
+        show.setTvMazeId(tvMazeId.get());
+        return tvMazeService.updateShow(show);
     }
 
 }

@@ -3,7 +3,7 @@ package nl.lijstr.common;
 import lombok.*;
 
 /**
- * A Container class to hold a certain item.
+ * A container class to hold a certain item.
  *
  * @param <X> The class of the item in the container
  */
@@ -23,5 +23,6 @@ public class Container<X> {
     public boolean isPresent() {
         return item != null;
     }
+
 
 }

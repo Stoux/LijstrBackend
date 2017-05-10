@@ -21,7 +21,9 @@ import nl.lijstr.domain.shows.seasons.ShowSeason;
 @Entity
 public class ShowEpisode extends IdCmModel {
 
+    @Setter(AccessLevel.NONE)
     private String imdbId;
+    @Setter(AccessLevel.NONE)
     private Long tvMazeId;
 
     @ManyToOne
@@ -34,6 +36,7 @@ public class ShowEpisode extends IdCmModel {
     private DateAccuracy airDateAccuracy;
 
     private String title;
+    @Lob
     private String plot;
     private Integer runtime;
 
@@ -53,6 +56,34 @@ public class ShowEpisode extends IdCmModel {
         this.tvMazeId = tvMazeId;
         this.season = season;
         this.episodeNumber = episodeNumber;
+    }
+
+    /**
+     * Set the IMDB ID.
+     * <p>
+     * Warning: This can only be done once (while the ID is still null).
+     *
+     * @param imdbId The ID
+     */
+    public void setImdbId(String imdbId) {
+        if (this.imdbId != null) {
+            throw new IllegalStateException("IMDB ID is already set");
+        }
+        this.imdbId = imdbId;
+    }
+
+    /**
+     * Set the TV Maze ID.
+     * <p>
+     * Warning: This can only be done once (while the ID is still null).
+     *
+     * @param tvMazeId The ID
+     */
+    public void setTvMazeId(Long tvMazeId) {
+        if (this.tvMazeId != null) {
+            throw new IllegalStateException("TV Maze ID is already set");
+        }
+        this.tvMazeId = tvMazeId;
     }
 
 }

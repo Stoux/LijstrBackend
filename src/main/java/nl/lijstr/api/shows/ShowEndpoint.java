@@ -74,14 +74,17 @@ public class ShowEndpoint extends TargetEndpoint<Show, ShowRepository> {
      * Add a new Movie to the DB.
      *
      * @param postedRequest The data
+     *
+     * @return detail representation of the show
      */
     @Secured(Permission.SHOW_MOD)
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
-    public void addMovie(@Valid @RequestBody PostedRequest postedRequest) {
+    public ShowDetail addShow(@Valid @RequestBody PostedRequest postedRequest) {
         //Validate
         JwtUser user = getUser();
-        addBean.addShow(new User(user.getId()), postedRequest.getImdbId(), postedRequest.getYoutubeId());
+        Show show = addBean.addShow(new User(user.getId()), postedRequest.getImdbId(), postedRequest.getYoutubeId());
+        return ShowDetail.fromShow(show);
     }
 
 }

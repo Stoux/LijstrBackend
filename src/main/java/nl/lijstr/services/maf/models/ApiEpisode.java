@@ -2,6 +2,7 @@ package nl.lijstr.services.maf.models;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
+import nl.lijstr.services.common.ShowSeasonUpdater;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -9,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @ToString
-public class ApiEpisode {
+public class ApiEpisode implements ShowSeasonUpdater.Episode {
 
     @SerializedName("episode")
     private Integer episodeNumber;
