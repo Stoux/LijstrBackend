@@ -53,6 +53,10 @@ public class FieldModifyHandler {
     private void fillHistoryMap() {
         //Fill the history map
         this.fieldHistoryMap = new HashMap<>();
+        if (o1.getId() == null) {
+            //New object, nothing to fill it with yet
+            return;
+        }
         List<FieldHistory> fieldHistoryList = historyRepository.findByObjectIdAndClassName(
                 o1.getId(),
                 FieldHistory.getDatabaseClassName(o1.getClass())

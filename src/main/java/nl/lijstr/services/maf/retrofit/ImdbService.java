@@ -40,7 +40,7 @@ public interface ImdbService {
      * @param imdbId    The IMDB ID
      * @param format    The format (json)
      * @param language  The language (en-us)
-     * @param technical Add technical details
+     * @param seasons   Add seasons
      * @param trivia    Add trivia about this movie
      * @param actors    Add the characters
      *
@@ -49,7 +49,7 @@ public interface ImdbService {
     @GET("/imdb/idIMDB")
     Call<ApiShowModel> getShow(@Query("token") String token, @Query("idIMDB") String imdbId,
                                @Query("format") String format, @Query("language") String language,
-                               @Query("aka") int otherNames, @Query("technical") int technical,
+                               @Query("aka") int otherNames, @Query("seasons") int seasons,
                                @Query("movieTrivia") int trivia, @Query("actors") int actors);
 
 

@@ -4,18 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import nl.lijstr.beans.ImdbBean;
+import nl.lijstr.common.Container;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.other.DateAccuracy;
 import nl.lijstr.domain.shows.Show;
 import nl.lijstr.domain.shows.ShowTrivia;
 import nl.lijstr.domain.shows.episodes.ShowEpisode;
 import nl.lijstr.domain.shows.people.ShowCharacter;
-import nl.lijstr.domain.shows.people.ShowDirector;
 import nl.lijstr.domain.shows.people.ShowWriter;
 import nl.lijstr.domain.shows.seasons.ShowSeason;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
@@ -53,7 +50,7 @@ public class ShowUpdateHandler extends TargetUpdateHandler<Show, ApiShow> {
         //Get year
         Integer startYear = null, endYear = null;
         String apiYear = apiShow.getYear();
-        if (apiYear != null && apiYear.matches("\\d{4}-(\\d{4})?")) {
+        if (apiYear != null && apiYear.matches("\\d{4}[-\u2013](\\d{4})?")) {
             startYear = FieldConverters.convertToYear(apiYear.substring(0, 4));
             if (apiYear.length() > 5) {
                 endYear = FieldConverters.convertToYear(apiYear.substring(5));
@@ -77,37 +74,53 @@ public class ShowUpdateHandler extends TargetUpdateHandler<Show, ApiShow> {
         updateImdbPeople(show.getWriters(), apiShow.getWriters(), ApiPerson::getName, (p, a) -> new ShowWriter(show, p),
             null);
 
-        updateImdbPeople(show.getDirectors(), apiShow.getDirectors(), ApiPerson::getName,
-            (p, a) -> new ShowDirector(show, p), null);
-
         updateImdbPeople(show.getCharacters(), apiShow.getActors(), ApiActor::getActorName,
             (p, a) -> new ShowCharacter(show, p, a.getCharacter(), a.getCharacterUrl(), a.getPhotoUrl(),
                 a.isMainCharacter()), this::checkActor);
     }
 
     @Override
-    protected void updateOtherRelations(Show show, ApiShow apiShow) {
+    protected Show updateOtherRelations(Show show, ApiShow apiShow) {
         List<ShowSeason> seasons = show.getSeasons();
         List<ApiSeason> apiSeasons = apiShow.getSeasons();
 
+        ArrayList<ApiSeason> newSeasons = new ArrayList<>();
         for (ApiSeason apiSeason : apiSeasons) {
             //Find the matching ShowSeason
-            Optional<ShowSeason> foundSeason = seasons.stream()
-                .filter(s -> Objects.equals(s.getSeasonNumber(), apiSeason.getSeasonNumber()))
-                .findFirst();
+            Optional<ShowSeason> foundSeason = getShowSeason(seasons, apiSeason);
 
-            if (!foundSeason.isPresent()) {
-                seasons.add(new ShowSeason(show, apiSeason.getSeasonNumber()));
-            }
-
-            ShowSeason showSeason = foundSeason.orElseGet(() -> {
+            if (foundSeason.isPresent()) {
+                updateSeason(foundSeason.get(), apiSeason);
+            } else {
                 ShowSeason newSeason = new ShowSeason(show, apiSeason.getSeasonNumber());
                 seasons.add(newSeason);
-                return newSeason;
-            });
-
-            updateSeason(showSeason, apiSeason);
+                newSeasons.add(apiSeason);
+            }
         }
+
+        if (newSeasons.isEmpty()) {
+            return show;
+        }
+
+        //New seasons are added, they need to be persisted before we can add episodes to them
+        Show updatedShow = targetRepository.saveAndFlush(show);
+
+        for (ApiSeason apiSeason : apiSeasons) {
+            Optional<ShowSeason> foundSeason = getShowSeason(updatedShow.getSeasons(), apiSeason);
+            if (!foundSeason.isPresent()) {
+                logger.warn("Unable to find season {} after adding it...", apiSeason.getSeasonNumber());
+            } else {
+                updateSeason(foundSeason.get(), apiSeason);
+            }
+        }
+
+        return updatedShow;
+    }
+
+    private Optional<ShowSeason> getShowSeason(List<ShowSeason> seasons, ApiSeason apiSeason) {
+        return seasons.stream()
+                    .filter(s -> Objects.equals(s.getSeasonNumber(), apiSeason.getSeasonNumber()))
+                    .findFirst();
     }
 
     private void updateSeason(ShowSeason showSeason, ApiSeason apiSeason) {

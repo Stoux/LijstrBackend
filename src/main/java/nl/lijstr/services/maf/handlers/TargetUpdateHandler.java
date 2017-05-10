@@ -20,6 +20,7 @@ import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.interfaces.ImdbIdentifiable;
 import nl.lijstr.domain.interfaces.Target;
+import nl.lijstr.domain.shows.Show;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.abs.BasicRepository;
@@ -49,7 +50,7 @@ public abstract class TargetUpdateHandler<DomainModel extends Target, ApiModel e
 
     protected final FieldHistoryRepository historyRepository;
     protected final FieldHistorySuggestionRepository suggestionRepository;
-    private final BasicRepository<DomainModel> targetRepository;
+    protected final BasicRepository<DomainModel> targetRepository;
     private final ImdbBean imdbBean;
     private final String imgFolderLocation;
 
@@ -86,6 +87,7 @@ public abstract class TargetUpdateHandler<DomainModel extends Target, ApiModel e
 
         updateTrivia(domainModel, apiModel);
         updatePersonnel(domainModel, apiModel);
+        updateOtherRelations(domainModel, apiModel);
 
         return targetRepository.saveAndFlush(domainModel);
     }
@@ -131,7 +133,7 @@ public abstract class TargetUpdateHandler<DomainModel extends Target, ApiModel e
 
     protected abstract void updatePersonnel(DomainModel domainModel, ApiModel apiModel);
 
-    protected abstract void updateOtherRelations(DomainModel domainModel, ApiModel apiModel);
+    protected abstract DomainModel updateOtherRelations(DomainModel domainModel, ApiModel apiModel);
 
     /**
      * Update the list of IMDB people connected to this target.

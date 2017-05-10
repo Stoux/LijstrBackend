@@ -10,7 +10,6 @@ import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.interfaces.Target;
 import nl.lijstr.domain.shows.people.ShowCharacter;
-import nl.lijstr.domain.shows.people.ShowDirector;
 import nl.lijstr.domain.shows.people.ShowWriter;
 import nl.lijstr.domain.shows.seasons.ShowSeason;
 import nl.lijstr.domain.users.User;
@@ -47,7 +46,7 @@ public class Show extends Target {
     private LocalDate premiereDate;
 
     //Relations | Children
-    @OneToMany(mappedBy = "show", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     private List<ShowSeason> seasons;
 
     //Relations | Details
@@ -61,8 +60,6 @@ public class Show extends Target {
     private List<ShowCharacter> characters;
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     private List<ShowWriter> writers;
-    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
-    private List<ShowDirector> directors;
 
     //Relations | External items
     @JsonIgnore
@@ -95,7 +92,6 @@ public class Show extends Target {
         this.languages = new ArrayList<>();
         this.characters = new ArrayList<>();
         this.writers = new ArrayList<>();
-        this.directors = new ArrayList<>();
         this.trivia = new ArrayList<>();
         this.latestShowRatings = new ArrayList<>();
         this.showRatings = new ArrayList<>();

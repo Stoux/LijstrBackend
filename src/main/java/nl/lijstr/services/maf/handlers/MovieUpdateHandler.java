@@ -64,7 +64,7 @@ public class MovieUpdateHandler extends TargetUpdateHandler<Movie, ApiMovie> {
     }
 
     @Override
-    protected void updateOtherRelations(Movie movie, ApiMovie apiMovie) {
-        //Has no other relations
+    protected Movie updateOtherRelations(Movie movie, ApiMovie apiMovie) {
+        return movie; //Has no other relations
     }
 }

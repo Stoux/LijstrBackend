@@ -25,7 +25,7 @@ public class ShowSeason extends ShowBoundModel {
 
     private boolean poster;
 
-    @OneToMany(mappedBy = "season", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
     private List<ShowEpisode> episodes;
 
     @OneToMany(mappedBy = "target")
