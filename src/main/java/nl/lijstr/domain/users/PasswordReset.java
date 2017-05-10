@@ -18,6 +18,7 @@ public class PasswordReset extends IdCmUserModel {
 
     private String remoteAddress;
     private Integer usedPort;
+    @Column(length = 500)
     private String userAgent;
 
     @Column(unique = true)

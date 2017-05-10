@@ -1,5 +1,6 @@
 package nl.lijstr.domain.shows.episodes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -26,6 +27,7 @@ public class ShowEpisode extends IdCmModel {
     @Setter(AccessLevel.NONE)
     private Long tvMazeId;
 
+    @JsonBackReference
     @ManyToOne
     private ShowSeason season;
     @Column(nullable = false)

@@ -1,6 +1,7 @@
 package nl.lijstr.domain.users;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +21,7 @@ public class LoginAttempt extends IdUserModel {
     private LocalDateTime timestamp;
     private String remoteAddress;
     private Integer usedPort;
+    @Column(length = 500)
     private String userAgent;
 
     private String username;
