@@ -6,8 +6,11 @@ import nl.lijstr.domain.shows.Show;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
+import nl.lijstr.services.maf.handlers.ShowUpdateHandler;
 import nl.lijstr.services.maf.models.ApiMovie;
+import nl.lijstr.services.maf.models.ApiShow;
 import nl.lijstr.services.maf.models.containers.ApiMovieModel;
+import nl.lijstr.services.maf.models.containers.ApiShowModel;
 import nl.lijstr.services.maf.retrofit.ImdbService;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,10 @@ public class MafApiService {
     private ImdbService imdbService;
 
     @Autowired
-    private MovieUpdateHandler updateHandler;
+    private MovieUpdateHandler movieUpdateHandler;
+
+    @Autowired
+    private ShowUpdateHandler showUpdateHandler;
 
     /**
      * Trigger a movie to be updated by using the latest data from MyApiFilms.
@@ -43,15 +49,15 @@ public class MafApiService {
      */
     public Movie updateMovie(Movie movie) {
         //Get the most recent data from the API
-        ApiMovie apiMovie = getApiMovie(movie.getImdbId());
-        logger.info("Updating movie: " + movie.getImdbId());
-        return updateHandler.update(movie, apiMovie);
-    }
+        ApiMovieModel model = get(movie.getImdbId(), imdbService::getMovie);
+        ApiMovie apiMovie = model.getMovie();
+        if (apiMovie == null) {
+            logger.info("Failed to fetch movie from MAF.");
+            return null;
+        }
 
-    private ApiMovie getApiMovie(String imdbId) {
-        Call<ApiMovieModel> movieCall = imdbService.getMovie(token, imdbId, "json", "en-us", 1, 1, 1, 1);
-        ApiMovieModel model = Utils.executeCall(movieCall);
-        return model.getMovie();
+        logger.info("Updating movie: " + movie.getImdbId());
+        return movieUpdateHandler.update(movie, apiMovie);
     }
 
     /**
@@ -62,9 +68,21 @@ public class MafApiService {
      * @return The updated show
      */
     public Show updateShow(Show show) {
-        //TODO: Update
-        return show;
+        ApiShowModel model = get(show.getImdbId(), imdbService::getShow);
+        ApiShow apiShow = model.getShow();
+        if (apiShow == null) {
+            logger.info("Failed to fetch movie from MAF.");
+            return null;
+        }
+
+        logger.info("Updating show: " + show.getImdbId());
+        return showUpdateHandler.update(show, apiShow);
     }
 
+    @SuppressWarnings("unchecked")
+    private <X> X get(String imdbId, ImdbService.ServiceMethod method) {
+        Call<X> call = method.get(token, imdbId, "json", "en-us", 1, 1, 1, 1);
+        return Utils.executeCall(call);
+    }
 
 }

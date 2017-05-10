@@ -61,8 +61,7 @@ public class MovieUpdateHandlerTest {
 
     @Before
     public void setUp() throws Exception {
-        updateHandler = new MovieUpdateHandler();
-        insertMocks(updateHandler, historyMock, suggestionMock, movieMock, imdbMock);
+        updateHandler = new MovieUpdateHandler(movieMock, historyMock, suggestionMock, imdbMock, null);
         loggerMock = mockLogger(updateHandler);
     }
 

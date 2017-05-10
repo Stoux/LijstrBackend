@@ -16,7 +16,7 @@ import nl.lijstr.repositories.abs.BasicTargetRepository;
 /**
  * Created by Stoux on 09/05/2017.
  */
-public abstract class TargetEndpoint<T extends IdModel & Target, X extends BasicTargetRepository<T>> extends AbsService {
+public abstract class TargetEndpoint<T extends Target, X extends BasicTargetRepository<T>> extends AbsService {
 
     protected static final String DETAIL_PATH = "/{id}";
     protected static final String ORIGINAL_PATH = "/{id}/original";

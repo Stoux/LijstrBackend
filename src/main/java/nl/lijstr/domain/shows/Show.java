@@ -2,12 +2,10 @@ package nl.lijstr.domain.shows;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
-import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.interfaces.Target;
@@ -29,29 +27,17 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @ModifiableWithHistory
-public class Show extends IdCmModel implements Target {
+public class Show extends Target {
 
     @Setter(value = AccessLevel.NONE)
-    @NotModifiable
-    @Column(unique = true, nullable = false)
-    private String imdbId;
-
     @NotModifiable
     @Column(unique = true)
     private String tmdbId;
 
+    @Setter(value = AccessLevel.NONE)
     @NotModifiable
     @Column(unique = true)
     private Long tvMazeId;
-
-    private String title;
-    private String originalTitle;
-    private String dutchTitle;
-
-    @Lob
-    private String shortPlot;
-    @Lob
-    private String longPlot;
 
     private String status; //eg 'Running'
     private String scriptType; //Eg 'Reality'/'Scripted'
@@ -59,24 +45,6 @@ public class Show extends IdCmModel implements Target {
     private Integer startYear;
     private Integer endYear;
     private LocalDate premiereDate;
-
-    private Double imdbRating;
-    private Long imdbVotes;
-    private Integer metacriticScore;
-
-    private String ageRating;
-    private Integer runtime;
-
-    private boolean poster;
-    private String youtubeUrl;
-
-    @NotModifiable
-    private LocalDateTime lastUpdated;
-
-    @ManyToOne
-    private User addedBy;
-
-    private Long oldSiteId;
 
     //Relations | Children
     @OneToMany
@@ -117,10 +85,10 @@ public class Show extends IdCmModel implements Target {
      * @param addedBy    The user who added this movie
      */
     public Show(String imdbId, String title, String youtubeUrl, User addedBy) {
-        this.imdbId = imdbId;
-        this.title = title;
-        this.youtubeUrl = youtubeUrl;
-        this.addedBy = addedBy;
+        super(imdbId);
+        setTitle(title);
+        setYoutubeUrl(youtubeUrl);
+        setAddedBy(addedBy);
 
         this.seasons = new ArrayList<>();
         this.genres = new ArrayList<>();
@@ -131,6 +99,34 @@ public class Show extends IdCmModel implements Target {
         this.trivia = new ArrayList<>();
         this.latestShowRatings = new ArrayList<>();
         this.showRatings = new ArrayList<>();
+    }
+
+    /**
+     * Set the TheMovieDatabase ID.
+     * <p>
+     * Warning: This can only be done once (while the ID is still null).
+     *
+     * @param tmdbId The ID
+     */
+    public void setTmdbId(String tmdbId) {
+        if (this.tmdbId != null) {
+            throw new IllegalStateException("TheMovieDB ID is already set");
+        }
+        this.tmdbId = tmdbId;
+    }
+
+    /**
+     * Set the TV Maze ID.
+     * <p>
+     * Warning: This can only be done once (while the ID is still null).
+     *
+     * @param tvMazeId The ID
+     */
+    public void setTvMazeId(Long tvMazeId) {
+        if (this.tvMazeId != null) {
+            throw new IllegalStateException("TV Maze ID is already set");
+        }
+        this.tvMazeId = tvMazeId;
     }
 
 }

@@ -52,7 +52,7 @@ public class MafApiServiceTest {
         assertNotNull(imdbService);
         when(imdbService.getMovie(anyString(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), anyInt()))
                 .thenReturn(mockedCall);
-        when(updateHandler.update(any(), any()))
+        when(updateHandler.update(eq(movie), eq(apiMovie)))
                 .thenReturn(movie);
 
         //Act

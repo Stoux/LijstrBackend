@@ -12,6 +12,8 @@ import nl.lijstr.domain.shows.Show;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 public abstract class ShowBoundModel extends IdCmModel {
 

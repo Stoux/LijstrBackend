@@ -28,52 +28,10 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @ModifiableWithHistory
-public class Movie extends IdCmModel implements Target {
-
-    @Setter(value = AccessLevel.NONE)
-    @NotModifiable
-    @Column(unique = true, nullable = false)
-    private String imdbId;
-
-    private String title;
-    private String originalTitle;
-    private String dutchTitle;
+public class Movie extends Target {
 
     private Integer year;
     private LocalDate released;
-
-    private Double imdbRating;
-    private Long imdbVotes;
-    private Integer metacriticScore;
-
-    @Lob
-    private String shortPlot;
-    @Lob
-    private String longPlot;
-
-    private Integer runtime;
-
-    //Rated for X
-    private String ageRating;
-
-    //Has poster
-    private boolean poster;
-
-    private String youtubeUrl;
-
-    @NotModifiable
-    private LocalDateTime lastUpdated;
-
-    @ManyToOne
-    private User addedBy;
-
-    private Long oldSiteId;
-
-    //Relations | Details
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Genre> genres;
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<SpokenLanguage> languages;
 
     //Relations | People
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
@@ -108,7 +66,7 @@ public class Movie extends IdCmModel implements Target {
      * @param imdbId The ID
      */
     public Movie(String imdbId) {
-        this.imdbId = imdbId;
+        super(imdbId);
     }
 
     /**
@@ -120,13 +78,11 @@ public class Movie extends IdCmModel implements Target {
      * @param addedBy    The user who added this movie
      */
     public Movie(String imdbId, String title, String youtubeUrl, User addedBy) {
-        this.imdbId = imdbId;
-        this.title = title;
-        this.youtubeUrl = youtubeUrl;
-        this.addedBy = addedBy;
+        super(imdbId);
+        setTitle(title);
+        setYoutubeUrl(youtubeUrl);
+        setAddedBy(addedBy);
 
-        this.genres = new ArrayList<>();
-        this.languages = new ArrayList<>();
         this.characters = new ArrayList<>();
         this.writers = new ArrayList<>();
         this.directors = new ArrayList<>();
@@ -148,7 +104,7 @@ public class Movie extends IdCmModel implements Target {
     public Movie(String imdbId, String title, Integer year, Long oldSiteId) {
         this(imdbId, title, (String) null, null);
         this.year = year;
-        this.oldSiteId = oldSiteId;
+        setOldSiteId(oldSiteId);
     }
 
 }
