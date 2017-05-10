@@ -11,7 +11,7 @@ import nl.lijstr.services.maf.models.ApiMovie;
 import nl.lijstr.services.maf.models.ApiShow;
 import nl.lijstr.services.maf.models.containers.ApiMovieModel;
 import nl.lijstr.services.maf.models.containers.ApiShowModel;
-import nl.lijstr.services.maf.retrofit.ImdbService;
+import nl.lijstr.services.maf.retrofit.ImdbApi;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class MafApiService {
     private Logger logger;
 
     @InjectRetrofitService
-    private ImdbService imdbService;
+    private ImdbApi imdbService;
 
     @Autowired
     private MovieUpdateHandler movieUpdateHandler;
@@ -80,7 +80,7 @@ public class MafApiService {
     }
 
     @SuppressWarnings("unchecked")
-    private <X> X get(String imdbId, ImdbService.ServiceMethod method) {
+    private <X> X get(String imdbId, ImdbApi.ServiceMethod method) {
         Call<X> call = method.get(token, imdbId, "json", "en-us", 1, 1, 1, 1);
         return Utils.executeCall(call);
     }

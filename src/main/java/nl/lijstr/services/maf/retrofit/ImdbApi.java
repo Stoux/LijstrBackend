@@ -9,10 +9,10 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
- * Created by Stoux on 28/01/2016.
+ * Endpoints for MyApiFilms.
  */
 @RetrofitServiceAnnotation(value = RetrofitEndpoints.MY_API_FILMS, readTimeout = 120)
-public interface ImdbService {
+public interface ImdbApi {
 
     /**
      * Get a Movie from the IMDB Api.

@@ -7,10 +7,9 @@ import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
 import nl.lijstr.services.maf.models.ApiMovie;
 import nl.lijstr.services.maf.models.containers.ApiMovieModel;
-import nl.lijstr.services.maf.retrofit.ImdbService;
+import nl.lijstr.services.maf.retrofit.ImdbApi;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -25,14 +24,14 @@ public class MafApiServiceTest {
 
     private MafApiService mafApiService;
     private MovieUpdateHandler updateHandler;
-    private ImdbService imdbService;
+    private ImdbApi imdbService;
 
     @Before
     public void setUp() throws Exception {
         mafApiService = new MafApiService();
         mockLogger(mafApiService);
         updateHandler = mock(MovieUpdateHandler.class);
-        imdbService = mock(ImdbService.class);
+        imdbService = mock(ImdbApi.class);
         insertMocks(mafApiService, updateHandler, imdbService);
     }
 
