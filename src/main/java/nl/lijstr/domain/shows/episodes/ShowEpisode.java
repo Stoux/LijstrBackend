@@ -43,4 +43,16 @@ public class ShowEpisode extends IdCmModel {
     @OneToMany(mappedBy = "target")
     private List<ShowEpisodeRating> episodeRatings;
 
+    public ShowEpisode(String imdbId, ShowSeason season, Integer episodeNumber) {
+        this.imdbId = imdbId;
+        this.season = season;
+        this.episodeNumber = episodeNumber;
+    }
+
+    public ShowEpisode(Long tvMazeId, ShowSeason season, Integer episodeNumber) {
+        this.tvMazeId = tvMazeId;
+        this.season = season;
+        this.episodeNumber = episodeNumber;
+    }
+
 }

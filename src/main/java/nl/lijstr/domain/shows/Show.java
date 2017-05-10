@@ -47,7 +47,7 @@ public class Show extends Target {
     private LocalDate premiereDate;
 
     //Relations | Children
-    @OneToMany
+    @OneToMany(mappedBy = "show", cascade = CascadeType.PERSIST)
     private List<ShowSeason> seasons;
 
     //Relations | Details

@@ -47,8 +47,8 @@ public abstract class TargetUpdateHandler<DomainModel extends Target, ApiModel e
     @InjectLogger
     protected Logger logger;
 
-    private final FieldHistoryRepository historyRepository;
-    private final FieldHistorySuggestionRepository suggestionRepository;
+    protected final FieldHistoryRepository historyRepository;
+    protected final FieldHistorySuggestionRepository suggestionRepository;
     private final BasicRepository<DomainModel> targetRepository;
     private final ImdbBean imdbBean;
     private final String imgFolderLocation;

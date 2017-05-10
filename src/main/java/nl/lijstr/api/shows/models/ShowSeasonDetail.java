@@ -15,7 +15,6 @@ import nl.lijstr.domain.shows.seasons.ShowSeason;
 public class ShowSeasonDetail {
 
     private Integer seasonNumber;
-    private String plot;
     private Integer episodes;
     private ShowStatus status;
 
@@ -42,7 +41,7 @@ public class ShowSeasonDetail {
             status = ShowStatus.RUNNING;
         }
 
-        return new ShowSeasonDetail(season.getSeasonNumber(), season.getPlot(), episodeList.size(), status);
+        return new ShowSeasonDetail(season.getSeasonNumber(), episodeList.size(), status);
     }
 
 }
