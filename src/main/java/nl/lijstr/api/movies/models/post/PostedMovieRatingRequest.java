@@ -2,6 +2,7 @@ package nl.lijstr.api.movies.models.post;
 
 import lombok.*;
 import nl.lijstr.api.abs.base.models.post.PostedRequest;
+import nl.lijstr.api.abs.base.models.post.RatingRequest;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -12,9 +13,9 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor
 public class PostedMovieRatingRequest extends PostedRequest {
 
-    private MovieRatingRequest ratingRequest;
+    private RatingRequest ratingRequest;
 
-    public PostedMovieRatingRequest(String imdbId, String youtubeId, MovieRatingRequest ratingRequest) {
+    public PostedMovieRatingRequest(String imdbId, String youtubeId, RatingRequest ratingRequest) {
         super(imdbId, youtubeId);
         this.ratingRequest = ratingRequest;
     }

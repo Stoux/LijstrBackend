@@ -9,7 +9,7 @@ import java.util.stream.DoubleStream;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import nl.lijstr.api.abs.AbsService;
-import nl.lijstr.api.movies.models.MovieExtendedRating;
+import nl.lijstr.api.abs.base.models.ExtendedRating;
 import nl.lijstr.api.movies.models.MovieShortComment;
 import nl.lijstr.api.movies.models.MovieShortDetail;
 import nl.lijstr.api.movies.models.MovieStats;
@@ -19,7 +19,6 @@ import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
-import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.repositories.movies.MovieCommentRepository;
 import nl.lijstr.repositories.movies.MovieRatingRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
@@ -149,12 +148,12 @@ public class MovieStatsEndpoint extends AbsService {
      * @return the ratings
      */
     @RequestMapping(value = "/newRatings")
-    public PageResult<MovieRecentChange<MovieExtendedRating>> newRatings(
+    public PageResult<MovieRecentChange<ExtendedRating>> newRatings(
         @RequestParam(required = false, defaultValue = "1") @Min(1) int page,
         @RequestParam(required = false, defaultValue = "10") @Min(1) @Max(100) int limit) {
         return getPaged(
             p -> ratingRepository.findAllBySeenEquals(p, MovieRating.Seen.YES),
-            page, limit, r -> wrapRating(r.getTarget(), new MovieExtendedRating(r))
+            page, limit, r -> wrapRating(r.getTarget(), new ExtendedRating(r))
         );
     }
 

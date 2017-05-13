@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
+import nl.lijstr.api.abs.base.models.post.RatingRequest;
 import nl.lijstr.api.movies.models.MovieShortRequest;
-import nl.lijstr.api.movies.models.post.MovieRatingRequest;
 import nl.lijstr.api.movies.models.post.PostedMovieRatingRequest;
 import nl.lijstr.beans.MovieAddBean;
 import nl.lijstr.domain.movies.Movie;
@@ -68,7 +68,7 @@ public class MovieRequestEndpoint extends AbsService {
         movieAddBean.checkIfMovieNotAdded(postedRequest.getImdbId());
         OmdbObject omdb = movieAddBean.getMovieData(postedRequest.getImdbId());
 
-        MovieRatingRequest ratingRequest = postedRequest.getRatingRequest();
+        RatingRequest ratingRequest = postedRequest.getRatingRequest();
         MovieRequest request = new MovieRequest(
                 new User(user.getId()), postedRequest.getImdbId(), postedRequest.getYoutubeId(),
                 omdb.getTitle(), omdb.getYear(), omdb.getImdbRating(),

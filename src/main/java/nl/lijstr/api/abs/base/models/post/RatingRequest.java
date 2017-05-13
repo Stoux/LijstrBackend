@@ -1,21 +1,22 @@
-package nl.lijstr.api.movies.models.post;
+package nl.lijstr.api.abs.base.models.post;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import lombok.*;
+import nl.lijstr.domain.base.RatingModel;
 import nl.lijstr.domain.movies.MovieRating;
 
 /**
- * Created by Stoux on 20/04/2016.
+ * A request model to add a rating.
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieRatingRequest {
+public class RatingRequest {
 
-    private MovieRating.Seen seen;
+    private RatingModel.Seen seen;
 
     @Getter(AccessLevel.NONE)
     @DecimalMin(value = "1.0", message = "A rating can't be less than 1")

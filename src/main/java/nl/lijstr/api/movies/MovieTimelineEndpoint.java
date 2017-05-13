@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import nl.lijstr.api.abs.AbsMovieService;
-import nl.lijstr.api.movies.models.MovieExtendedRating;
+import nl.lijstr.api.abs.base.models.ExtendedRating;
 import nl.lijstr.api.movies.models.MovieShortComment;
 import nl.lijstr.api.movies.models.TimeBased;
 import nl.lijstr.domain.movies.Movie;
@@ -45,7 +45,7 @@ public class MovieTimelineEndpoint extends AbsMovieService {
             list.add(movie.getMovieComments().stream().map(MovieShortComment::new));
         }
         if (includeRatings) {
-            list.add(movie.getMovieRatings().stream().map(MovieExtendedRating::new));
+            list.add(movie.getMovieRatings().stream().map(ExtendedRating::new));
         }
 
         //Merge the streams

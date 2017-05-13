@@ -3,8 +3,8 @@ package nl.lijstr.api.movies;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import nl.lijstr.api.abs.base.models.post.RatingRequest;
 import nl.lijstr.api.movies.models.MovieShortRequest;
-import nl.lijstr.api.movies.models.post.MovieRatingRequest;
 import nl.lijstr.api.movies.models.post.PostedMovieRatingRequest;
 import nl.lijstr.beans.MovieAddBean;
 import nl.lijstr.beans.UserBean;
@@ -83,7 +83,7 @@ public class MovieRequestEndpointTest {
         when(requestRepository.save(any(MovieRequest.class)))
                 .thenAnswer(i -> storeInvoked(i, container));
 
-        MovieRatingRequest rating = new MovieRatingRequest(MovieRating.Seen.YES, BigDecimal.TEN, COMMENT);
+        RatingRequest rating = new RatingRequest(MovieRating.Seen.YES, BigDecimal.TEN, COMMENT);
         PostedMovieRatingRequest request = new PostedMovieRatingRequest(IMDB_ID, YOUTUBE_ID, rating);
 
         //Act

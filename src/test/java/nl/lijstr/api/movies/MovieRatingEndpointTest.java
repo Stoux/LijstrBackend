@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import nl.lijstr.api.movies.models.MovieExtendedRating;
+import nl.lijstr.api.abs.base.models.ExtendedRating;
 import nl.lijstr.api.abs.base.models.ShortRating;
-import nl.lijstr.api.movies.models.post.MovieRatingRequest;
+import nl.lijstr.api.abs.base.models.post.RatingRequest;
 import nl.lijstr.beans.UserBean;
 import nl.lijstr.common.Container;
 import nl.lijstr.domain.movies.Movie;
@@ -45,8 +45,8 @@ public class MovieRatingEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        endpoint = new MovieRatingEndpoint();
-        insertMocks(endpoint, userBean, movieRepository, movieRatingRepository);
+        endpoint = new MovieRatingEndpoint(movieRepository, movieRatingRepository);
+        insertMocks(endpoint, userBean);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(new ArrayList<>());
         movie.setId(1L);
         JwtUser jwtUser = createUser(1L);
-        MovieRatingRequest newRating = new MovieRatingRequest(MovieRating.Seen.UNKNOWN, new BigDecimal("9.1"), null);
+        RatingRequest newRating = new RatingRequest(MovieRating.Seen.UNKNOWN, new BigDecimal("9.1"), null);
         long ratingId = 10L;
 
         when(userBean.getJwtUser()).thenReturn(jwtUser);
@@ -64,7 +64,7 @@ public class MovieRatingEndpointTest {
         whenRatingSaveReturnWithId(ratingId);
 
         //Act
-        MovieExtendedRating added = endpoint.add(1L, newRating);
+        ExtendedRating added = endpoint.add(1L, newRating);
 
         //Assert
         assertEquals(ratingId, added.getId());
@@ -80,7 +80,7 @@ public class MovieRatingEndpointTest {
         JwtUser user = createUser(1L);
         Movie movie = new Movie();
         movie.setLatestMovieRatings(new ArrayList<>());
-        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
+        RatingRequest request = new RatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
 
         whenRatingSaveReturnWithId(1L);
 
@@ -105,7 +105,7 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(Arrays.asList(
                 createRating(2, LocalDateTime.now().minusHours(1)), ownRating
         ));
-        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
+        RatingRequest request = new RatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
 
         Container<MovieRating> container = new Container<>();
         when(movieRatingRepository.save(any(MovieRating.class))).thenAnswer(invocation -> {
@@ -167,7 +167,7 @@ public class MovieRatingEndpointTest {
         whenRatingSaveReturnWithId(1L);
 
         //Act
-        ShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null));
+        ShortRating rating = endpoint.edit(1L, 1L, new RatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null));
 
         //Assert
         assertEquals(MovieRating.Seen.YES.ordinal(), rating.getSeen());
