@@ -17,11 +17,12 @@ public interface OmdbService {
      * Get a Movie/Series by their IMDB ID.
      *
      * @param imdbId The ID
+     * @param apiKey The API key
      *
      * @return The OmdbObject call
      */
     @GET("/")
-    Call<OmdbObject> getByImdbId(@Query("i") String imdbId);
+    Call<OmdbObject> getByImdbId(@Query("i") String imdbId, @Query("apikey") String apiKey);
 
 
 }

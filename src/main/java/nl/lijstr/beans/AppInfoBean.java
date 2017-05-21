@@ -1,5 +1,6 @@
 package nl.lijstr.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +44,16 @@ public class AppInfoBean {
                     creativeInput
                 })
         );
+    }
+
+    /**
+     * Get this builds user-agent.
+     *
+     * @return the user-agent
+     */
+    @JsonIgnore
+    public String getUserAgent() {
+        return description + "/" + buildVersion;
     }
 
     @Getter

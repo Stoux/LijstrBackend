@@ -1,6 +1,7 @@
 package nl.lijstr.services.retrofit;
 
 import java.util.Map;
+import nl.lijstr.beans.AppInfoBean;
 import nl.lijstr.services.retrofit.models.TimeoutTimings;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import retrofit2.http.GET;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 29/01/2016.
@@ -26,7 +28,10 @@ public class RetrofitServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        retrofitService = new RetrofitService();
+        AppInfoBean infoBean = mock(AppInfoBean.class);
+        when(infoBean.getUserAgent()).thenReturn("UserAgent");
+
+        retrofitService = new RetrofitService(infoBean);
         endpointMap = getFieldValue(retrofitService, "endpointMap");
     }
 

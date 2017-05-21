@@ -22,7 +22,7 @@ public class OmdbServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        apiService = new OmdbApiService();
+        apiService = new OmdbApiService("");
 
         omdbService = mock(OmdbService.class);
         insertMocks(apiService, omdbService);
@@ -33,7 +33,7 @@ public class OmdbServiceTest {
         //Arrange
         OmdbObject omdbObject = new OmdbObject("", "", "", "movie");
         Call<OmdbObject> mockedCall = TestUtils.successCall(omdbObject);
-        when(omdbService.getByImdbId(anyString()))
+        when(omdbService.getByImdbId(anyString(), anyString()))
                 .thenReturn(mockedCall);
 
         //Act
@@ -48,7 +48,7 @@ public class OmdbServiceTest {
         //Arrange
         OmdbObject omdbObject = new OmdbObject("", "", "", "series");
         Call<OmdbObject> mockedCall = TestUtils.successCall(omdbObject);
-        when(omdbService.getByImdbId(anyString()))
+        when(omdbService.getByImdbId(anyString(), anyString()))
                 .thenReturn(mockedCall);
 
         //Act
@@ -62,7 +62,7 @@ public class OmdbServiceTest {
     public void getNonExistentMovie() throws Exception {
         //Arrange
         Call<OmdbObject> failedCall = TestUtils.failedCall(404, "Not found");
-        when(omdbService.getByImdbId(anyString()))
+        when(omdbService.getByImdbId(anyString(), anyString()))
                 .thenReturn(failedCall);
 
         //Act

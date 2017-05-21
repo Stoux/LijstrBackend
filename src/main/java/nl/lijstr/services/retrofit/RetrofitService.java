@@ -3,10 +3,13 @@ package nl.lijstr.services.retrofit;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import nl.lijstr.beans.AppInfoBean;
+import nl.lijstr.processors.injectors.UserAgentInterceptor;
 import nl.lijstr.services.retrofit.models.TimeoutTimings;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,12 +20,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Service
 public class RetrofitService {
 
-    private Map<String, Retrofit> endpointMap;
+    private final AppInfoBean infoBean;
+    private final Map<String, Retrofit> endpointMap;
 
     /**
      * Create a RetrofitService.
      */
-    public RetrofitService() {
+    @Autowired
+    public RetrofitService(AppInfoBean infoBean) {
+        this.infoBean = infoBean;
         endpointMap = new ConcurrentHashMap<>();
     }
 
@@ -57,15 +63,19 @@ public class RetrofitService {
 
     private Retrofit createRetrofit(String endpoint, TimeoutTimings timings, Interceptor[] interceptors) {
         //Create the OkHttpClient
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
         //Add interceptors
         for (Interceptor customInterceptor : interceptors) {
             clientBuilder.addInterceptor(customInterceptor);
         }
-        clientBuilder.addInterceptor(interceptor);
+
+        UserAgentInterceptor userAgentInterceptor = new UserAgentInterceptor(infoBean.getUserAgent());
+        clientBuilder.addInterceptor(userAgentInterceptor);
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        clientBuilder.addInterceptor(loggingInterceptor);
 
         //Add timings
         clientBuilder.connectTimeout((long) timings.getConnect(), TimeUnit.SECONDS)
