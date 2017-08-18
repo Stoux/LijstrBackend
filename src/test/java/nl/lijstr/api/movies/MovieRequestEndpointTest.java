@@ -83,7 +83,7 @@ public class MovieRequestEndpointTest {
         when(requestRepository.save(any(MovieRequest.class)))
                 .thenAnswer(i -> storeInvoked(i, container));
 
-        MovieRatingRequest rating = new MovieRatingRequest(MovieRating.Seen.YES, BigDecimal.TEN, COMMENT);
+        MovieRatingRequest rating = new MovieRatingRequest(MovieRating.Seen.YES, 10.0, COMMENT);
         PostedMovieRatingRequest request = new PostedMovieRatingRequest(IMDB_ID, YOUTUBE_ID, rating);
 
         //Act
@@ -188,7 +188,7 @@ public class MovieRequestEndpointTest {
     private MovieRequest createRequestWithRating(long id) {
         MovieRequest request = createRequest(id);
         request.setSeen(MovieRating.Seen.YES);
-        request.setRating(BigDecimal.ONE);
+        request.setRating(1.0);
         request.setComment(COMMENT);
         return request;
     }

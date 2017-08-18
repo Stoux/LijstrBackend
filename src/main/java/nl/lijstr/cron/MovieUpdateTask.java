@@ -31,7 +31,7 @@ public class MovieUpdateTask {
      */
     //Runs every 0th and 20th minute past every hour, every day
     @Transactional
-    @Scheduled(cron = "0 0,20 * * * *")
+    //@Scheduled(cron = "0 0,20 * * * *")
     public void updateOldestByCron() {
         Movie movie = movieRepository.findFirstByOrderByLastUpdatedAsc();
         update(movie);
@@ -42,7 +42,7 @@ public class MovieUpdateTask {
      */
     //Runs every 40th minute past every hour, every day
     @Transactional
-    @Scheduled(cron = "0 40 * * * *")
+    //@Scheduled(cron = "0 40 * * * *")
     public void updateOldestFromRecentMovies() {
         LocalDate recentDate = LocalDate.now().minusYears(1);
         Movie movie = movieRepository.findFirstByReleasedAfterOrderByLastUpdatedAsc(recentDate);

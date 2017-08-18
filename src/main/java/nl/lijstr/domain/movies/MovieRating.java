@@ -24,7 +24,7 @@ public class MovieRating extends IdCmUserMovieModel {
     @Column(nullable = false)
     private Seen seen;
     @Column(precision = 3, scale = 1)
-    private BigDecimal rating;
+    private Double rating;
     @Column(length = 5000)
     private String comment;
     @Column(nullable = false)
@@ -39,7 +39,7 @@ public class MovieRating extends IdCmUserMovieModel {
      * @param rating  The actual rating
      * @param comment A optional comment
      */
-    public MovieRating(Movie movie, User user, Seen seen, BigDecimal rating, String comment) {
+    public MovieRating(Movie movie, User user, Seen seen, Double rating, String comment) {
         this.movie = movie;
         this.user = user;
         this.seen = seen;

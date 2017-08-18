@@ -56,7 +56,7 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(new ArrayList<>());
         movie.setId(1L);
         JwtUser jwtUser = createUser(1L);
-        MovieRatingRequest newRating = new MovieRatingRequest(MovieRating.Seen.UNKNOWN, new BigDecimal("9.1"), null);
+        MovieRatingRequest newRating = new MovieRatingRequest(MovieRating.Seen.UNKNOWN, 9.1, null);
         long ratingId = 10L;
 
         when(userBean.getJwtUser()).thenReturn(jwtUser);
@@ -80,7 +80,7 @@ public class MovieRatingEndpointTest {
         JwtUser user = createUser(1L);
         Movie movie = new Movie();
         movie.setLatestMovieRatings(new ArrayList<>());
-        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
+        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, 9.1, null);
 
         whenRatingSaveReturnWithId(1L);
 
@@ -105,7 +105,7 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(Arrays.asList(
                 createRating(2, LocalDateTime.now().minusHours(1)), ownRating
         ));
-        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null);
+        MovieRatingRequest request = new MovieRatingRequest(MovieRating.Seen.YES, 9.1, null);
 
         Container<MovieRating> container = new Container<>();
         when(movieRatingRepository.save(any(MovieRating.class))).thenAnswer(invocation -> {
@@ -156,7 +156,7 @@ public class MovieRatingEndpointTest {
         JwtUser user = createUser(1L);
         Movie movie = new Movie();
         MovieRating oldRating = createRating(user.getId(), LocalDateTime.now());
-        oldRating.setRating(new BigDecimal("9.1"));
+        oldRating.setRating(9.1);
         oldRating.setComment("Test");
         movie.setLatestMovieRatings(Arrays.asList(
                 oldRating
@@ -167,7 +167,7 @@ public class MovieRatingEndpointTest {
         whenRatingSaveReturnWithId(1L);
 
         //Act
-        MovieShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(MovieRating.Seen.YES, new BigDecimal("9.1"), null));
+        MovieShortRating rating = endpoint.edit(1L, 1L, new MovieRatingRequest(MovieRating.Seen.YES, 9.1, null));
 
         //Assert
         assertEquals(MovieRating.Seen.YES.ordinal(), rating.getSeen());

@@ -28,7 +28,7 @@ public class MovieRequest extends IdCmUserModel {
     @Column(nullable = false)
     private MovieRating.Seen seen;
     @Column(precision = 3, scale = 1)
-    private BigDecimal rating;
+    private Double rating;
     @Column(length = 5000)
     private String comment;
 
@@ -48,7 +48,7 @@ public class MovieRequest extends IdCmUserModel {
      * @param rating     The user's rating
      * @param comment    The user's comment (on their rating)
      */
-    public MovieRequest(User user, String imdbId, String youtubeUrl, String title, String year, String imdbRating, MovieRating.Seen seen, BigDecimal rating, String comment) {
+    public MovieRequest(User user, String imdbId, String youtubeUrl, String title, String year, String imdbRating, MovieRating.Seen seen, Double rating, String comment) {
         this.setUser(user);
         this.imdbId = imdbId;
         this.youtubeUrl = youtubeUrl;

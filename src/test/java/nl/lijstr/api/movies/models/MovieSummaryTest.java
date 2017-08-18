@@ -141,7 +141,7 @@ public class MovieSummaryTest {
 
     private static void addRating(Movie movie, long user) {
         movie.getLatestMovieRatings().add(new MovieRating(
-            movie, new User(user), MovieRating.Seen.YES, BigDecimal.ONE, null
+            movie, new User(user), MovieRating.Seen.YES, 1.0, null
         ));
     }
 
