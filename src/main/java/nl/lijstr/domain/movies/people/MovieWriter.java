@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import lombok.*;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.imdb.Person;
+import nl.lijstr.domain.interfaces.MovieBound;
 import nl.lijstr.domain.interfaces.PersonBound;
 import nl.lijstr.domain.movies.Movie;
 
@@ -19,7 +20,7 @@ import nl.lijstr.domain.movies.Movie;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class MovieWriter extends IdModel implements PersonBound {
+public class MovieWriter extends IdModel implements PersonBound, MovieBound {
 
     @JsonBackReference
     @ManyToOne

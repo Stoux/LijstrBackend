@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import lombok.*;
 import nl.lijstr.domain.imdb.AbstractActor;
 import nl.lijstr.domain.imdb.Person;
+import nl.lijstr.domain.interfaces.MovieBound;
 import nl.lijstr.domain.movies.Movie;
 
 /**
@@ -16,7 +17,7 @@ import nl.lijstr.domain.movies.Movie;
 @Setter
 @NoArgsConstructor
 @Entity
-public class MovieCharacter extends AbstractActor {
+public class MovieCharacter extends AbstractActor implements MovieBound {
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.PERSIST)
