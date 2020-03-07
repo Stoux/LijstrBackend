@@ -72,6 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors().and()
+
                 //Don't need CSRF
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
@@ -89,8 +91,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //=> Pretty much all POST/PUT interactions
                 .antMatchers(HttpMethod.POST, "/**").authenticated()
                 .antMatchers(HttpMethod.PUT, "/**").authenticated()
-                //=> Movie update triggers
-                .antMatchers("/movies/update/**").access("hasRole('ROLE_ADMIN')")
 
                 //Allow the rest
                 .anyRequest().permitAll();

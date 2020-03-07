@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 /**
  * The base AbsService used for {@link org.springframework.web.bind.annotation.RestController}s.
  */
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public abstract class AbsService {
 
     @Autowired
