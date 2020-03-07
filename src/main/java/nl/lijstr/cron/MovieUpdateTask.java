@@ -2,7 +2,10 @@ package nl.lijstr.cron;
 
 import java.time.LocalDate;
 import javax.transaction.Transactional;
+
+import io.sentry.Sentry;
 import nl.lijstr.domain.movies.Movie;
+import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.services.maf.MafApiService;
@@ -33,8 +36,10 @@ public class MovieUpdateTask {
     @Transactional
     @Scheduled(cron = "0 0,10,20,30 * * * *")
     public void updateOldestByCron() {
-        Movie movie = movieRepository.findFirstByOrderByLastUpdatedAsc();
-        update(movie);
+        withSentry(() -> {
+            Movie movie = movieRepository.findFirstByOrderByLastUpdatedAsc();
+            update(movie);
+        });
     }
 
     /**
@@ -44,9 +49,11 @@ public class MovieUpdateTask {
     @Transactional
     @Scheduled(cron = "0 40,50 * * * *")
     public void updateOldestFromRecentMovies() {
-        LocalDate recentDate = LocalDate.now().minusYears(1);
-        Movie movie = movieRepository.findFirstByReleasedAfterOrderByLastUpdatedAsc(recentDate);
-        update(movie);
+        withSentry(() -> {
+            LocalDate recentDate = LocalDate.now().minusYears(1);
+            Movie movie = movieRepository.findFirstByReleasedAfterOrderByLastUpdatedAsc(recentDate);
+            update(movie);
+        });
     }
 
     private void update(Movie movie) {
@@ -58,5 +65,15 @@ public class MovieUpdateTask {
             logger.info("[CRON] Finished updating movie");
         }
     }
+
+    private void withSentry(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (Throwable e) {
+            Sentry.capture(e);
+            throw e;
+        }
+    }
+
 
 }
