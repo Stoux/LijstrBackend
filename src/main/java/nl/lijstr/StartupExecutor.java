@@ -3,6 +3,7 @@ package nl.lijstr;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
@@ -19,6 +20,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
+
+import javax.naming.InitialContext;
 
 /**
  * Created by Stoux on 19/04/2016.
@@ -40,6 +43,9 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
     @Value("${admin.password}")
     private String adminPassword;
 
+    @Value("${sentry.tomcat}")
+    private boolean sentryTomcat;
+
     @Value("${server.image-location}")
     private String imgFolderLocation;
 
@@ -48,9 +54,38 @@ public class StartupExecutor implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        setupSentry();
         addPermissions();
         addAdmin();
         validateWritePermissions();
+    }
+
+    private void setupSentry() {
+        if (!sentryTomcat) {
+            logger.debug("[Sentry] Skipping tomcat integration");
+            return;
+        }
+
+        try {
+            logger.debug("[Sentry] Attempting tomcat integration");
+            InitialContext context = new InitialContext();
+            Object file = context.lookup("java:comp/env/sentry.properties.file");
+            if (file == null) {
+                logger.warn("[Sentry] No path to file found in context");
+            } else {
+                String pathToConfig = file.toString();
+                File configFile = new File(pathToConfig);
+                if (!configFile.exists()) {
+
+                }
+
+                logger.info("[Sentry] Setting to env: " + file);
+                System.setProperty("sentry.properties.file", file.toString());
+            }
+
+        } catch (Exception e) {
+            logger.warn(e);
+        }
     }
 
     private void addPermissions() {
