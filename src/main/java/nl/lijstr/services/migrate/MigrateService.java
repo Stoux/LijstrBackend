@@ -82,7 +82,7 @@ public class MigrateService {
     }
 
     @Async
-    private void startMigration(OldSiteMigrator migrator) {
+    public void startMigration(OldSiteMigrator migrator) {
         migrator.migrate();
     }
 

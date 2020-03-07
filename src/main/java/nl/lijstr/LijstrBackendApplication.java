@@ -12,8 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  * This is the JAR method of starting.
  */
 @EntityScan("nl.lijstr")
-@ComponentScan("nl.lijstr")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "nl.lijstr")
 public class LijstrBackendApplication {
 
     @Autowired
