@@ -2,6 +2,7 @@ package nl.lijstr.services.maf;
 
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
+import nl.lijstr.exceptions.api.ExternalApiException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
@@ -43,6 +44,10 @@ public class MafApiService {
     public Movie updateMovie(Movie movie) {
         //Get the most recent data from the API
         ApiMovie apiMovie = getApiMovie(movie.getImdbId());
+        if (apiMovie == null) {
+            logger.warn("Failed to fetch movie from MAF");
+            throw new ExternalApiException("Unable to fetch movie from MAF");
+        }
         logger.info("Updating movie: " + movie.getImdbId());
         return updateHandler.update(movie, apiMovie);
     }

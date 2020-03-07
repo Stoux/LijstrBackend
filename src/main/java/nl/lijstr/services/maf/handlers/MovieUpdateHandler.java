@@ -4,10 +4,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -253,6 +250,12 @@ public class MovieUpdateHandler {
     private <X extends ImdbIdentifiable, Y extends ImdbIdentifiable> void updateImdbPeople(
             final List<X> currentItems, Collection<Y> newItems, Function<Y, String> getPersonName,
             BiFunction<Person, Y, X> createX, BiConsumer<X, Y> updateX) {
+        if (newItems == null) {
+            // No items found in the API, which means we will remove them all (if there are any)
+            // How in the heck are there movies with now writers by the way?
+            newItems = Collections.emptyList();
+        }
+
         final Map<String, X> itemMap = Utils.toMap(currentItems, ImdbIdentifiable::getImdbId);
 
         //Loop through new items
