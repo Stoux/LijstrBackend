@@ -1,7 +1,6 @@
 package nl.lijstr.services.maf.retrofit;
 
 import nl.lijstr.configs.RetrofitEndpoints;
-import nl.lijstr.services.maf.MafDataType;
 import nl.lijstr.services.maf.models.containers.ApiMovieModel;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
 import retrofit2.Call;

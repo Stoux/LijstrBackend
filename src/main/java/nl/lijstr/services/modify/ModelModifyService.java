@@ -110,7 +110,7 @@ public class ModelModifyService {
             List<ReflectedField> reflectedFields = loadClassFields(clazz);
 
             //Log it
-            logger.info(
+            logger.debug(
                     "Mapped {} fields for class: {} ({})",
                     reflectedFields.size(), className,
                     StrUtils.collectionToDelimitedString(
