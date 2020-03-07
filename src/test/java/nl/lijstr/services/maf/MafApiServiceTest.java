@@ -50,7 +50,7 @@ public class MafApiServiceTest {
         doReturn(mockedResponse).when(mockedCall).execute();
 
         assertNotNull(imdbService);
-        when(imdbService.getMovie(anyString(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), anyInt()))
+        when(imdbService.getMovie(anyString(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), any(), any(), any()))
                 .thenReturn(mockedCall);
         when(updateHandler.update(any(), any()))
                 .thenReturn(movie);
@@ -60,7 +60,7 @@ public class MafApiServiceTest {
 
         //Assert
         assertEquals(movie, resultingMovie);
-        verify(imdbService, times(1)).getMovie(anyString(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), anyInt());
+        verify(imdbService, times(1)).getMovie(anyString(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), any(), any(), any());
         verify(updateHandler, times(1)).update(movie, apiMovie);
     }
 
