@@ -52,5 +52,6 @@ crashlytics-build.properties
 # Log4j2
 logs/
 
-# Use the default.properties file
-/src/main/resources/application.properties
+# Ignore root property files
+/application.properties
+/sentry.properties
