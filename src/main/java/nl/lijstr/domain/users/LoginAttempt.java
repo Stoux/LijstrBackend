@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import nl.lijstr.domain.base.IdUserModel;
 
@@ -15,6 +17,7 @@ import nl.lijstr.domain.base.IdUserModel;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIgnoreProperties({"user"})
 public class LoginAttempt extends IdUserModel {
 
     private LocalDateTime timestamp;

@@ -6,20 +6,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
-import nl.lijstr.api.users.models.CreateUserRequest;
-import nl.lijstr.api.users.models.PasswordChangeRequest;
-import nl.lijstr.api.users.models.PermissionList;
+import nl.lijstr.api.users.models.*;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
+import nl.lijstr.domain.users.LoginAttempt;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.exceptions.security.UnauthorizedException;
+import nl.lijstr.repositories.users.LoginAttemptRepository;
 import nl.lijstr.repositories.users.PermissionRepository;
 import nl.lijstr.repositories.users.UserRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,9 @@ public class UserEndpoint extends AbsService {
     private UserRepository userRepository;
 
     @Autowired
+    private LoginAttemptRepository loginAttemptRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     /**
@@ -48,8 +52,14 @@ public class UserEndpoint extends AbsService {
      */
     @Secured(Permission.ADMIN)
     @RequestMapping()
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserDetails> getUsers() {
+        return userRepository.findAll().stream()
+            .map(user -> new UserDetails(
+                user,
+                this.loginAttemptRepository.findFirstByUserAndSuccessOrderByTimestampDesc(user, true),
+                this.loginAttemptRepository.findFirstByUserAndSuccessOrderByTimestampDesc(user, false)
+            ))
+            .collect(Collectors.toList());
     }
 
 
@@ -64,6 +74,22 @@ public class UserEndpoint extends AbsService {
     public User getUserDetails(@PathVariable Long id) {
         checkUserOrAdmin(id);
         return findOne(userRepository, id, "User");
+    }
+
+    /**
+     * Update the general details of the user.
+     *
+     * @param id                ID of the user
+     * @param updateUserRequest Updated fields
+     *
+     * @return the updated user
+     */
+    @RequestMapping(value = "/{id:\\d+}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
+        checkUserOrAdmin(id);
+        User foundUser = findOne(userRepository, id, "User");
+        updateUserRequest.applyTo(foundUser);
+        return userRepository.saveAndFlush(foundUser);
     }
 
     /**
@@ -114,6 +140,29 @@ public class UserEndpoint extends AbsService {
     }
 
     /**
+     * Get a list of all available permissions.
+     *
+     * @return permissions
+     */
+    @Secured(Permission.ADMIN)
+    @RequestMapping("/permissions")
+    public List<Permission> getAvailablePermissions() {
+        return permissionRepository.findAll();
+    }
+
+    /**
+     * List all available 'approvedFor' options.
+     *
+     * @return List of options
+     */
+    @Secured(Permission.ADMIN)
+    @RequestMapping("/list-approved-for")
+    public List<ApprovedFor> getAvailableApprovedForIds() {
+        return Arrays.asList(ApprovedFor.values());
+    }
+
+
+    /**
      * Allows a user to change their password.
      *
      * @param id            The user's ID
@@ -160,6 +209,7 @@ public class UserEndpoint extends AbsService {
                 userRequest.getUsername(), userRequest.getDisplayName(), userRequest.getEmail(),
                 userRequest.getApprovedFor() == null ? ApprovedFor.EVERYONE : userRequest.getApprovedFor()
         );
+
         return userRepository.saveAndFlush(newUser);
         //TODO: Send a mail
     }
