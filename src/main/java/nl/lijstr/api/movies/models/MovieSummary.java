@@ -2,6 +2,9 @@ package nl.lijstr.api.movies.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,6 +47,9 @@ public class MovieSummary {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, MovieShortRating> latestRatings;
+
+    private BigDecimal averageUserRating;
+    private Integer averageUserRatingCount;
 
     /**
      * Convert a Movie to a summarized version of itself.
@@ -90,6 +96,22 @@ public class MovieSummary {
                 .map(MovieShortRating::new)
                 .collect(Collectors.toMap(MovieShortRating::getUser, o -> o));
             builder.latestRatings(shortRatings);
+
+            // Calculate the average rating of all users
+            BigDecimal average = new BigDecimal("0.0");
+            int ratingCount = 0;
+            for (MovieRating rating : movie.getLatestMovieRatings()) {
+                if (rating.getRating() != null) {
+                    average = average.add(rating.getRating());
+                    ratingCount++;
+                }
+            }
+            if (ratingCount >= 1) {
+                builder.averageUserRating(
+                    average.divide(new BigDecimal(ratingCount), RoundingMode.HALF_UP)
+                );
+                builder.averageUserRatingCount(ratingCount);
+            }
         }
 
         if (includeAgeRating) {
