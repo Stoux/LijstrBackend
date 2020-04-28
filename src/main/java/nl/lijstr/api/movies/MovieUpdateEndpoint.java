@@ -46,7 +46,7 @@ public class MovieUpdateEndpoint extends AbsService {
         logger.info("Updating movie: {} ({})", movie.getTitle(), movie.getImdbId());
         mafApiService.updateMovie(movie);
         return MovieSummary.convert(
-            movie, false, false, false, false, false, Collections.emptySet()
+            movie, false, false, false, false, false, false, Collections.emptySet()
         );
     }
 

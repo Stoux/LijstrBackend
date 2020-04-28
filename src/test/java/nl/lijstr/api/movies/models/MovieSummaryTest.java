@@ -26,7 +26,7 @@ public class MovieSummaryTest {
 
         //Act
         MovieSummary summary = MovieSummary.convert(
-            movie, false, false, true, true, true, null
+            movie, false, false, true, true, true, true,null
         );
         new MovieSummary(); //Coverage lol
 
@@ -59,10 +59,10 @@ public class MovieSummaryTest {
 
         //Act
         MovieSummary dutch = MovieSummary.convert(
-            movie, true, false, false, false, false, null
+            movie, true, false, false, false, false, true,null
         );
         MovieSummary original = MovieSummary.convert(
-            movie, false, true, false, false, false, null
+            movie, false, true, false, false, false, true,null
         );
 
         //Assert
@@ -78,7 +78,7 @@ public class MovieSummaryTest {
 
         //Act
         MovieSummary summary = MovieSummary.convert(
-            movie, false, false, false, false, false, Collections.emptySet()
+            movie, false, false, false, false, false, true, Collections.emptySet()
         );
 
         //Assert
@@ -100,7 +100,7 @@ public class MovieSummaryTest {
 
         //Act
         MovieSummary summary = MovieSummary.convert(
-            movie, false, false, false, false, false, requestedUsers
+            movie, false, false, false, false, false, true, requestedUsers
         );
 
         //Assert

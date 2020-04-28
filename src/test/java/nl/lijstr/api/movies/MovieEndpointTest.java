@@ -105,7 +105,7 @@ public class MovieEndpointTest {
 
         //Act
         List<MovieSummary> summaries = movieEndpoint.summaries(false, false,
-                false, false, false, null);
+                false, false, false, false, null);
 
         //Assert
         assertEquals(3, summaries.size());

@@ -11,6 +11,7 @@ import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.interfaces.PersonBound;
 import nl.lijstr.domain.movies.Movie;
+import nl.lijstr.domain.movies.MovieCollection;
 import nl.lijstr.domain.movies.MovieRating;
 
 /**
@@ -54,6 +55,8 @@ public class MovieDetail {
     private List<Genre> genres;
     private List<SpokenLanguage> languages;
 
+    private List<MovieCollection> collections;
+
     private List<Person> writers;
     private List<Person> directors;
 
@@ -87,6 +90,7 @@ public class MovieDetail {
                 .ageRating(movie.getAgeRating())
                 .hasPoster(movie.isPoster())
                 .youtubeUrl(movie.getYoutubeUrl())
+                .collections(movie.getCollections())
                 .genres(movie.getGenres())
                 .languages(movie.getLanguages());
 

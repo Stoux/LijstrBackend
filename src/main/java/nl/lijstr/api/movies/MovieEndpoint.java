@@ -81,12 +81,13 @@ public class MovieEndpoint extends AbsService {
             @RequestParam(required = false, defaultValue = "false") final boolean includeGenres,
             @RequestParam(required = false, defaultValue = "false") final boolean includeLanguages,
             @RequestParam(required = false, defaultValue = "false") final boolean includeAgeRating,
+            @RequestParam(required = false, defaultValue = "true") final boolean includeCollections,
             @RequestParam(required = false, name = "users") final String requestedUsers) {
         Set<Long> users = parseUsers(requestedUsers);
         return movieRepository.findAllByOrderByTitleAsc()
                 .stream()
                 .map(m -> MovieSummary.convert(m, useDutchTitles, useOriginalTitles,
-                        includeGenres, includeLanguages, includeAgeRating, users))
+                        includeGenres, includeLanguages, includeAgeRating, includeCollections, users))
                 .collect(Collectors.toList());
     }
 

@@ -34,6 +34,9 @@ public class Movie extends IdCmModel {
     @Column(unique = true, nullable = false)
     private String imdbId;
 
+//    @Column(unique = true, nullable = false)
+//    private Integer tmdbId;
+
     private String title;
     private String originalTitle;
     private String dutchTitle;
@@ -101,6 +104,10 @@ public class Movie extends IdCmModel {
     @OneToMany(mappedBy = "movie")
     private List<MovieUserMeta> movieUserMetaList;
 
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "movies")
+    private List<MovieCollection> collections;
+
     /**
      * Create a new Movie by it's IMDB ID.
      *
@@ -134,6 +141,7 @@ public class Movie extends IdCmModel {
         this.latestMovieRatings = new ArrayList<>();
         this.movieRatings = new ArrayList<>();
         this.movieUserMetaList = new ArrayList<>();
+        this.collections = new ArrayList<>();
     }
 
     /**

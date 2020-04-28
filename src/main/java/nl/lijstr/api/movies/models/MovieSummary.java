@@ -15,6 +15,7 @@ import nl.lijstr.common.Utils;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
+import nl.lijstr.domain.movies.MovieCollection;
 import nl.lijstr.domain.movies.MovieRating;
 
 /**
@@ -46,6 +47,9 @@ public class MovieSummary {
     private Map<Long, String> languages;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Map<Long, String> collections;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<Long, MovieShortRating> latestRatings;
 
     private BigDecimal averageUserRating;
@@ -70,6 +74,7 @@ public class MovieSummary {
                                        boolean includeGenres,
                                        boolean includeLanguages,
                                        boolean includeAgeRating,
+                                       boolean includeCollections,
                                        Set<Long> requestUsers) {
         MovieSummaryBuilder builder = MovieSummary.builder()
             .id(movie.getId())
@@ -123,6 +128,10 @@ public class MovieSummary {
         }
         if (includeLanguages) {
             builder.languages(Utils.toMap(movie.getLanguages(), SpokenLanguage::getId, SpokenLanguage::getLanguage));
+        }
+
+        if (includeCollections) {
+            builder.collections(Utils.toMap(movie.getCollections(), MovieCollection::getId, MovieCollection::getTitle));
         }
 
         return builder.build();
