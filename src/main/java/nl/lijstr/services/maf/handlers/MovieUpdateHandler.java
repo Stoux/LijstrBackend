@@ -22,7 +22,11 @@ import nl.lijstr.domain.movies.people.MovieWriter;
 import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
+import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
+import nl.lijstr.repositories.movies.people.MovieCharacterRepository;
+import nl.lijstr.repositories.movies.people.MovieDirectorRepository;
+import nl.lijstr.repositories.movies.people.MovieWriterRepository;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
 import nl.lijstr.services.maf.handlers.util.FieldConverters;
@@ -54,6 +58,13 @@ public class MovieUpdateHandler {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieWriterRepository movieWriterRepository;
+    @Autowired
+    private MovieDirectorRepository movieDirectorRepository;
+    @Autowired
+    private MovieCharacterRepository movieCharacterRepository;
 
     @Autowired
     private ImdbBean imdbBean;
@@ -205,21 +216,21 @@ public class MovieUpdateHandler {
 
     private void updateWriters(final Movie movie, ApiMovie apiMovie) {
         updateImdbPeople(
-                movie.getWriters(), apiMovie.getWriters(), ApiPerson::getName,
+                movieWriterRepository, movie.getWriters(), apiMovie.getWriters(), ApiPerson::getName,
                 (p, a) -> new MovieWriter(movie, p), null
         );
     }
 
     private void updateDirectors(final Movie movie, ApiMovie apiMovie) {
         updateImdbPeople(
-                movie.getDirectors(), apiMovie.getDirectors(), ApiPerson::getName,
+                movieDirectorRepository, movie.getDirectors(), apiMovie.getDirectors(), ApiPerson::getName,
                 (p, a) -> new MovieDirector(movie, p), null
         );
     }
 
     private void updateActors(final Movie movie, ApiMovie apiMovie) {
         updateImdbPeople(
-                movie.getCharacters(), apiMovie.getActors(), ApiActor::getActorName,
+                movieCharacterRepository, movie.getCharacters(), apiMovie.getActors(), ApiActor::getActorName,
                 (p, a) -> new MovieCharacter(
                         movie, p, a.getCharacter(), a.getCharacterUrl(),
                         a.getPhotoUrl(), a.isMainCharacter()
@@ -239,6 +250,7 @@ public class MovieUpdateHandler {
      * This function allows for the conversion from Api elements to Movie elements.
      * It checks for new ones (and adds them), updates current ones and removes old ones.
      *
+     * @param repository    The repository of the items (used for removing)
      * @param currentItems  The current list
      * @param newItems      The new items
      * @param getPersonName Get a person's name from a new item
@@ -246,9 +258,10 @@ public class MovieUpdateHandler {
      * @param updateX       Ability to update X with the values from Y
      * @param <X>           The Movie element
      * @param <Y>           The API element
+     * @param <R>           The Repository for the Movie Element
      */
-    private <X extends ImdbIdentifiable, Y extends ImdbIdentifiable> void updateImdbPeople(
-            final List<X> currentItems, Collection<Y> newItems, Function<Y, String> getPersonName,
+    private <X extends ImdbIdentifiable, Y extends ImdbIdentifiable, R extends BasicRepository<X>> void updateImdbPeople(
+            final R repository, final List<X> currentItems, Collection<Y> newItems, Function<Y, String> getPersonName,
             BiFunction<Person, Y, X> createX, BiConsumer<X, Y> updateX) {
         if (newItems == null) {
             // No items found in the API, which means we will remove them all (if there are any)
@@ -256,11 +269,25 @@ public class MovieUpdateHandler {
             newItems = Collections.emptyList();
         }
 
+        // MAF has returned duplicate entries in the past (which we have copied). Remove them if present.
+        removeDuplicateImdbPeople(repository, currentItems);
+
+        // Map the existing items to their IMDB ID
         final Map<String, X> itemMap = Utils.toMap(currentItems, ImdbIdentifiable::getImdbId);
 
-        //Loop through new items
+        // Keep track of any item IDs that we have already processed
+        final Set<String> processedImdbIds = new HashSet<>();
+
+        // Loop through new items to find ones that need to be updated or added
         newItems.forEach(newItem -> {
-            String newId = newItem.getImdbId();
+            final String newId = newItem.getImdbId();
+            if (processedImdbIds.contains(newId)) {
+                // Already handled an item with this ID, trash API is returning duplicates.
+                return;
+            } else {
+                processedImdbIds.add(newId);
+            }
+
             if (itemMap.containsKey(newId)) {
                 X matchedItem = itemMap.remove(newId);
                 if (updateX != null) {
@@ -279,7 +306,40 @@ public class MovieUpdateHandler {
         });
 
         //Delete old ones
-        itemMap.values().forEach(currentItems::remove);
+        itemMap.values().forEach(x -> {
+            // Remove it from the list linked with the movie
+            currentItems.remove(x);
+            // Remove it from the DB
+            repository.delete(x);
+        });
+    }
+
+    /**
+     * Check the list for any duplicate IDs.
+     *
+     * MAF has returned duplicate people (as seperate entries) in the past. Clean those up.
+     *
+     * @param currentItems The already added items
+     * @param <X> The IMDB item
+     */
+    private <X extends ImdbIdentifiable, R extends BasicRepository<X>> void removeDuplicateImdbPeople(
+        final R repository, final List<X> currentItems
+    ) {
+        final Set<String> foundIds = new HashSet<>();
+        final ListIterator<X> listIterator = currentItems.listIterator();
+        while(listIterator.hasNext()) {
+            final X imdbItem = listIterator.next();
+            final String id = imdbItem.getImdbId();
+            if (foundIds.contains(id)) {
+                // Already found this ID, remove the item from the list
+                listIterator.remove();
+
+                // Completely remove it from the DB
+                repository.delete(imdbItem);
+            } else {
+                foundIds.add(id);
+            }
+        }
     }
 
     private void updatePoster(Movie movie, ApiMovie apiMovie) {
