@@ -90,7 +90,7 @@ public class ModelModifyServiceConstructTest {
         //Assert
         assertTrue(excludedNotModifiable);
         assertTrue(includedEntity);
-        verify(mockedLogger, times(1)).info(anyString(), anyInt(), anyString(), anyString());
+        verify(mockedLogger, times(1)).debug(anyString(), anyInt(), anyString(), anyString());
     }
 
     private Void assertLoggerInvocation(InvocationOnMock invocation) {
