@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 public class PostedMovieRequest {
 
     @NotEmpty
-    @Pattern(regexp = "tt\\d{7}")
+    @Pattern(regexp = "tt\\d{7,8}")
     private String imdbId;
 
     private String youtubeId;

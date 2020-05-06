@@ -40,7 +40,7 @@ public class OmdbProxyEndpoint extends AbsService {
      * @return The OmdbObject
      */
     @Secured({Permission.MOVIE_MOD, Permission.ADMIN})
-    @RequestMapping("/{imdbId:tt\\d{7}}")
+    @RequestMapping("/{imdbId:tt\\d{7,8}}")
     public OmdbObject proxy(@PathVariable("imdbId") String imdbId) {
         OmdbObject omdbObject = apiService.get(imdbId);
         if (!omdbObject.isSuccessful()) {
