@@ -62,6 +62,10 @@ public class User extends IdCmModel {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GrantedPermission> grantedPermissions;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private EmailSettings emailSettings;
+
     /**
      * Create a User by it's ID.
      * This is intended to be used as a reference object (for relations).

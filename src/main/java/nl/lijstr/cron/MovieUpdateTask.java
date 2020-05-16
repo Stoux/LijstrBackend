@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import javax.transaction.Transactional;
 
 import io.sentry.Sentry;
+import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
@@ -36,7 +37,7 @@ public class MovieUpdateTask {
     @Transactional
     @Scheduled(cron = "0 0,10,20,30 * * * *")
     public void updateOldestByCron() {
-        withSentry(() -> {
+        Utils.withSentry(() -> {
             Movie movie = movieRepository.findFirstByOrderByLastUpdatedAsc();
             update(movie);
         });
@@ -49,7 +50,7 @@ public class MovieUpdateTask {
     @Transactional
     @Scheduled(cron = "0 40,50 * * * *")
     public void updateOldestFromRecentMovies() {
-        withSentry(() -> {
+        Utils.withSentry(() -> {
             LocalDate recentDate = LocalDate.now().minusYears(1);
             Movie movie = movieRepository.findFirstByReleasedAfterOrderByLastUpdatedAsc(recentDate);
             update(movie);
@@ -65,15 +66,5 @@ public class MovieUpdateTask {
             logger.info("[CRON] Finished updating movie");
         }
     }
-
-    private void withSentry(Runnable runnable) {
-        try {
-            runnable.run();
-        } catch (Throwable e) {
-            Sentry.capture(e);
-            throw e;
-        }
-    }
-
 
 }

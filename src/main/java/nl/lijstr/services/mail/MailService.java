@@ -68,15 +68,32 @@ public class MailService {
      * @return a Mail response
      */
     public MailGunResponse sendMail(String subject, User user, MailTemplate mailTemplate, String tag) {
+        final String html = buildTemplateMail(
+            subject, user, mailTemplate.getMessage(), mailTemplate.getButton(), mailTemplate.getButtonUrlPath());
+        final String text = buildTemplateText(user, mailTemplate);
+
+        return sendMail(subject, user, html, text, tag);
+    }
+
+    /**
+     * Send a mail to the given user.
+     *
+     * @param subject Subject of the mail
+     * @param user User to send to
+     * @param html HTML of the email
+     * @param text Text the email
+     * @param tag Optional tag (for Mailgun)
+     *
+     * @return a Mail response
+     */
+    public MailGunResponse sendMail(String subject, User user, String html, String text, String tag) {
         //Build field map
         Map<String, String> fieldMap = new HashMap<>();
         fieldMap.put("from", from);
         fieldMap.put("to", user.getEmail());
         fieldMap.put("subject", subject);
-        fieldMap.put("html", buildTemplateMail(
-                subject, user, mailTemplate.getMessage(), mailTemplate.getButton(), mailTemplate.getButtonUrlPath())
-        );
-        fieldMap.put("text", buildTemplateText(user, mailTemplate));
+        fieldMap.put("html", html);
+        fieldMap.put("text", text);
         fieldMap.put("o:tag", tag);
 
         //Send mail

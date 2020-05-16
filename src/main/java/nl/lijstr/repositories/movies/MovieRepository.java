@@ -1,6 +1,7 @@
 package nl.lijstr.repositories.movies;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.repositories.abs.BasicRepository;
@@ -16,6 +17,15 @@ public interface MovieRepository extends BasicRepository<Movie> {
      * @return list of movies
      */
     List<Movie> findAllByOrderByTitleAsc();
+
+    /**
+     * Find all movies that were added after a given time.
+     *
+     * @param after After this time
+     *
+     * @return list of movies
+     */
+    List<Movie> findAllByCreatedAfter(LocalDateTime after);
 
     /**
      * Find the movie with the oldest lastUpdated value.

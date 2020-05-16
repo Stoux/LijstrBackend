@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Lijstr update</title>
+    <style>
+        body {
+            padding: 15px 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #1b1c1d;
+            min-height: 600px;
+            color: white;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            line-height: 1.3em;
+        }
+
+        .header, .footer {
+            background-color: #1a6293;
+            padding: 24px 12px;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*align-items: center;*/
+        }
+
+        .header *, .footer {
+            text-align: center;
+        }
+
+        .header .title {
+            margin: 10px 0;
+        }
+
+        .content {
+
+        }
+
+        .content-block {
+            padding: 8px 12px 16px;
+            border-bottom: 1px solid white;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*align-items: center;*/
+        }
+
+        .content-block.last {
+            border-bottom: none;
+            margin-bottom: 32px;
+        }
+        .content-block.last > p {
+            padding: 16px;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .content-block .title {
+            width: 100%;
+            text-align: center;
+        }
+
+        .added-movies {
+            display: flex;
+            width: max-content;
+            margin: 0 auto;
+        }
+
+        .added-movies-extra {
+            font-style: italic;
+        }
+
+        .added-movies-text {
+            max-width: 70%;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .added-movie {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        a {
+            color: lightgray;
+        }
+
+        blockquote {
+            margin: 0;
+            padding-left: 8px;
+            border-left: 1px solid lightgray;
+        }
+
+        blockquote.kanye-quote {
+            border: none;
+            text-align: center;
+        }
+
+        blockquote.kanye-quote span {
+            color: yellow;
+            font-size: 1.3em;
+        }
+
+        .button {
+            font-size: 1.2em;
+            text-decoration: none;
+            padding: 10px 16px;
+            background: #559020;
+            color: white !important;
+            transition: 0.2s;
+        }
+
+        .container .content a.button[href] {
+            color: white;
+        }
+
+        .container .footer a[href] {
+            color: white;
+        }
+
+        .button:hover {
+            background-color: #1a6293;
+        }
+
+        .align-self-center {
+            /*align-self: center;*/
+        }
+
+        .review {
+            width: 100%;
+            display: flex;
+            margin: 16px;
+        }
+
+        .review-image-holder {
+            align-self: center;
+        }
+
+        .review-content {
+            padding-left: 12px;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*justify-content: center;*/
+            height: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .review-content > * {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        .review-intro {
+            max-width: 500px;
+            display: flex;
+        }
+
+        .review-outro {
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .sep {
+            margin: 4px auto;
+            border-top: 1px solid lightgray;
+            width: 50px;
+        }
+
+        .review-sep {
+            margin: 12px 0;
+        }
+
+        blockquote footer {
+            font-size: 80%;
+            line-height: 1.42857143;
+            margin-top: 4px;
+        }
+
+        blockquote footer:before {
+            content: "\2014 \00A0";
+        }
+
+        .margin-center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 class="title" th:text="${user.getDisplayName() + '👋'}"></h1>
+        <h4 class="title" th:text="${title}"></h4>
+    </div>
+    <div class="content">
+        <div class="content-block">
+            <small style="display: block; text-align: center; font-size: 0.6em;">
+                Vorige update:
+                <span th:remove="tag" th:text="${lastUpdate.getDayOfMonth() + '-' + lastUpdate.getMonth().getValue() + '-' + lastUpdate.getYear()}"></span>
+            </small>
+            <h3 class="title">Nieuwe filmpies</h3>
+            <div class="added-movies" th:unless="${addedMoviesSubset.isEmpty()}">
+                <div class="added-movie" th:each="movie : ${addedMoviesSubset}">
+                    <a th:href="@{${appUrl + '/movies/' + movie.getId()}}">
+                        <img th:title="${movie.getTitle()}"
+                             th:src="@{${apiUrl + '/movies/' + movie.getId() + '/poster'}}"/>
+                    </a>
+                </div>
+            </div>
+            <p style="text-align: center" th:if="${addedMoviesCount > 3}">
+                <small class="added-movies-extra margin-center">
+                    <a th:href="@{${appUrl + '/movies/stats'}}"
+                       th:text="${'+ nog ' + (addedMoviesCount - 3) + ' andere'}"
+                       style="color: lightgray;">
+                    </a>
+                </small>
+            </p>
+            <p style="text-align: center" th:if="${addedMoviesCount == 0}">
+                Blijkbaar is d'r niks toegevoegd sinds je laatste update. <br />
+                <em>Lekker dan.</em>
+            </p>
+
+            <p class="added-movies-text margin-center">
+                <span th:if="${outstandingCount >= 2}">
+                    Er zijn nu in totaal nog <strong th:text="${outstandingCount}"></strong> films die je nog moet invullen.
+                </span>
+                <span th:if="${outstandingCount == 1}">
+                    Er is nu in totaal nog <strong>1</strong> film die je nog moet invullen.
+                </span>
+                <span th:if="${outstandingCount == 0}">
+                    Je hebt alle films al ingevuld, <em>lekker bezig hoor</em>.
+                </span>
+            </p>
+            <p style="text-align: center; margin-top: 24px;">
+                <a th:href="@{${appUrl + (outstandingCount > 0 ? '/movies/outstanding' : '/movies/stats')}}" href="#" class="button align-self-center">
+                    <span th:text="|1, 2, ${outstandingCount}, vullen maar|" th:if="${outstandingCount >= 3}" th:remove="tag"></span>
+                    <span th:if="${outstandingCount == 1 || outstandingCount == 2}" th:remove="tag">
+                        1, 2, 3, vullen maar
+                    </span>
+                    <span th:if="${outstandingCount == 0}" th:remove="tag">
+                        Stats bekijken
+                    </span>
+                </a>
+            </p>
+        </div>
+        <div class="content-block">
+            <h3 class="title">Trash van de rest</h3>
+            <div class="review-intro margin-center">
+                <div>-</div>
+                <small style="text-align: center;">
+                    <span th:remove="tag" th:text="${algoPrefix}"></span>
+                    <span th:remove="tag" th:text="${algoBuzzwords}"></span>
+                    machine learning is toegepast om uit te zoeken
+                    welke reviews voor jou <em>echt</em> intressant zijn. <!-- Dit is niet waar. -->
+                </small>
+                <div>-</div>
+            </div>
+
+            <div th:remove="tag" th:each="update, iterator : ${ratingUpdates}">
+
+                <div class="review">
+                    <a th:href="@{${appUrl + '/movies/' + update.getMovie().getId()}}" class="review-image-holder">
+                        <img th:title="${update.getMovie().getTitle()}"
+                             th:src="@{${apiUrl + '/movies/' + update.getMovie().getId() + '/poster'}}"/>
+                    </a>
+                    <div class="review-content">
+                        <div th:remove="tag" th:each="movieRating, ratingIterator : ${update.getMovieRatings()}">
+
+                            <div class="review-sep" th:if="${ratingIterator.index > 0}"></div>
+
+                            <div th:unless="${movieRating.hasComment()}">
+                                <strong th:text="${movieRating.getUser().getDisplayName()}"></strong>:
+                                <span th:remove="tag" th:if="${movieRating.getSeen() == T(nl.lijstr.domain.movies.MovieRating.Seen).YES}"
+                                      th:text="${'Rating: ' + formatRating.apply(movieRating) + '/10'}"></span>
+                                <span th:remove="tag" th:if="${movieRating.getSeen() == T(nl.lijstr.domain.movies.MovieRating.Seen).UNKNOWN}">
+                                    Gezien?
+                                </span>
+                                <span th:remove="tag" th:if="${movieRating.getSeen() == T(nl.lijstr.domain.movies.MovieRating.Seen).NO}">
+                                    Niet gezien
+                                </span>
+                            </div>
+
+                            <blockquote th:if="${movieRating.hasComment()}" th:inline="text">
+                                <span th:remove="tag" th:text="${movieRating.getComment()}"></span>
+                                <footer>
+                                    <strong th:text="${movieRating.getUser().getDisplayName()}"></strong> |
+
+                                    <span th:remove="tag" th:if="${movieRating.getSeen() == T(nl.lijstr.domain.movies.MovieRating.Seen).YES}"
+                                          th:text="${'Rating: ' + formatRating.apply(movieRating) + '/10'}"></span>
+                                    <span th:remove="tag" th:if="${movieRating.getSeen() == T(nl.lijstr.domain.movies.MovieRating.Seen).UNKNOWN}">
+                                        Gezien?
+                                    </span>
+                                        <span th:remove="tag" th:if="${movieRating.getSeen() == T(nl.lijstr.domain.movies.MovieRating.Seen).NO}">
+                                        Niet gezien
+                                    </span>
+
+                                </footer>
+                            </blockquote>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sep" th:if="${iterator.index &lt; (iterator.size - 1)}"></div>
+            </div>
+
+            <p class="review-outro margin-center">
+                Mooi spul man. Naast deze <em>kleine</em> selectie
+                <span th:remove="tag" th:if="${otherRatingUpdates == 0}">
+                    is er helemaal niks gebeurt op de site. Voor de gijn toch ff de stats pagina checken?
+                </span>
+
+                <span th:remove="tag" th:if="${otherRatingUpdates == 1}">
+                    is er nog 1 reviews/comment achtergelaten sinds je laatste update.
+                    Deze kan je checken op de stats pagina!
+                </span>
+
+                <span th:remove="tag" th:if="${otherRatingUpdates > 1}"
+                      th:text="${'zijn er nog ' + otherRatingUpdates + ' reviews achtergelaten sinds je laatste update. Deze kan je checken op de stats pagina!'}">
+                </span>
+            </p>
+
+
+            <p style="text-align: center; margin-top: 24px;">
+                <a th:href="@{${appUrl + '/movies/stats'}}" class="button">
+                    Check het uit
+                </a>
+            </p>
+        </div>
+
+        <div class="content-block last" th:if="${kanyeQuote.isPresent()}">
+            <p style="padding: 16px" class="margin-center">
+                Om het verhaal nog even rond te krijgen eindigen we deze mail met een van de wereldberoemde quotes
+                van de quote-legende, <br/>Kanye West.
+            </p>
+
+            <blockquote class="kanye-quote">
+                <span th:text="${kanyeQuote.get()}"></span>
+                <footer>Kanye West</footer>
+            </blockquote>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        <small>
+            <a th:href="@{${appUrl + '/dashboard/email-settings'}}"
+                  style="color: white;">
+                Mail instellingen aanpassen?
+            </a>
+        </small>
+
+        <h2>
+            <a th:href="@{${appUrl}}" style="text-decoration: none; color: white;">
+                Lijstr.nl
+            </a>
+        </h2>
+
+    </div>
+
+</div>
+</body>
+</html>

@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmUserMovieModel;
 import nl.lijstr.domain.users.User;
+import org.thymeleaf.util.StringUtils;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -61,6 +62,15 @@ public class MovieRating extends IdCmUserMovieModel {
             return ordinal();
         }
 
+    }
+
+    /**
+     * Check if this rating has a comment.
+     *
+     * @return has comment
+     */
+    public boolean hasComment() {
+        return !StringUtils.isEmpty(this.comment);
     }
 
 }

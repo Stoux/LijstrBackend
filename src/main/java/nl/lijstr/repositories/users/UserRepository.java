@@ -1,6 +1,8 @@
 package nl.lijstr.repositories.users;
 
 import java.util.List;
+
+import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicRepository;
@@ -50,5 +52,13 @@ public interface UserRepository extends BasicRepository<User> {
      */
     List<User> findByGrantedPermissionsPermissionName(String permissionName);
 
+    /**
+     * Find all users that don't have any email settings yet but do have a given permission.
+     *
+     * @param permissionName The permission to look for
+     *
+     * @return list of users
+     */
+    List<User> findByEmailSettingsIsNullAndGrantedPermissionsPermissionName(String permissionName);
 
 }

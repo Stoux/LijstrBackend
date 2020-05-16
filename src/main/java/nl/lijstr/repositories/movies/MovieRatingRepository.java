@@ -7,6 +7,9 @@ import nl.lijstr.repositories.abs.BasicMovieRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * A repository for Movie comments.
  */
@@ -34,5 +37,15 @@ public interface MovieRatingRepository extends BasicMovieRepository<MovieRating>
      * @return a paged result
      */
     Page<MovieRating> findAllBySeenEquals(Pageable pageable, MovieRating.Seen seen);
+
+    /**
+     * Find all ratings not by a given user and after a given time.
+     *
+     * @param user The user
+     * @param lastModified The date time
+     *
+     * @return list of ratings
+     */
+    List<MovieRating> findAllByUserNotAndLastModifiedAfterAndLatestIsTrue(User user, LocalDateTime lastModified);
 
 }

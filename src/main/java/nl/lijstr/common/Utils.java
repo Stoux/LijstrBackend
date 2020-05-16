@@ -5,6 +5,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Function;
+
+import io.sentry.Sentry;
 import nl.lijstr.exceptions.LijstrException;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -134,6 +136,20 @@ public final class Utils {
             return response.body();
         } catch (IOException e) {
             throw new LijstrException("Failed to execute call: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Run with a Sentry wrapper that will catch any throwables.
+     *
+     * @param runnable the task to execute
+     */
+    public static void withSentry(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (Throwable e) {
+            Sentry.capture(e);
+            throw e;
         }
     }
 
