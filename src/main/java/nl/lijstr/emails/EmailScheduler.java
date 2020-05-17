@@ -132,7 +132,7 @@ public class EmailScheduler extends AbsService {
     @RequestMapping(path = "/emails/init-missing-settings", method = RequestMethod.POST)
     public void initMissingEmailSettings() {
         // Find any users that have no email settings yet.
-        final List<User> users = userRepository.findByGrantedPermissionsPermissionName(Permission.MOVIE_USER);
+        final List<User> users = userRepository.findByEmailSettingsIsNullAndGrantedPermissionsPermissionName(Permission.MOVIE_USER);
         for (final User user : users) {
             this.logger.info("Creating email settings for user: " + user.getDisplayName());
             final EmailSettings emailSettings = EmailSettings.createDefault(user);
