@@ -12,6 +12,7 @@ import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.services.maf.MafApiService;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,9 @@ public class MovieUpdateTask {
     @Autowired
     private MafApiService mafApiService;
 
+    @Value("${maf.schedule-updates}")
+    private boolean runUpdates;
+
     /**
      * Update the movie with the oldest lastUpdated value.
      */
@@ -37,6 +41,10 @@ public class MovieUpdateTask {
     @Transactional
     @Scheduled(cron = "0 0,10,20,30 * * * *")
     public void updateOldestByCron() {
+        if (!runUpdates) {
+            return;
+        }
+
         Utils.withSentry(() -> {
             Movie movie = movieRepository.findFirstByOrderByLastUpdatedAsc();
             update(movie);
@@ -50,6 +58,10 @@ public class MovieUpdateTask {
     @Transactional
     @Scheduled(cron = "0 40,50 * * * *")
     public void updateOldestFromRecentMovies() {
+        if (!runUpdates) {
+            return;
+        }
+
         Utils.withSentry(() -> {
             LocalDate recentDate = LocalDate.now().minusYears(1);
             Movie movie = movieRepository.findFirstByReleasedAfterOrderByLastUpdatedAsc(recentDate);
