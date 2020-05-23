@@ -6,12 +6,17 @@ import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.services.omdb.OmdbApiService;
 import nl.lijstr.services.omdb.models.OmdbObject;
+import nl.lijstr.services.omdb.models.OmdbSearchResultObject;
+import nl.lijstr.services.omdb.models.OmdbType;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Endpoint for proxying the OMDB endpoint.
@@ -47,6 +52,19 @@ public class OmdbProxyEndpoint extends AbsService {
             throw new BadRequestException(omdbObject.getError());
         }
         return omdbObject;
+    }
+
+    /**
+     * Make request searching for movies.
+     *
+     * @param query Search query for the title
+     *
+     * @return list of results
+     */
+    @Secured({Permission.MOVIE_MOD, Permission.ADMIN})
+    @RequestMapping("/search")
+    public List<OmdbSearchResultObject> search(@RequestParam() final String query) {
+        return apiService.search(query, OmdbType.MOVIE);
     }
 
 }
