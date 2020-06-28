@@ -56,9 +56,9 @@ public class MovieEndpoint extends AbsService {
      *
      * @return the movie
      */
+    @Secured({Permission.MOVIE_MOD, Permission.ADMIN})
     @RequestMapping("/{id}/original")
     public Movie getOriginalById(@PathVariable("id") final long id) {
-        checkPermission(getUser(), Permission.MOVIE_MOD);
         return findOne(movieRepository, id, "movie");
     }
 

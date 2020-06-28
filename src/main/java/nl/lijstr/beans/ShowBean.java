@@ -9,22 +9,25 @@ import nl.lijstr.common.Utils;
 import nl.lijstr.domain.shows.Show;
 import nl.lijstr.domain.shows.ShowEpisode;
 import nl.lijstr.domain.shows.ShowSeason;
+import nl.lijstr.domain.users.User;
+import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
 import nl.lijstr.repositories.shows.ShowEpisodeRepository;
 import nl.lijstr.repositories.shows.ShowRepository;
 import nl.lijstr.repositories.shows.ShowSeasonRepository;
-import nl.lijstr.services.maf.handlers.util.FieldConverters;
 import nl.lijstr.services.maf.handlers.util.FieldModifyHandler;
 import nl.lijstr.services.tmdb.TmdbApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Bean with utility methods regarding TV shows.
@@ -49,12 +52,46 @@ public class ShowBean {
     @Autowired
     private FieldHistorySuggestionRepository suggestionRepository;
 
-    public Show addShow(final int tmdbId) {
-        final Show newShow = new Show(tmdbId);
+    /**
+     * Add a new show by it's IMDB ID.
+     *
+     * @param imdbId  The IMDB ID
+     * @param addedBy Added by this user (if any)
+     * @return The new show
+     */
+    public Show addShowByImdbId(final String imdbId, final User addedBy) {
+        final Optional<Integer> optFoundId = tmdbApiService.findShowByImdbId(imdbId);
+        if (!optFoundId.isPresent()) {
+            throw new BadRequestException("No TMDB show found with that IMDB ID");
+        }
+        return addShowByTmdbId(optFoundId.get(), addedBy);
+    }
+
+    /**
+     * Add a new show by it's TMDB ID.
+     *
+     * @param tmdbId  The TMDB ID
+     * @param addedBy Added by this user (if any)
+     * @return The new show
+     */
+    public Show addShowByTmdbId(final int tmdbId, final User addedBy) {
+        // Check if the show doesn't exist yet.
+        if (showRepository.getByTmdbId(tmdbId) != null) {
+            throw new BadRequestException("Show with TMDB ID " + tmdbId + " already exists.");
+        }
+
+        // Create the new show.
+        final Show newShow = new Show(tmdbId, addedBy);
         final Show savedShow = showRepository.save(newShow);
         return updateShow(savedShow);
     }
 
+    /**
+     * Update a {@link Show} including it's {@link ShowSeason}s and {@link ShowEpisode}s.
+     *
+     * @param show The show to update
+     * @return The updated show
+     */
     public Show updateShow(final Show show) {
         // Fetch the latest from TMDB
         final TvShow tmdbShow = tmdbApiService.getShow(show.getTmdbId());
@@ -94,6 +131,8 @@ public class ShowBean {
 
         // === Seasons ===
         updateSeasons(show, tmdbShow);
+
+        show.setLastUpdated(LocalDateTime.now());
 
         return showRepository.saveAndFlush(show);
     }

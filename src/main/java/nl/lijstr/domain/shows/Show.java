@@ -3,10 +3,12 @@ package nl.lijstr.domain.shows;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
+import nl.lijstr.domain.users.User;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +65,9 @@ public class Show extends IdCmModel {
     private String backdropImage;
     private String posterImage;
 
+    @NotModifiable
+    private LocalDateTime lastUpdated;
+
     // Relations
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     private List<ShowSeason> seasons;
@@ -71,10 +76,17 @@ public class Show extends IdCmModel {
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     private List<ShowEpisode> episodes;
 
+    @ManyToOne
+    private User addedBy;
 
     public Show(int tmdbId) {
         this.tmdbId = tmdbId;
         this.seasons = new ArrayList<>();
+    }
+
+    public Show(int tmdbId, User addedBy) {
+        this(tmdbId);
+        this.addedBy = addedBy;
     }
 
 }

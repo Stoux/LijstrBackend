@@ -20,6 +20,9 @@ public class Permission extends IdModel {
     public static final String MOVIE_MOD = "ROLE_MOVIE_MOD";
     public static final String MOVIE_USER = "ROLE_MOVIE";
 
+    public static final String SHOW_MOD = "ROLE_SHOW_MOD";
+    public static final String SHOW_USER = "ROLE_SHOW_USER";
+
     @Column(unique = true)
     private String name;
 
@@ -29,7 +32,14 @@ public class Permission extends IdModel {
      * @return the list
      */
     public static String[] list() {
-        return new String[]{ADMIN, USER, MOVIE_MOD, MOVIE_USER};
+        return new String[]{
+            ADMIN,
+            USER,
+            MOVIE_MOD,
+            MOVIE_USER,
+            SHOW_MOD,
+            SHOW_USER,
+        };
     }
 
     @Override
