@@ -1,5 +1,6 @@
 package nl.lijstr.services.maf.handlers.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -25,10 +26,38 @@ public class FieldModifyHandler {
 
     private IdModel o1;
     private Object o2;
+    /** Should use the properties of the API object instead of methods. */
+    private final boolean useApiProperties;
 
     private FieldHistoryRepository historyRepository;
     private FieldHistorySuggestionRepository suggestionRepository;
     private Map<String, FieldHistory> fieldHistoryMap;
+
+    /** Any property is updated */
+    private boolean updated;
+
+    /**
+     * Create a FieldModifyHandler.
+     *
+     * @param o1                   The original object
+     * @param o2                   The new object
+     * @param useApiProperties     Should properties of the API (new) object instead of it's methods
+     * @param historyRepository    The FieldHistory repository
+     * @param suggestionRepository The FieldHistorySuggestion repository
+     */
+    public FieldModifyHandler(IdModel o1, Object o2, boolean useApiProperties,
+                              FieldHistoryRepository historyRepository,
+                              FieldHistorySuggestionRepository suggestionRepository) {
+        this.o1 = o1;
+        this.o2 = o2;
+        this.useApiProperties = useApiProperties;
+        this.historyRepository = historyRepository;
+        this.suggestionRepository = suggestionRepository;
+        this.updated = false;
+
+        fieldHistoryMap = new HashMap<>();
+        fillHistoryMap();
+    }
 
     /**
      * Create a FieldModifyHandler.
@@ -41,18 +70,17 @@ public class FieldModifyHandler {
     public FieldModifyHandler(IdModel o1, Object o2,
                               FieldHistoryRepository historyRepository,
                               FieldHistorySuggestionRepository suggestionRepository) {
-        this.o1 = o1;
-        this.o2 = o2;
-        this.historyRepository = historyRepository;
-        this.suggestionRepository = suggestionRepository;
-        fieldHistoryMap = new HashMap<>();
-
-        fillHistoryMap();
+         this(o1, o2, false, historyRepository, suggestionRepository);
     }
 
     private void fillHistoryMap() {
         //Fill the history map
         this.fieldHistoryMap = new HashMap<>();
+        if (o1.getId() == null) {
+            // New item
+            return;
+        }
+
         List<FieldHistory> fieldHistoryList = historyRepository.findByObjectIdAndClassName(
                 o1.getId(),
                 FieldHistory.getDatabaseClassName(o1.getClass())
@@ -79,14 +107,31 @@ public class FieldModifyHandler {
      * @param apiFieldName The ApiMovie fieldname
      */
     public void modify(String fieldName, String apiFieldName) {
+        Object newValue = getApiFieldValue(apiFieldName);
+        modifyWithValue(fieldName, newValue);
+    }
+
+    /**
+     * Modify the field of object 1 with the passed value.
+     * @param fieldName The Entity field name
+     * @param newValue  The Api/new field value
+     */
+    public void modifyWithValue(String fieldName, Object newValue) {
         Container<Method> movieFieldSetter = new Container<>();
         Object originalValue = getFieldValue(o1, fieldName, movieFieldSetter);
-        Object newValue = getFieldValue(o2, apiFieldName, null);
 
         compareAndModify(fieldName, originalValue, newValue, o -> o, object -> {
             Method method = movieFieldSetter.getItem();
             ReflectionUtils.invokeMethod(method, o1, object);
         });
+    }
+
+
+    /**
+     * @see FieldModifyHandler#compareAndModify(String, Object, Object, Function, Consumer)
+     */
+    public <X> void modify(String fieldName, X originalValue, X newValue, Consumer<X> setterFunction) {
+        compareAndModify(fieldName, originalValue, newValue, x -> x, setterFunction);
     }
 
     /**
@@ -134,6 +179,7 @@ public class FieldModifyHandler {
             return;
         }
 
+        updated = true;
         setterFunction.accept(modifiedValue);
     }
 
@@ -147,6 +193,21 @@ public class FieldModifyHandler {
         }
 
         return o1.equals(o2);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <X> X getApiFieldValue(String fieldName) {
+        if (useApiProperties) {
+            final Class<?> aClass = o2.getClass();
+            try {
+                final Field field = aClass.getField(fieldName);
+                return (X) field.get(o2);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new LijstrException("Failed to find field for " + aClass.getSimpleName() + " - "  + fieldName);
+            }
+        } else {
+            return getFieldValue(o2, fieldName, null);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -165,4 +226,10 @@ public class FieldModifyHandler {
         }
     }
 
+    /**
+     * @return if any property is updated on the main model
+     */
+    public boolean isUpdated() {
+        return updated;
+    }
 }
