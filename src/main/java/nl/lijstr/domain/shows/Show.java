@@ -7,6 +7,7 @@ import nl.lijstr.domain.shows.user.ShowRating;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -70,8 +71,14 @@ public class Show extends IdCmModel {
     private LocalDateTime lastUpdated;
 
     // Relations
+    @Where(clause = "season_number>=1")
+    @org.hibernate.annotations.OrderBy(clause = "seasonNumber ASC")
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     private List<ShowSeason> seasons;
+
+    @org.hibernate.annotations.OrderBy(clause = "seasonNumber ASC")
+    @OneToMany(mappedBy = "show")
+    private List<ShowSeason> seasonsIncludingSpecials;
 
     @JsonIgnore
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
@@ -79,10 +86,9 @@ public class Show extends IdCmModel {
 
     @ManyToOne
     private User addedBy;
-    
+
     @OneToMany(mappedBy = "show")
     private List<ShowRating> showRatings;
-
 
     public Show(int tmdbId) {
         this.tmdbId = tmdbId;
@@ -93,5 +99,6 @@ public class Show extends IdCmModel {
         this(tmdbId);
         this.addedBy = addedBy;
     }
+
 
 }

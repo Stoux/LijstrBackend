@@ -153,7 +153,7 @@ public class ShowBean {
         }
 
         // Map the season to their TMDB IDs.
-        final List<ShowSeason> currentSeasons = show.getSeasons();
+        final List<ShowSeason> currentSeasons = show.getSeasonsIncludingSpecials();
         final Map<Integer, ShowSeason> tmdbToCurrentSeason = Utils.toMap(currentSeasons, ShowSeason::getTmdbId);
 
         // Loop through the new seasons

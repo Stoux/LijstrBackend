@@ -1,8 +1,10 @@
 package nl.lijstr.api.shows;
 
 import nl.lijstr.api.abs.AbsShowService;
+import nl.lijstr.api.shows.models.ShowSummary;
 import nl.lijstr.api.shows.models.post.PostedShowRequest;
 import nl.lijstr.beans.ShowBean;
+import nl.lijstr.beans.shows.ShowSummaryBean;
 import nl.lijstr.domain.shows.Show;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Endpoint for TV Shows.
@@ -26,6 +27,9 @@ public class ShowEndpoint extends AbsShowService {
 
     @Autowired
     private ShowBean showBean;
+
+    @Autowired
+    private ShowSummaryBean showSummaryBean;
 
 
     /**
@@ -58,11 +62,8 @@ public class ShowEndpoint extends AbsShowService {
      * @return list of show summaries
      */
     @RequestMapping
-    public List<Show> summaries() {
-        return showRepository.findAllByOrderByTitleAsc()
-            .stream()
-            .map(s -> s) // TODO: Implement trimmed down summary view
-            .collect(Collectors.toList());
+    public List<ShowSummary> summaries() {
+        return showSummaryBean.buildSummaries();
     }
 
     /**

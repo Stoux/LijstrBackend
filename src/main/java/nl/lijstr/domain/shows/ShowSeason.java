@@ -47,6 +47,7 @@ public class ShowSeason extends IdCmModel {
     private String posterImage;
 
     // Relations
+    @org.hibernate.annotations.OrderBy(clause = "episodeNumber ASC")
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
     private List<ShowEpisode> episodes;
 
