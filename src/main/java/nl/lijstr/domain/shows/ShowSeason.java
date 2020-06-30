@@ -3,6 +3,7 @@ package nl.lijstr.domain.shows;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
+import nl.lijstr.domain.shows.user.ShowSeasonComment;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
@@ -48,6 +49,9 @@ public class ShowSeason extends IdCmModel {
     // Relations
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
     private List<ShowEpisode> episodes;
+
+    @OneToMany(mappedBy = "season")
+    private List<ShowSeasonComment> comments;
 
     public ShowSeason(Show show, Integer tmdbId, Integer seasonNumber, String title, String overview, String posterImage) {
         this.show = show;

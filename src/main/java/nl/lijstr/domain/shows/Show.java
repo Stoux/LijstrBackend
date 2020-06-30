@@ -3,6 +3,7 @@ package nl.lijstr.domain.shows;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
+import nl.lijstr.domain.shows.user.ShowRating;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
@@ -78,6 +79,10 @@ public class Show extends IdCmModel {
 
     @ManyToOne
     private User addedBy;
+    
+    @OneToMany(mappedBy = "show")
+    private List<ShowRating> showRatings;
+
 
     public Show(int tmdbId) {
         this.tmdbId = tmdbId;
