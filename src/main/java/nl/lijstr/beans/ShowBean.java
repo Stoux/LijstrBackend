@@ -113,6 +113,12 @@ public class ShowBean {
         handler.modify("backdropImage", "backdrop_path");
         handler.modify("posterImage", "poster_path");
 
+        // TODO: Episode run time
+        // TODO: Genres?
+        // TODO: Languages?
+        // TODO: Networks?
+        // TODO: Created by?
+
         // Attempt to find the dutch title
         if (tmdbShow.translations != null && tmdbShow.translations.translations != null) {
             for (Translations.Translation translation : tmdbShow.translations.translations) {
@@ -127,6 +133,10 @@ public class ShowBean {
         if (tmdbShow.external_ids != null) {
             handler.modifyWithValue("imdbId", tmdbShow.external_ids.imdb_id);
             handler.modifyWithValue("tvdbId", tmdbShow.external_ids.tvdb_id);
+        }
+
+        if (show.getImdbId() != null) {
+            // TODO: Get IMDB rating & votes from OmdbApi
         }
 
         // === Seasons ===
