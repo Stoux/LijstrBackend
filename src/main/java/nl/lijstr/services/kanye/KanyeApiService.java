@@ -29,7 +29,11 @@ public class KanyeApiService {
     public Optional<String> getQuote() {
         try {
             final KanyeQuote kanyeQuote = Utils.executeCall(kanyeService.getQuote());
-            return Optional.of(kanyeQuote.getText());
+            if (kanyeQuote != null) {
+                return Optional.of(kanyeQuote.getText());
+            } else {
+                return Optional.empty();
+            }
         } catch (LijstrException e) {
             return Optional.empty();
         }
