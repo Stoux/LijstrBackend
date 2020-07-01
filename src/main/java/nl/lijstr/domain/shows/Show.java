@@ -71,6 +71,7 @@ public class Show extends IdCmModel {
     private LocalDateTime lastUpdated;
 
     // Relations
+    @JsonIgnore
     @Where(clause = "season_number>=1")
     @org.hibernate.annotations.OrderBy(clause = "seasonNumber ASC")
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
@@ -93,6 +94,9 @@ public class Show extends IdCmModel {
     public Show(int tmdbId) {
         this.tmdbId = tmdbId;
         this.seasons = new ArrayList<>();
+        this.seasonsIncludingSpecials = new ArrayList<>();
+        this.episodes = new ArrayList<>();
+        this.showRatings = new ArrayList<>();
     }
 
     public Show(int tmdbId, User addedBy) {
