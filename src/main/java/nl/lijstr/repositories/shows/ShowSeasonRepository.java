@@ -9,4 +9,15 @@ import nl.lijstr.repositories.abs.BasicRepository;
  */
 public interface ShowSeasonRepository extends BasicRepository<ShowSeason> {
 
+
+    /**
+     * Fetch a season by it's show and season number.
+     *
+     * @param showId Show ID
+     * @param seasonNumber Chronological season number
+     *
+     * @return the season
+     */
+    ShowSeason getByShowIdAndSeasonNumber(Long showId, Integer seasonNumber);
+
 }

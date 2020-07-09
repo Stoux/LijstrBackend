@@ -59,6 +59,9 @@ public class ShowEpisode extends IdCmModel {
     private Double tmdbRating;
     private Integer tmdbVotes;
 
+    private Double imdbRating;
+    private Integer imdbVotes;
+
     // Relations
     @JsonIgnore
     @OneToMany(mappedBy = "episode")
