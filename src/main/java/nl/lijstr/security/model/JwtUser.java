@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
+import nl.lijstr.domain.users.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -102,4 +103,14 @@ public class JwtUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    /**
+     * Transform this {@see JwtUser} into a domain {@see User}. Note that this model only has the ID set.
+     *
+     * @return domain user with only the ID set.
+     */
+    public User toDomainUser() {
+        return new User(this.getId());
+    }
+
 }

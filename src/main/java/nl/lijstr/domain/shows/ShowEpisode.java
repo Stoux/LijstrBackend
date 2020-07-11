@@ -75,4 +75,13 @@ public class ShowEpisode extends IdCmModel {
         this.season = season;
         this.tmdbId = tmdbId;
     }
+
+    /**
+     * Get the 'follow code' which represents a sortable number of this episode in the chronological order of episodes.
+     * @return the code
+     */
+    public int getFollowCode() {
+        return (getSeason().getSeasonNumber() * 10000) + getEpisodeNumber();
+    }
+
 }
