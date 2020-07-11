@@ -6,8 +6,12 @@ import nl.lijstr.api.shows.models.post.PostedShowRequest;
 import nl.lijstr.beans.ShowBean;
 import nl.lijstr.beans.shows.ShowSummaryBean;
 import nl.lijstr.domain.shows.Show;
+import nl.lijstr.domain.shows.ShowEpisode;
+import nl.lijstr.domain.shows.ShowSeason;
+import nl.lijstr.domain.shows.user.ShowEpisodeUserMeta;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
+import nl.lijstr.repositories.shows.user.ShowEpisodeUserMetaRepository;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,7 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Endpoint for TV Shows.
@@ -30,6 +37,9 @@ public class ShowEndpoint extends AbsShowService {
 
     @Autowired
     private ShowSummaryBean showSummaryBean;
+
+    @Autowired
+    private ShowEpisodeUserMetaRepository userMetaRepository;
 
 
     /**
@@ -65,6 +75,40 @@ public class ShowEndpoint extends AbsShowService {
     public List<ShowSummary> summaries() {
         return showSummaryBean.buildSummaries();
     }
+
+    /**
+     * Fetch the seen status of the show mapped by season -> episode.
+     */
+    @Secured(Permission.SHOW_USER)
+    @RequestMapping("/{showId:\\d+}/seen-status")
+    public Map<Long, Map<Long, Boolean>> getShowSeenStatus(@PathVariable final long showId) {
+        final Show show = findShow(showId);
+        final User user = getUser().toDomainUser();
+
+        // Fetch all user meta
+        final List<ShowEpisodeUserMeta> userMetas = userMetaRepository.findAllByUserAndEpisodeShow(user, show);
+        final Map<Long, ShowEpisodeUserMeta> episodeToUserMeta = userMetas.stream().collect(Collectors.toMap(meta -> meta.getEpisode().getId(), meta -> meta));
+
+        // Build the map
+        final Map<Long, Map<Long, Boolean>> seasonToEpisodeToSeenMap = new HashMap<>();
+        for (final ShowSeason season : show.getSeasonsIncludingSpecials()) {
+
+            // Loop through episodes
+            final Map<Long, Boolean> episodeToSeenMap = seasonToEpisodeToSeenMap.computeIfAbsent(season.getId(), key -> new HashMap<>());
+            for (final ShowEpisode episode : season.getEpisodes()) {
+                // Check if there's a meta
+                boolean seen = false;
+                final ShowEpisodeUserMeta userMeta = episodeToUserMeta.get(episode.getId());
+                if (userMeta != null) {
+                    seen = userMeta.isSeen();
+                }
+                episodeToSeenMap.put(episode.getId(), seen);
+            }
+        }
+
+        return seasonToEpisodeToSeenMap;
+    }
+
 
     /**
      * Add a new {@link Show}.

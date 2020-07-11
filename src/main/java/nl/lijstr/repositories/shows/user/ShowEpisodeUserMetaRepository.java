@@ -38,6 +38,9 @@ public interface ShowEpisodeUserMetaRepository extends BasicRepository<ShowEpiso
      */
     List<ShowEpisodeUserMeta> findAllByUserAndEpisodeIdIn(User user, Collection<Long> episodeIds);
 
+    List<ShowEpisodeUserMeta> findAllByUserAndEpisodeShow(User user, Show show);
+
+
     /**
      * Fetch all episodes that user hasn't seen, before the given episode.
      *
@@ -55,5 +58,7 @@ public interface ShowEpisodeUserMetaRepository extends BasicRepository<ShowEpiso
             "WHERE ss.season_number != 0 AND (seum.user_id IS NULL OR seum.seen = false) AND ((ss.season_number * 10000) + se.episode_number) < :number"
     )
     List<BigInteger> getNotSeenEpisodesBeforeEpisode(@Param("user") Long userId, @Param("show") Long showId, @Param("number") Integer episodeFollowCode);
+
+
 
 }

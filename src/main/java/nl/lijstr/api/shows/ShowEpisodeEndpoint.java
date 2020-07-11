@@ -2,9 +2,7 @@ package nl.lijstr.api.shows;
 
 import nl.lijstr.api.abs.AbsShowService;
 import nl.lijstr.api.shows.models.post.UpdateEpisodeMetaRequest;
-import nl.lijstr.domain.shows.Show;
 import nl.lijstr.domain.shows.ShowEpisode;
-import nl.lijstr.domain.shows.ShowSeason;
 import nl.lijstr.domain.shows.user.ShowEpisodeUserMeta;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
@@ -14,6 +12,7 @@ import nl.lijstr.repositories.shows.user.ShowEpisodeUserMetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -69,6 +68,7 @@ public class ShowEpisodeEndpoint extends AbsShowService {
      * @return the meta
      */
     @Secured(Permission.SHOW_USER)
+    @Transactional
     @RequestMapping(value = "/{episodeNumber:\\d+}/meta", method = RequestMethod.PUT)
     public ShowEpisodeUserMeta updateUserMetaForEpisode(
         @PathVariable() final long showId,
@@ -123,6 +123,7 @@ public class ShowEpisodeEndpoint extends AbsShowService {
      * Update all episodes before the given episode to seen.
      */
     @Secured(Permission.SHOW_USER)
+    @Transactional
     @RequestMapping(value = "/{episodeNumber:\\d+}/update-not-seen", method = RequestMethod.PUT)
     public void updateNotSeenEpisodesToSeen(
         @PathVariable() final long showId,
