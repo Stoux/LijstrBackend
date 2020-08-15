@@ -2,6 +2,7 @@ package nl.lijstr.domain.shows;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.shows.user.ShowEpisodeComment;
@@ -63,10 +64,11 @@ public class ShowEpisode extends IdCmModel {
     private Integer imdbVotes;
 
     // Relations
-    @JsonIgnore
+//    @JsonIgnore // TODO: Renable this & solve with cleaner return objects
     @OneToMany(mappedBy = "episode")
     private List<ShowEpisodeUserMeta> userMetas;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "episode")
     private List<ShowEpisodeComment> comments;
 
@@ -82,6 +84,12 @@ public class ShowEpisode extends IdCmModel {
      */
     public int getFollowCode() {
         return (getSeason().getSeasonNumber() * 10000) + getEpisodeNumber();
+    }
+
+
+    @JsonProperty("comments")
+    public int getCommentCount() {
+        return this.comments instanceof List ? this.comments.size() : 0;
     }
 
 }
