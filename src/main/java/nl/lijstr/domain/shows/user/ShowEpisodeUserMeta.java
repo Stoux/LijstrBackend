@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Table(uniqueConstraints = {
     @UniqueConstraint(columnNames = { "user_id", "episode_id" })
 })
-@JsonIgnoreProperties({"id", "user"})
+@JsonIgnoreProperties({"id"})
 public class ShowEpisodeUserMeta extends IdCmUserModel {
 
     @JsonBackReference
