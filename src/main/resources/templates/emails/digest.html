@@ -191,6 +191,10 @@
             margin-right: auto;
         }
 
+        .poster-image {
+            height: 300px;
+        }
+
     </style>
 </head>
 <body>
@@ -209,7 +213,8 @@
             <div class="added-movies" th:unless="${addedMoviesSubset.isEmpty()}">
                 <div class="added-movie" th:each="movie : ${addedMoviesSubset}">
                     <a th:href="@{${appUrl + '/movies/' + movie.getId()}}">
-                        <img th:title="${movie.getTitle()}"
+                        <img class="poster-image"
+                             th:title="${movie.getTitle()}"
                              th:src="@{${apiUrl + '/movies/' + movie.getId() + '/poster'}}"/>
                     </a>
                 </div>
@@ -267,7 +272,8 @@
 
                 <div class="review">
                     <a th:href="@{${appUrl + '/movies/' + update.getMovie().getId()}}" class="review-image-holder">
-                        <img th:title="${update.getMovie().getTitle()}"
+                        <img class="poster-image"
+                             th:title="${update.getMovie().getTitle()}"
                              th:src="@{${apiUrl + '/movies/' + update.getMovie().getId() + '/poster'}}"/>
                     </a>
                     <div class="review-content">
