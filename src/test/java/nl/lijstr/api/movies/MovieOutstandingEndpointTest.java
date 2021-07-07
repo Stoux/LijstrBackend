@@ -86,6 +86,9 @@ public class MovieOutstandingEndpointTest {
         }
 
         m.setLatestMovieRatings(movieRatings);
+        m.setWriters(new ArrayList<>());
+        m.setDirectors(new ArrayList<>());
+
         return m;
     }
 

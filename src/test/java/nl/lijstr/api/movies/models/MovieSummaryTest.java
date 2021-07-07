@@ -135,6 +135,7 @@ public class MovieSummaryTest {
         movie.setAgeRating("Age Rating");
         movie.setGenres(Arrays.asList(genre1, genre2));
         movie.setLanguages(Arrays.asList(language1, language2));
+        movie.setCollections(new ArrayList<>());
 
         return movie;
     }
