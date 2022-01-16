@@ -5,18 +5,18 @@
   "releaseDate": "20151002",
   "directors": [
     {
-      "name": "Ridley Scott",
-      "id": "nm0000631"
+      "titleName": "Ridley Scott",
+      "imdbId": "nm0000631"
     }
   ],
   "writers": [
     {
-      "name": "Drew Goddard",
-      "id": "nm1206844"
+      "titleName": "Drew Goddard",
+      "imdbId": "nm1206844"
     },
     {
-      "name": "Andy Weir",
-      "id": "nm1083982"
+      "titleName": "Andy Weir",
+      "imdbId": "nm1083982"
     }
   ],
   "runtime": "144 min",
