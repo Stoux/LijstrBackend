@@ -97,7 +97,7 @@ public class MovieUpdateHandler {
         //Check people
         updateWriters(movie, apiMovie);
         updateDirectors(movie, apiMovie);
-        updateActors(movie, apiMovie);
+//        updateActors(movie, apiMovie);
 
         return movieRepository.saveAndFlush(movie);
     }
