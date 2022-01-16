@@ -11,8 +11,8 @@ import nl.lijstr.domain.interfaces.ImdbIdentifiable;
 @Getter
 public class ApiPerson implements ImdbIdentifiable {
 
+    @SerializedName("titleName")
     private String name;
-    @SerializedName("id")
     private String imdbId;
 
 }
