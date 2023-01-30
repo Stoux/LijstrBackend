@@ -156,15 +156,17 @@ public class MovieUpdateHandler {
         handler.modify("originalTitle");
 
         //Find the dutch title if there's one
-        apiMovie.getAkas().stream()
+        if (apiMovie.getAkas() != null) {
+            apiMovie.getAkas().stream()
                 .filter(ApiAka::isDutch)
                 .findFirst()
                 .ifPresent(aka -> {
                     handler.compareAndModify(
-                            "dutchTitle", movie.getDutchTitle(), aka.getTitle(),
-                            s -> s, movie::setDutchTitle
+                        "dutchTitle", movie.getDutchTitle(), aka.getTitle(),
+                        s -> s, movie::setDutchTitle
                     );
                 });
+        }
 
         //NOTE: Due to MyApiFilms fucking up & returning french titles we have to do some extra logic...
 //        if (movie.getOriginalTitle() != null) {
