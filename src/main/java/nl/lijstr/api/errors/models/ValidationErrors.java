@@ -1,10 +1,12 @@
 package nl.lijstr.api.errors.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Stoux on 21/04/2016.

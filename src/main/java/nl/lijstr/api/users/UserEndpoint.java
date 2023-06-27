@@ -1,16 +1,10 @@
 package nl.lijstr.api.users;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.*;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
-import nl.lijstr.domain.users.LoginAttempt;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
@@ -24,6 +18,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The Users Endpoint.

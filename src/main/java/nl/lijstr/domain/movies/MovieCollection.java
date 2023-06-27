@@ -9,10 +9,10 @@ import lombok.Setter;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,7 +1,8 @@
 package nl.lijstr.services.migrate.models;
 
+import lombok.Getter;
+
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.*;
 
 /**
  * A data object that keeps track of a current migration;

@@ -1,10 +1,11 @@
 package nl.lijstr.api.movies.models.post;
 
-import java.math.BigDecimal;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import lombok.*;
 import nl.lijstr.domain.movies.MovieRating;
+
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import java.math.BigDecimal;
 
 /**
  * Created by Stoux on 20/04/2016.

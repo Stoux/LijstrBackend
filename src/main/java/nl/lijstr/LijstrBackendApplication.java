@@ -1,11 +1,9 @@
 package nl.lijstr;
 
 import nl.lijstr.services.modify.ModelModifyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * The main LijstrBackendApplication class for starting the application.
@@ -15,8 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication(scanBasePackages = "nl.lijstr")
 public class LijstrBackendApplication {
 
-    @Autowired
-    private ModelModifyService service;
+    public LijstrBackendApplication(ModelModifyService ignoredService) {
+
+    }
 
     /**
      * Start the application.

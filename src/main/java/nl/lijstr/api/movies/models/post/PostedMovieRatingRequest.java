@@ -1,6 +1,7 @@
 package nl.lijstr.api.movies.models.post;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 /**

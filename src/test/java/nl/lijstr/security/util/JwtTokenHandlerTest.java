@@ -1,8 +1,5 @@
 package nl.lijstr.security.util;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import nl.lijstr.exceptions.security.AccessExpiredException;
 import nl.lijstr.exceptions.security.TokenExpiredException;
 import nl.lijstr.security.model.AuthenticationToken;
@@ -16,9 +13,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
 
 
 /**

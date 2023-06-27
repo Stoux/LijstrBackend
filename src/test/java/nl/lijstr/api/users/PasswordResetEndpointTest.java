@@ -1,6 +1,5 @@
 package nl.lijstr.api.users;
 
-import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.api.users.models.NewPasswordRequest;
 import nl.lijstr.api.users.models.ResetPasswordRequest;
 import nl.lijstr.beans.PasswordBean;
@@ -14,7 +13,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import javax.servlet.http.HttpServletRequest;
+
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

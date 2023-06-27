@@ -2,14 +2,10 @@ package nl.lijstr.api.movies.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import nl.lijstr.common.StrUtils;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.imdb.Genre;
@@ -17,6 +13,13 @@ import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieCollection;
 import nl.lijstr.domain.movies.MovieRating;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A summarized version of a {@link Movie}.

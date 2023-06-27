@@ -1,14 +1,18 @@
 package nl.lijstr.services.mail.retrofit;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import lombok.*;
+import lombok.NoArgsConstructor;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Base64Utils;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
  * Created by Stoux on 22/04/2016.
@@ -23,12 +27,13 @@ public class MailGunInterceptor implements Interceptor {
 
     private String basicAuth;
 
+    @NotNull
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NotNull Chain chain) throws IOException {
 
         //Generate the basic authentication
         if (basicAuth == null) {
-            basicAuth = Base64Utils.encodeToString(("api:key-" + apiKey).getBytes(Charset.forName("UTF-8")));
+            basicAuth = Base64.getEncoder().encodeToString(("api:key-" + apiKey).getBytes(StandardCharsets.UTF_8));
         }
 
         //Get the original request & modify the URL

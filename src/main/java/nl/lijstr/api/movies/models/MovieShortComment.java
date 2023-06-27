@@ -1,8 +1,9 @@
 package nl.lijstr.api.movies.models;
 
-import java.time.LocalDateTime;
-import lombok.*;
+import lombok.Getter;
 import nl.lijstr.domain.movies.MovieComment;
+
+import java.time.LocalDateTime;
 
 /**
  * A representable version of a movie comment.

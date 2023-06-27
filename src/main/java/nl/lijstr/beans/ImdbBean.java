@@ -1,6 +1,5 @@
 package nl.lijstr.beans;
 
-import java.util.function.Function;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.imdb.SpokenLanguage;
@@ -9,6 +8,8 @@ import nl.lijstr.repositories.imdb.PersonRepository;
 import nl.lijstr.repositories.imdb.SpokenLanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Function;
 
 /**
  * Created by Stoux on 01/03/2016.

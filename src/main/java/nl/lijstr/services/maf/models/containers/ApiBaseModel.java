@@ -1,6 +1,6 @@
 package nl.lijstr.services.maf.models.containers;
 
-import lombok.*;
+import lombok.Getter;
 import nl.lijstr.services.maf.models.ApiAbout;
 
 /**

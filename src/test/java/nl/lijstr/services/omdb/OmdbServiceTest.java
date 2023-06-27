@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import retrofit2.Call;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

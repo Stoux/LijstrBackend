@@ -1,13 +1,14 @@
 package nl.lijstr.services.migrate;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import nl.lijstr.services.migrate.migrators.OldSiteMigrator;
 import nl.lijstr.services.migrate.models.MigrationProgress;
 import nl.lijstr.services.migrate.models.MigrationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Stoux on 31-1-2017.

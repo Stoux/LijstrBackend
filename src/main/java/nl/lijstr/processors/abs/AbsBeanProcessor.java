@@ -1,10 +1,11 @@
 package nl.lijstr.processors.abs;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import nl.lijstr.common.Utils;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ReflectionUtils;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 
 /**
  * An Abstract Bean Processor.

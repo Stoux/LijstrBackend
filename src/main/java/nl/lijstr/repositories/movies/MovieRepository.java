@@ -1,10 +1,11 @@
 package nl.lijstr.repositories.movies;
 
+import nl.lijstr.domain.movies.Movie;
+import nl.lijstr.repositories.abs.BasicRepository;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import nl.lijstr.domain.movies.Movie;
-import nl.lijstr.repositories.abs.BasicRepository;
 
 /**
  * The basic Movie repository.

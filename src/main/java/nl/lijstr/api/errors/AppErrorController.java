@@ -1,19 +1,23 @@
 package nl.lijstr.api.errors;
 
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.processors.annotations.InjectLogger;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
-import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.ServletWebRequest;
+
+import java.util.Map;
 
 /**
  * Created by Stoux on 27/01/2016.
@@ -50,9 +54,11 @@ public class AppErrorController implements ErrorController {
     }
 
     private Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
-        RequestAttributes requestAttributes = new ServletRequestAttributes(request);
-        return this.errorAttributes.getErrorAttributes(requestAttributes,
-                includeStackTrace);
+        ServletWebRequest requestAttributes = new ServletWebRequest(request);
+        return this.errorAttributes.getErrorAttributes(
+                requestAttributes,
+                ErrorAttributeOptions.of(ErrorAttributeOptions.Include.STACK_TRACE)
+        );
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {
@@ -68,8 +74,4 @@ public class AppErrorController implements ErrorController {
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-    @Override
-    public String getErrorPath() {
-        return ERROR_PATH;
-    }
 }

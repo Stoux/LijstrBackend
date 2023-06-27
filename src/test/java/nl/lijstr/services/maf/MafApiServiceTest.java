@@ -1,6 +1,5 @@
 package nl.lijstr.services.maf;
 
-import java.io.IOException;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.exceptions.LijstrException;
@@ -10,11 +9,13 @@ import nl.lijstr.services.maf.models.containers.ApiMovieModel;
 import nl.lijstr.services.maf.retrofit.ImdbService;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.io.IOException;
+
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
+import static nl.lijstr._TestUtils.TestUtils.mockLogger;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

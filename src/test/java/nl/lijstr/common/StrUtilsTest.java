@@ -1,9 +1,10 @@
 package nl.lijstr.common;
 
-import java.util.Arrays;
-import java.util.List;
 import nl.lijstr._TestUtils.TestUtils;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 

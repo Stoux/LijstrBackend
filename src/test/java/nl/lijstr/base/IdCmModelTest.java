@@ -1,14 +1,12 @@
-package nl.lijstr.domain.base;
+package nl.lijstr.base;
 
-import java.time.LocalDateTime;
-import org.junit.Before;
-import org.junit.Ignore;
+import nl.lijstr.domain.base.IdCmModel;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.time.LocalDateTime;
+
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 29/01/2016.

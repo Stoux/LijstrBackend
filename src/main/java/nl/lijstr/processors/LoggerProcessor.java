@@ -1,12 +1,13 @@
 package nl.lijstr.processors;
 
-import java.lang.reflect.Field;
 import nl.lijstr.common.StrUtils;
 import nl.lijstr.processors.abs.AbsBeanProcessor;
 import nl.lijstr.processors.annotations.InjectLogger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Field;
 
 /**
  * A Bean processor that injects Logger instances into Beans.

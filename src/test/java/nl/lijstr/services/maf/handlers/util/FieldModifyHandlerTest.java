@@ -1,9 +1,5 @@
 package nl.lijstr.services.maf.handlers.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import lombok.*;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.domain.other.FieldHistorySuggestion;
@@ -13,7 +9,11 @@ import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
 import org.junit.Before;
 import org.junit.Test;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

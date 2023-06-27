@@ -1,11 +1,6 @@
 package nl.lijstr.domain.movies;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
 import lombok.*;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.imdb.Genre;
@@ -17,6 +12,12 @@ import nl.lijstr.domain.users.User;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 import org.hibernate.annotations.Where;
+
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -48,9 +49,9 @@ public class Movie extends IdCmModel {
     private Long imdbVotes;
     private Integer metacriticScore;
 
-    @Lob
+    @Column(length = 5000)
     private String shortPlot;
-    @Lob
+    @Column(length = 65000)
     private String longPlot;
 
     private Integer runtime;

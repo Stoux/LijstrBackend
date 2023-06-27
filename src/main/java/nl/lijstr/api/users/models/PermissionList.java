@@ -1,7 +1,10 @@
 package nl.lijstr.api.users.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
-import lombok.*;
 
 /**
  * Created by Stoux on 19/04/2016.

@@ -1,8 +1,9 @@
 package nl.lijstr.repositories.abs;
 
-import java.util.List;
 import nl.lijstr.domain.movies.Movie;
 import org.springframework.data.repository.NoRepositoryBean;
+
+import java.util.List;
 
 /**
  * Create a BasicMovieRepository.

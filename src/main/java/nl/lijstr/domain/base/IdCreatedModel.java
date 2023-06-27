@@ -1,11 +1,13 @@
 package nl.lijstr.domain.base;
 
-import java.time.LocalDateTime;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import nl.lijstr.services.modify.annotations.NotModifiable;
+
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import java.time.LocalDateTime;
 
 /**
  * An extended IdModel with created timestamp.

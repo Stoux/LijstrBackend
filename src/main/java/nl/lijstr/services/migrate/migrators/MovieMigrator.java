@@ -1,6 +1,5 @@
 package nl.lijstr.services.migrate.migrators;
 
-import java.util.*;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.repositories.movies.MovieRepository;
@@ -10,6 +9,8 @@ import nl.lijstr.services.migrate.models.movies.OldMovie;
 import nl.lijstr.services.migrate.retrofit.OldSiteService;
 import org.apache.logging.log4j.Logger;
 import retrofit2.Call;
+
+import java.util.*;
 
 /**
  * Migrator with the ability to migrate movies from the old site to the new one.

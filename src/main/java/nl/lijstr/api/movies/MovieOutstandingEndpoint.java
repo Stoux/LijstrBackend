@@ -1,9 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieDetail;
 import nl.lijstr.api.movies.models.wrappers.MovieOutstandingCount;
@@ -17,6 +13,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Endpoint for getting outstanding movies (regarding a user).

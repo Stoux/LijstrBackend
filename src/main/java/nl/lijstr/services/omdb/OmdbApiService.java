@@ -1,7 +1,5 @@
 package nl.lijstr.services.omdb;
 
-import java.util.List;
-import java.util.Map;
 import nl.lijstr.common.Utils;
 import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
@@ -13,6 +11,8 @@ import nl.lijstr.services.omdb.retrofit.OmdbService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
+
+import java.util.List;
 
 /**
  * A Service that provides access to the external api 'omdbapi.com'.

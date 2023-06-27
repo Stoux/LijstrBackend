@@ -1,8 +1,5 @@
 package nl.lijstr.services.retrofit;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 import nl.lijstr.beans.AppInfoBean;
 import nl.lijstr.processors.injectors.UserAgentInterceptor;
 import nl.lijstr.services.retrofit.models.TimeoutTimings;
@@ -13,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A service that provides Retrofit instances for multiple endpoints.

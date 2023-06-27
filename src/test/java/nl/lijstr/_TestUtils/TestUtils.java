@@ -1,11 +1,6 @@
 package nl.lijstr._TestUtils;
 
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.util.function.Consumer;
 import nl.lijstr.common.Container;
 import nl.lijstr.common.Utils;
 import nl.lijstr.security.model.JwtUser;
@@ -18,6 +13,12 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 import retrofit2.Call;
 import retrofit2.Response;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.function.Consumer;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;

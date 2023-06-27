@@ -2,7 +2,9 @@ package nl.lijstr.services.omdb.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by Leon Stam on 21-4-2016.

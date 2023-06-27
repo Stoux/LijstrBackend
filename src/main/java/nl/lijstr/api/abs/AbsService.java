@@ -1,6 +1,5 @@
 package nl.lijstr.api.abs;
 
-import java.util.Map;
 import nl.lijstr.beans.UserBean;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.base.IdModel;
@@ -13,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * The base AbsService used for {@link org.springframework.web.bind.annotation.RestController}s.
@@ -38,7 +40,7 @@ public abstract class AbsService {
     }
 
     /**
-     * Find an item by it's ID in the given repository.
+     * Find an item by its ID in the given repository.
      * Throws an NotFoundException if not found.
      *
      * @param basicRepository The repository
@@ -49,11 +51,9 @@ public abstract class AbsService {
      * @return the item
      */
     protected <X extends IdModel> X findOne(BasicRepository<X> basicRepository, long id, String itemName) {
-        X item = basicRepository.findOne(id);
-        if (item == null) {
-            throw new NotFoundException(itemName, id);
-        }
-        return item;
+        return basicRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException(itemName, id));
     }
 
     /**

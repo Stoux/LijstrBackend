@@ -1,11 +1,10 @@
 package nl.lijstr.repositories.users;
 
-import java.util.List;
-
-import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicRepository;
+
+import java.util.List;
 
 /**
  * The basic User repository.

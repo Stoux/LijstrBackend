@@ -1,10 +1,6 @@
 package nl.lijstr.services.mail;
 
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Map;
 import nl.lijstr.common.Container;
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.other.MemeImage;
@@ -20,11 +16,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 import org.springframework.core.io.Resource;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Map;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;

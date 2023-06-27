@@ -1,9 +1,11 @@
 package nl.lijstr.api.movies.models;
 
-import java.time.LocalDateTime;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.users.User;
+
+import java.time.LocalDateTime;
 
 /**
  * Model with movie information.

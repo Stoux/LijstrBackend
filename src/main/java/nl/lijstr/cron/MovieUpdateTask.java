@@ -1,12 +1,8 @@
 package nl.lijstr.cron;
 
-import java.time.LocalDate;
-import javax.transaction.Transactional;
-
-import io.sentry.Sentry;
+import jakarta.transaction.Transactional;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
-import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.services.maf.MafApiService;
@@ -15,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 /**
  * Created by Stoux on 29/03/2017.

@@ -1,6 +1,7 @@
 package nl.lijstr.services.retrofit.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Timings for HTTP clients.

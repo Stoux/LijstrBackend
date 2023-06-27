@@ -1,6 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.Map;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.users.Permission;
@@ -10,6 +9,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * Endpoint for movie migrations from the old site.

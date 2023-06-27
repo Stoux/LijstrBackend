@@ -1,7 +1,5 @@
 package nl.lijstr.security;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.users.UserRepository;
@@ -12,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Stoux on 18/04/2016.

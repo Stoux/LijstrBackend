@@ -1,12 +1,16 @@
 package nl.lijstr.domain.imdb;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.interfaces.PersonBound;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * Created by Stoux on 03/12/2015.

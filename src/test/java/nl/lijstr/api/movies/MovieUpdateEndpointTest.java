@@ -1,6 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.ArrayList;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.common.Container;
 import nl.lijstr.domain.movies.Movie;
@@ -12,10 +11,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+
 import static nl.lijstr._TestUtils.TestUtils.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**

@@ -9,7 +9,7 @@ import lombok.Setter;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.exceptions.LijstrException;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -70,7 +70,7 @@ public class EmailSettings extends IdModel {
             user,
             LocalDateTime.now().minusDays(7),
             LocalDate.now(),
-            EmailSettings.Interval.WEEKLY,
+            Interval.WEEKLY,
             null,
             DayOfWeek.MONDAY
         );
@@ -165,7 +165,7 @@ public class EmailSettings extends IdModel {
             if (nextMonthFirstDate.isPresent()) {
                 return nextMonthFirstDate.get();
             } else {
-                Sentry.capture("This shouldn't happen. Unable to resolve a date for monthly, preferred day of week: " + preferredDayOfWeek.name());
+                Sentry.captureMessage("This shouldn't happen. Unable to resolve a date for monthly, preferred day of week: " + preferredDayOfWeek.name());
                 return requiredAfter.plusMonths(1);
             }
         }

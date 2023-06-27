@@ -1,16 +1,18 @@
 package nl.lijstr.services.modify;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.services.modify.models.ReflectedField;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
+import static nl.lijstr._TestUtils.TestUtils.mockLogger;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

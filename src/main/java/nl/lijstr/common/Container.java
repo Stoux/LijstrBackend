@@ -1,6 +1,9 @@
 package nl.lijstr.common;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * A Container class to hold a certain item.

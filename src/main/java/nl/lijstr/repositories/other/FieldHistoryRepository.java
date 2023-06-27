@@ -1,8 +1,9 @@
 package nl.lijstr.repositories.other;
 
-import java.util.List;
 import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.repositories.abs.BasicRepository;
+
+import java.util.List;
 
 /**
  * The basic FieldHistory repository.

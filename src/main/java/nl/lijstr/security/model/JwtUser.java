@@ -2,10 +2,14 @@ package nl.lijstr.security.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.*;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * A JwtUser that implements UserDetails for authentication.

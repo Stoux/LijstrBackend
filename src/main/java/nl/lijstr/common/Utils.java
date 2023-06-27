@@ -1,15 +1,15 @@
 package nl.lijstr.common;
 
+import io.sentry.Sentry;
+import nl.lijstr.exceptions.LijstrException;
+import retrofit2.Call;
+import retrofit2.Response;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Function;
-
-import io.sentry.Sentry;
-import nl.lijstr.exceptions.LijstrException;
-import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Common General Utilities.
@@ -96,7 +96,7 @@ public final class Utils {
     /**
      * Update a List.
      * <p>
-     * Especially useful for updating associated lists on an {@link javax.persistence.Entity}.
+     * Especially useful for updating associated lists on an {@link jakarta.persistence.Entity}.
      *
      * @param currentItems        The current list
      * @param newItems            The new list
@@ -150,7 +150,7 @@ public final class Utils {
         try {
             runnable.run();
         } catch (Throwable e) {
-            Sentry.capture(e);
+            Sentry.captureException(e);
             throw e;
         }
     }

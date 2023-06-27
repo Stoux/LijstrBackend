@@ -1,8 +1,11 @@
 package nl.lijstr.api.users.models;
 
-import javax.validation.constraints.Size;
-import lombok.*;
-import org.hibernate.validator.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 /**
  * Created by Leon Stam on 21-4-2016.

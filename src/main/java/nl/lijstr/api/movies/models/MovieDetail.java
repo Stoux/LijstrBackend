@@ -1,11 +1,9 @@
 package nl.lijstr.api.movies.models;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.imdb.SpokenLanguage;
@@ -13,6 +11,12 @@ import nl.lijstr.domain.interfaces.PersonBound;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieCollection;
 import nl.lijstr.domain.movies.MovieRating;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A different model based on a {@link Movie}.
