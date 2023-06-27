@@ -1,18 +1,20 @@
 package nl.lijstr.services.modify;
 
+import lombok.Getter;
+import lombok.Setter;
 import nl.lijstr.services.modify.annotations.ExternalModifiable;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 import nl.lijstr.services.modify.models.ReflectedField;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.*;
 
 import static nl.lijstr._TestUtils.TestUtils.mockLogger;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A Test for {@link ModelModifyService} that mainly focuses on the
@@ -25,7 +27,7 @@ public class ModelModifyServiceLoadFieldsTest {
     private Map<Class<?>, List<ReflectedField>> mirroredClassListMap;
 
     @SuppressWarnings("unchecked")
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         service = new ModelModifyService();
         mockLogger(service);
@@ -98,7 +100,7 @@ public class ModelModifyServiceLoadFieldsTest {
 
     @Getter
     @Setter
-    private class NotModifiableFieldModel {
+    private static class NotModifiableFieldModel {
         @Id
         private String id;
         @NotModifiable
@@ -123,13 +125,13 @@ public class ModelModifyServiceLoadFieldsTest {
     @Getter
     @Setter
     @ModifiableWithHistory
-    private class WithHistoryModel {
+    private static class WithHistoryModel {
         private String randomVar;
     }
 
     @Getter
     @Setter
-    private class WithHistoryFieldModel {
+    private static class WithHistoryFieldModel {
         private String otherVar;
         @ModifiableWithHistory
         private String randomVar;

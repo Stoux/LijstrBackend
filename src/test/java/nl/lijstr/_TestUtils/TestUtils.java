@@ -20,8 +20,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.function.Consumer;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -65,7 +65,7 @@ public class TestUtils {
      * <li>Matching Mock type to Field type</li>
      * </ol>
      * <p>
-     * NOTE: This method will call {@link org.junit.Assert#fail(String)} if it fails to insert the mock
+     * NOTE: This method will call {@link org.junit.jupiter.api.Assertions#fail(String)} if it fails to insert the mock
      *
      * @param object The target
      * @param mocks  The mock objects that needs to inserted
@@ -82,7 +82,7 @@ public class TestUtils {
 
     private static boolean insertMockByFieldName(Object object, Object mock) throws Exception {
         String mockedName = mock.getClass().getSimpleName();
-        String[] splitMockedName = mockedName.split("\\$\\$");
+        String[] splitMockedName = mockedName.split("\\$");
         String fieldName = StringUtils.uncapitalize(splitMockedName[0]);
 
         Class targetClass = object.getClass();

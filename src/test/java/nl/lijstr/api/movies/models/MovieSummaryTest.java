@@ -5,12 +5,12 @@ import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.User;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Stoux on 25/04/2016.

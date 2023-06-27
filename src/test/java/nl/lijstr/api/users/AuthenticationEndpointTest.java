@@ -10,30 +10,30 @@ import nl.lijstr.repositories.users.LoginAttemptRepository;
 import nl.lijstr.security.model.AuthenticationToken;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.security.util.JwtTokenHandler;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 25/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AuthenticationEndpointTest {
 
     @Mock
@@ -47,7 +47,7 @@ public class AuthenticationEndpointTest {
 
     private AuthenticationEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new AuthenticationEndpoint();
         insertMocks(endpoint, authenticationManager, userDetailsService, loginAttemptRepository, jwtTokenHandler);

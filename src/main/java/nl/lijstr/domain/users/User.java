@@ -10,7 +10,6 @@ import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 
 import jakarta.persistence.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -28,9 +27,9 @@ public class User extends IdCmModel {
     @NotModifiable
     private String username;
 
+    @Column(nullable = false)
     @NotModifiable
     @JsonIgnore
-    @NotNull
     private String hashedPassword;
 
     private String displayName;

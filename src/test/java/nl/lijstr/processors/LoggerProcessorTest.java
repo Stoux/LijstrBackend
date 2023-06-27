@@ -3,74 +3,86 @@ package nl.lijstr.processors;
 import nl.lijstr.processors.annotations.InjectLogger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedStatic;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.Assert.*;
+import java.util.function.Consumer;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 27/01/2016.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(LogManager.class)
+@ExtendWith(MockitoExtension.class)
 public class LoggerProcessorTest {
 
     private LoggerProcessor loggerProcessor;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         loggerProcessor = new LoggerProcessor();
+    }
 
+    private static void runWithMockedLogManager(Consumer<MockedStatic<LogManager>> runnable) {
         //Setup the LogManager to return a mocked logger using the passed param.
-        PowerMockito.mockStatic(LogManager.class);
-        when(LogManager.getLogger(anyString())).thenAnswer(invocation -> {
-            //Get passed argument
-            final String loggerName = (String) invocation.getArguments()[0];
+        try (MockedStatic<LogManager> logManager = mockStatic(LogManager.class)) {
+            logManager.when(() -> LogManager.getLogger(anyString())).thenAnswer(invocation -> {
+                //Get passed argument
+                final String loggerName = (String) invocation.getArguments()[0];
 
-            //Mock the logger
-            Logger mockLogger = mock(Logger.class);
-            when(mockLogger.getName()).thenReturn(loggerName);
+                //Mock the logger
+                Logger mockLogger = mock(Logger.class);
+                when(mockLogger.getName()).thenReturn(loggerName);
 
-            return mockLogger;
+                return mockLogger;
+            });
+
+            runnable.accept(logManager);
+        }
+    }
+
+
+    @Test
+    public void testValidPostProcessBeforeInit()  {
+        runWithMockedLogManager(logManager -> {
+            //Arrange
+            ValidBean validBean = new ValidBean();
+
+            //Act
+            executeAndConfirmSameBean(validBean);
+
+            //Assert
+            Logger mockedLogger = validBean.logger;
+            assertNotNull(mockedLogger);
+            assertEquals(mockedLogger.getName(), validBean.getClass().getName());
+            assertNull(validBean.randomVar);
+            logManager.verify(() -> LogManager.getLogger(anyString()), times(1));
         });
     }
 
-
     @Test
-    public void testValidPostProcessBeforeInit() throws Exception {
-        //Arrange
-        ValidBean validBean = new ValidBean();
+    public void testValidNamedPostProcessBeforeInit() {
+        runWithMockedLogManager(logManager -> {
+            //Arrange
+            ValidNamedBean namedBean = new ValidNamedBean();
 
-        //Act
-        executeAndConfirmSameBean(validBean);
+            //Act
+            executeAndConfirmSameBean(namedBean);
 
-        //Assert
-        Logger mockedLogger = validBean.logger;
-        assertNotNull(mockedLogger);
-        assertEquals(mockedLogger.getName(), validBean.getClass().getName());
-        assertNull(validBean.randomVar);
-        PowerMockito.verifyStatic(times(1));
+            //Assert
+            assertEquals(ValidNamedBean.NAMED_LOGGER, namedBean.logger.getName());
+        });
     }
 
     @Test
-    public void testValidNamedPostProcessBeforeInit() throws Exception {
-        //Arrange
-        ValidNamedBean namedBean = new ValidNamedBean();
+    public void testInvalidTypePostProcessBeforeInit() {
+        runWithMockedLogManager(logManager -> {
 
-        //Act
-        executeAndConfirmSameBean(namedBean);
-
-        //Assert
-        assertEquals(ValidNamedBean.NAMED_LOGGER, namedBean.logger.getName());
-    }
-
-    @Test
-    public void testInvalidTypePostProcessBeforeInit() throws Exception {
+        });
         //Arrange
         InvalidTypeBean invalidTypeBean = new InvalidTypeBean();
 
@@ -82,15 +94,17 @@ public class LoggerProcessorTest {
     }
 
     @Test
-    public void testMissingAnnotationPostProcessBeforeInit() throws Exception {
-        //Arrange
-        MissingAnnotationBean missingAnnotationBean = new MissingAnnotationBean();
+    public void testMissingAnnotationPostProcessBeforeInit() {
+        runWithMockedLogManager(logManager -> {
+            //Arrange
+            MissingAnnotationBean missingAnnotationBean = new MissingAnnotationBean();
 
-        //Act
-        executeAndConfirmSameBean(missingAnnotationBean);
+            //Act
+            executeAndConfirmSameBean(missingAnnotationBean);
 
-        //Assert
-        assertNull(missingAnnotationBean.logger);
+            //Assert
+            assertNull(missingAnnotationBean.logger);
+        });
     }
 
     private void executeAndConfirmSameBean(Object bean) {
@@ -102,32 +116,34 @@ public class LoggerProcessorTest {
     }
 
     @Test
-    public void testPostProcessAfterInitialization() throws Exception {
-        //Act
-        Object bean = loggerProcessor.postProcessAfterInitialization(null, null);
+    public void testPostProcessAfterInitialization() {
+        runWithMockedLogManager(logManager -> {
+            //Act
+            Object bean = loggerProcessor.postProcessAfterInitialization(null, null);
 
-        //Assert
-        assertNull(bean);
+            //Assert
+            assertNull(bean);
+        });
     }
 
-    private class ValidBean {
+    private static class ValidBean {
         @InjectLogger
         private Logger logger;
         private String randomVar;
     }
 
-    private class ValidNamedBean {
+    private static class ValidNamedBean {
         public static final String NAMED_LOGGER = "NamedLogger";
         @InjectLogger(NAMED_LOGGER)
         private Logger logger;
     }
 
-    private class InvalidTypeBean {
+    private static class InvalidTypeBean {
         @InjectLogger
         private String logger;
     }
 
-    private class MissingAnnotationBean {
+    private static class MissingAnnotationBean {
         private Logger logger;
     }
 

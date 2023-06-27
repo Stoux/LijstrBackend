@@ -2,8 +2,8 @@ package nl.lijstr.services.retrofit;
 
 import nl.lijstr.beans.AppInfoBean;
 import nl.lijstr.services.retrofit.models.TimeoutTimings;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 import java.util.Map;
 
 import static nl.lijstr._TestUtils.TestUtils.getFieldValue;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,7 +28,7 @@ public class RetrofitServiceTest {
     //Mirror'd from RetrofitService
     private Map<String, Retrofit> endpointMap;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         AppInfoBean infoBean = mock(AppInfoBean.class);
         when(infoBean.getUserAgent()).thenReturn("UserAgent");

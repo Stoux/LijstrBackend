@@ -4,12 +4,12 @@ import nl.lijstr.common.Container;
 import nl.lijstr.services.migrate.migrators.OldSiteMigrator;
 import nl.lijstr.services.migrate.models.MigrationProgress;
 import nl.lijstr.services.migrate.models.MigrationType;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -26,7 +26,7 @@ public class MigrateServiceTest {
     private Container<MigrationType> typeContainer;
     private Container<MigrationProgress> progressContainer;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         migrateService = new MigrateService();
         typeContainer = new Container<>();

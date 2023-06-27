@@ -7,27 +7,27 @@ import nl.lijstr.exceptions.db.ConflictException;
 import nl.lijstr.exceptions.db.NotFoundException;
 import nl.lijstr.repositories.users.PasswordResetRepository;
 import nl.lijstr.repositories.users.UserRepository;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 23/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PasswordBeanTest {
 
     private static SecureRandom secureRandom;
@@ -41,12 +41,12 @@ public class PasswordBeanTest {
 
     private PasswordBean passwordBean;
 
-    @BeforeClass
+    @BeforeAll
     public static void createSecureRandom() {
         secureRandom = new SecureRandom();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         passwordBean = new PasswordBean();
         insertMocks(passwordBean, userRepository, passwordResetRepository, passwordEncoder, secureRandom);
@@ -83,20 +83,21 @@ public class PasswordBeanTest {
         assertFalse(reset.getResetToken().isEmpty());
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test()
     public void passwordResetNonExistentUser() throws Exception {
         //Arrange
         when(userRepository.findByUsernameAndEmail(anyString(), anyString()))
                 .thenReturn(null);
 
         //Act
-        passwordBean.requestPasswordReset("A", "B", null);
-
-        //Assert
-        fail("User shouldn't been found.");
+        assertThrows(
+                NotFoundException.class,
+                () -> passwordBean.requestPasswordReset("A", "B", null),
+                "User shouldn't have been found"
+        );
     }
 
-    @Test(expected = ConflictException.class)
+    @Test()
     public void conflictPasswordReset() throws Exception {
         //Arrange
         when(userRepository.findByUsernameAndEmail(anyString(), anyString()))
@@ -108,10 +109,11 @@ public class PasswordBeanTest {
                 .thenReturn(passwordReset);
 
         //Act
-        passwordBean.requestPasswordReset("A", "B", null);
-
-        //Assert
-        fail("Already an open passwordReset");
+        assertThrows(
+                ConflictException.class,
+                () ->  passwordBean.requestPasswordReset("A", "B", null),
+                "Already an open passwordReset!"
+        );
     }
 
     @Test
@@ -139,43 +141,46 @@ public class PasswordBeanTest {
         verify(userRepository, times(1)).save(eq(user));
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test()
     public void nonExistentPasswordReset() throws Exception {
         //Arrange
         when(passwordResetRepository.findByResetToken(anyString()))
                 .thenReturn(null);
 
         //Act
-        passwordBean.resetPassword("nonExistentToken", "password");
-
-        //Assert
-        fail("PasswordReset doesn't exist");
+        assertThrows(
+                NotFoundException.class,
+                () -> passwordBean.resetPassword("nonExistentToken", "password"),
+                "PasswordReset doesn't exist"
+        );
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test()
     public void usedPasswordReset() {
         //Arrange
         when(passwordResetRepository.findByResetToken(anyString()))
                 .thenReturn(new PasswordReset("", 0, "", "", LocalDateTime.MAX, true));
 
         //Act
-        passwordBean.resetPassword("usedToken", "password");
-
-        //Assert
-        fail("PasswordReset is already used");
+        assertThrows(
+                BadRequestException.class,
+                () -> passwordBean.resetPassword("usedToken", "password"),
+                "PasswordReset is already used"
+        );
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test()
     public void expiredPasswordReset() {
         //Arrange
         when(passwordResetRepository.findByResetToken(anyString()))
                 .thenReturn(new PasswordReset("", 0, "", "", LocalDateTime.MIN, false));
 
         //Act
-        passwordBean.resetPassword("expiredToken", "password");
-
-        //Assert
-        fail("PasswordReset is expired");
+        assertThrows(
+                BadRequestException.class,
+                () -> passwordBean.resetPassword("expiredToken", "password"),
+                "PasswordReset is expired"
+        );
     }
 
 }

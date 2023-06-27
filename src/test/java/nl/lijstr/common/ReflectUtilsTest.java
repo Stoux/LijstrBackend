@@ -1,14 +1,16 @@
 package nl.lijstr.common;
 
+import lombok.Getter;
+import lombok.Setter;
 import nl.lijstr._TestUtils.TestUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Leon Stam on 29-1-2016.
@@ -20,7 +22,7 @@ public class ReflectUtilsTest {
     private Container<Method> getter;
     private Container<Method> setter;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mClass = TestModel.class;
         getter = new Container<>();
@@ -103,7 +105,7 @@ public class ReflectUtilsTest {
         }
     }
 
-    public class TestModel {
+    public static class TestModel {
         @Getter
         @Setter
         private String varX;

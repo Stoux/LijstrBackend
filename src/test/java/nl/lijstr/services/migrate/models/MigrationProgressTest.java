@@ -1,13 +1,13 @@
 package nl.lijstr.services.migrate.models;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Stoux on 1-2-2017.
@@ -16,7 +16,7 @@ public class MigrationProgressTest {
 
     private MigrationProgress progress;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         progress = new MigrationProgress();
     }
@@ -52,11 +52,16 @@ public class MigrationProgressTest {
         assertEquals(e, progress.getException());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test()
     public void doubleFinish() throws Exception {
         //Act
-        progress.finish();
-        progress.fail(null);
+        assertThrows(
+                IllegalStateException.class,
+                () -> {
+                    progress.finish();
+                    progress.fail(null);
+                }
+        );
     }
 
     @Test
@@ -87,16 +92,16 @@ public class MigrationProgressTest {
         assertEquals(value, progress.getAddedAndFilled().get(id));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test()
     public void filledInvalidState() throws Exception {
         //Arrange
         String id = "ID";
 
         //Act
-        progress.filled(id);
-
-        //Assert
-        fail();
+        assertThrows(
+                IllegalStateException.class,
+                () -> progress.filled(id)
+        );
     }
 
     private void mapCheck(BiConsumer<String, String> caller, Supplier<Map<String, String>> mapSupplier) {

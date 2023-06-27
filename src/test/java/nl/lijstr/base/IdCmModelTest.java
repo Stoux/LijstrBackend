@@ -1,12 +1,12 @@
 package nl.lijstr.base;
 
 import nl.lijstr.domain.base.IdCmModel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Stoux on 29/01/2016.

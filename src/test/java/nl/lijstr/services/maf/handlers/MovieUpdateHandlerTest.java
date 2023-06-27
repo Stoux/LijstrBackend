@@ -17,12 +17,12 @@ import nl.lijstr.services.maf.handlers.util.FieldModifyHandler;
 import nl.lijstr.services.maf.models.ApiAka;
 import nl.lijstr.services.maf.models.ApiMovie;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.InputStreamReader;
@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -44,7 +44,7 @@ import static org.mockito.Mockito.*;
  * This test relies heavily on {@link FieldModifyHandler} and it's test.
  * If anything of that test fails; this test will fail as well.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieUpdateHandlerTest {
 
     private MovieUpdateHandler updateHandler;
@@ -59,7 +59,7 @@ public class MovieUpdateHandlerTest {
     private ImdbBean imdbMock;
     private Logger loggerMock;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         updateHandler = new MovieUpdateHandler();
         insertMocks(updateHandler, historyMock, suggestionMock, movieMock, imdbMock);
@@ -99,10 +99,10 @@ public class MovieUpdateHandlerTest {
                 .thenAnswer(invocation -> new SpokenLanguage((String) invocation.getArguments()[0]));
         when(imdbMock.getPerson(anyString()))
                 .thenReturn(null);
-        when(imdbMock.getPerson(mattImdb))
-                .thenReturn(mattDamon);
-        when(imdbMock.getPerson(seanImdb))
-                .thenReturn(seanBean);
+//        when(imdbMock.getPerson(mattImdb))
+//                .thenReturn(mattDamon);
+//        when(imdbMock.getPerson(seanImdb))
+//                .thenReturn(seanBean);
         when(imdbMock.addPerson(any()))
                 .thenAnswer(invocation -> invocation.getArguments()[0]);
 
@@ -143,20 +143,21 @@ public class MovieUpdateHandlerTest {
 //        assertEquals(seanBean, seanChar.getPerson());
     }
 
-    @Test(expected = LijstrException.class)
+    @Test()
     public void updateWrongMovie() throws Exception {
         //Arrange
         Movie movie = new Movie("tt0000000");
         ApiMovie apiMovie = loadApiMovie();
 
         //Act
-        updateHandler.update(movie, apiMovie);
-
-        //Assert
-        fail("Should have thrown a LijstrException as the IMDB IDs are not equal");
+        assertThrows(
+                LijstrException.class,
+                () -> updateHandler.update(movie, apiMovie),
+                "Should have thrown a LijstrException as the IMDB IDs are not equal"
+        );
     }
 
-    @Ignore //Ignore as the title is temporary fetched from OmdbAPI
+    @Disabled //Ignore as the title is temporary fetched from OmdbAPI
     @Test
     public void frenchTitleUpdate() {
         //Arrange

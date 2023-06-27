@@ -1,10 +1,11 @@
 package nl.lijstr.processors;
 
+import lombok.AllArgsConstructor;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.retrofit.RetrofitService;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.invocation.InvocationOnMock;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -26,7 +27,7 @@ public class RetrofitProcessorTest {
 
     private List<ClassInstanceContainer> createdServices;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         createdServices = new ArrayList<>();
 
@@ -133,7 +134,7 @@ public class RetrofitProcessorTest {
     }
 
     @AllArgsConstructor
-    private class ClassInstanceContainer {
+    private static class ClassInstanceContainer {
         private Class<?> aClass;
         private Object instance;
     }

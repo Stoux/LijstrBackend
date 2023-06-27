@@ -12,11 +12,11 @@ import nl.lijstr.repositories.other.MemeQuoteRepository;
 import nl.lijstr.services.mail.model.MailGunResponse;
 import nl.lijstr.services.mail.model.MailTemplate;
 import nl.lijstr.services.mail.retrofit.MailGunApiService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -26,13 +26,13 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 23/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MailServiceTest {
 
     public static final String ADMIN_EXAMPLE_COM = "admin@example.com";
@@ -49,7 +49,7 @@ public class MailServiceTest {
     private MailService mailService;
     private boolean answerCalled = false;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         mailService = new MailService();
         mockLogger(mailService);
@@ -75,7 +75,7 @@ public class MailServiceTest {
         assertNotNull(ReflectionTestUtils.getField(mailService, "templateMail"));
     }
 
-    @Test(expected = LijstrException.class)
+    @Test()
     public void failedPostConstruct() throws Exception {
         //Arrange
         Resource mockResource = mock(Resource.class);
@@ -84,10 +84,11 @@ public class MailServiceTest {
         insertMocks(mailService, mockResource);
 
         //Act
-        ReflectionTestUtils.invokeMethod(mailService, "getTemplateMail");
-
-        //Assert
-        fail("Coulnd't read IOStream, LijstrException should have been thrown");
+        assertThrows(
+                LijstrException.class,
+                () -> ReflectionTestUtils.invokeMethod(mailService, "getTemplateMail"),
+                "Couldn't read IOStream, LijstrException should have been thrown"
+        );
     }
 
     @Test

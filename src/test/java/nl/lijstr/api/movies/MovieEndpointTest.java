@@ -14,26 +14,27 @@ import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.security.model.JwtGrantedAuthority;
 import nl.lijstr.security.model.JwtUser;
 import nl.lijstr.services.omdb.models.OmdbObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 24/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieEndpointTest {
 
     public static final String IMDB_ID = "imdbId";
@@ -48,14 +49,14 @@ public class MovieEndpointTest {
     private JwtUser jwtUser;
     private MovieEndpoint movieEndpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         movieEndpoint = new MovieEndpoint();
         insertMocks(movieEndpoint, movieRepository, addBean, userBean);
 
         LocalDateTime access = LocalDateTime.now().plusMinutes(5);
         jwtUser = new JwtUser(1L, "User", "Pass", new ArrayList<>(), access, access, 1L);
-        when(userBean.getJwtUser()).thenReturn(jwtUser);
+        lenient().when(userBean.getJwtUser()).thenReturn(jwtUser);
     }
 
     @Test
@@ -64,7 +65,7 @@ public class MovieEndpointTest {
         Movie movie = new Movie("", "", "", new User(2L));
         movie.setId(1L);
         movie.setOldSiteId(1L);
-        when(movieRepository.findOne(eq(1L))).thenReturn(movie);
+        when(movieRepository.findById(eq(1L))).thenReturn(Optional.of(movie));
 
         //Act
         MovieDetail detail = movieEndpoint.getById(1L);
@@ -79,7 +80,7 @@ public class MovieEndpointTest {
         //Arrange
         jwtUser.getAuthorities().add(new JwtGrantedAuthority(Permission.MOVIE_MOD));
         Movie movie = new Movie();
-        when(movieRepository.findOne(eq(1L))).thenReturn(movie);
+        when(movieRepository.findById(eq(1L))).thenReturn(Optional.of(movie));
 
         //Act
         Movie originalById = movieEndpoint.getOriginalById(1L);
@@ -88,13 +89,14 @@ public class MovieEndpointTest {
         assertEquals(movie, originalById);
     }
 
-    @Test(expected = UnauthorizedException.class)
+    @Test()
     public void getUnauthorizedOriginal() throws Exception {
         //Act
-        movieEndpoint.getOriginalById(1L);
-
-        //Assert
-        fail("Shouldn't be allowed to get the movie");
+        assertThrows(
+                UnauthorizedException.class,
+                () -> movieEndpoint.getOriginalById(1L),
+                "Shouldn't be allowed to get the movie"
+        );
     }
 
     @Test

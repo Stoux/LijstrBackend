@@ -1,6 +1,6 @@
 package nl.lijstr;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 /**
  * This test is literally only here for Test coverage.
