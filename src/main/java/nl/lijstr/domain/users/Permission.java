@@ -1,9 +1,12 @@
 package nl.lijstr.domain.users;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import nl.lijstr.domain.base.IdModel;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 
 /**
  * Created by Leon Stam on 18-4-2016.

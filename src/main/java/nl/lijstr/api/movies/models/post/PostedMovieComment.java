@@ -1,9 +1,12 @@
 package nl.lijstr.api.movies.models.post;
 
-import javax.persistence.Column;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
+
+import jakarta.persistence.Column;
 
 /**
  * Created by Stoux on 20-7-2016.

@@ -1,7 +1,5 @@
 package nl.lijstr.security;
 
-import java.util.ArrayList;
-import java.util.List;
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
@@ -18,7 +16,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

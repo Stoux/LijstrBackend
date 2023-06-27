@@ -1,6 +1,5 @@
 package nl.lijstr.configs;
 
-import java.security.SecureRandom;
 import nl.lijstr.security.JwtUserDetailsService;
 import nl.lijstr.security.spring.JwtAuthenticationEntryPoint;
 import nl.lijstr.security.spring.JwtAuthenticationTokenFilter;
@@ -9,24 +8,29 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.security.SecureRandom;
 
 /**
  * The Security configuration used by the Spring application.
  */
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private JwtUserDetailsService detailsService;
+@EnableMethodSecurity(securedEnabled = true)
+public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -34,72 +38,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationTokenFilter tokenFilter;
 
-    @SuppressWarnings("squid:UnusedProtectedMethod")
-    @Override
-    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder
-                .userDetailsService(detailsService)
-                .passwordEncoder(passwordEncoderBean());
-    }
-
-    /**
-     * Creates a {@link PasswordEncoder}.
-     *
-     * @return The encoder
-     */
     @Bean
-    public PasswordEncoder passwordEncoderBean() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * Creates a {@link SecureRandom}.
-     *
-     * @return the random
-     */
-    @Bean
-    public SecureRandom secureRandomBean() {
-        return new SecureRandom();
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @SuppressWarnings("squid:UnusedProtectedMethod")
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .cors().and()
-
-                //Don't need CSRF
-                .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-
-                //No sessions, full REST
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
-                //Authorize paths
-                .authorizeRequests()
-
-                //Explicitly allow authentication paths
-                .antMatchers("/auth/**").permitAll()
-
-                //Auth is required for...
-                //=> Pretty much all POST/PUT interactions
-                .antMatchers(HttpMethod.POST, "/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/**").authenticated()
-
-                //Allow the rest
-                .anyRequest().permitAll();
-
-        //Add JWT Security filter
-        httpSecurity
-                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
-
-        //Disable user side cache
-        httpSecurity.headers().cacheControl();
+    public SecurityFilterChain configureHttp(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(register -> register.requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/**").authenticated()
+                        .anyRequest().permitAll())
+                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .headers(configurer -> configurer.cacheControl(Customizer.withDefaults()))
+                .build();
     }
 }

@@ -1,9 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-
 import nl.lijstr.api.movies.models.post.PostedMovieComment;
 import nl.lijstr.beans.UserBean;
 import nl.lijstr.common.Container;
@@ -22,6 +18,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;

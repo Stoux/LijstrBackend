@@ -1,11 +1,13 @@
 package nl.lijstr.domain.other;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.services.modify.annotations.NotModifiable;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 /**
  * A suggestion for a override of a FieldHistory entry.

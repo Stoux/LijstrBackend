@@ -1,8 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.ArrayList;
-import java.util.List;
-import nl.lijstr._TestUtils.TestUtils;
 import nl.lijstr.api.users.models.UserSummary;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
@@ -13,9 +10,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
-import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Leon Stam on 28-4-2016.

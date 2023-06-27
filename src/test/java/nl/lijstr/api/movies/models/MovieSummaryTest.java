@@ -1,7 +1,5 @@
 package nl.lijstr.api.movies.models;
 
-import java.math.BigDecimal;
-import java.util.*;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.domain.movies.Movie;
@@ -9,9 +7,10 @@ import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.User;
 import org.junit.Test;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.math.BigDecimal;
+import java.util.*;
+
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 25/04/2016.

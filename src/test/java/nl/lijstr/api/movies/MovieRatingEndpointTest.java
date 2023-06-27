@@ -1,10 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import nl.lijstr.api.movies.models.MovieExtendedRating;
 import nl.lijstr.api.movies.models.MovieShortRating;
 import nl.lijstr.api.movies.models.post.MovieRatingRequest;
@@ -23,6 +18,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;

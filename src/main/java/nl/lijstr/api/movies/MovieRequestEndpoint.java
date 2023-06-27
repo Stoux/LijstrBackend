@@ -1,8 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieShortRequest;
 import nl.lijstr.api.movies.models.post.MovieRatingRequest;
@@ -23,6 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Endpoint for requesting new movies.

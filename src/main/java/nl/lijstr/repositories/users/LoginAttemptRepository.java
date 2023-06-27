@@ -1,11 +1,11 @@
 package nl.lijstr.repositories.users;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import nl.lijstr.domain.users.LoginAttempt;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicRepository;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by Stoux on 20/04/2016.

@@ -1,10 +1,13 @@
 package nl.lijstr.domain.other;
 
-import java.lang.reflect.Field;
-import javax.persistence.Entity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import nl.lijstr.domain.base.IdCreatedModel;
 import nl.lijstr.services.modify.annotations.NotModifiable;
+
+import jakarta.persistence.Entity;
+import java.lang.reflect.Field;
 
 /**
  * Created by Stoux on 26/01/2016.

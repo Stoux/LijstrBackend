@@ -1,6 +1,7 @@
 package nl.lijstr.services.mail.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Created by Stoux on 22/04/2016.

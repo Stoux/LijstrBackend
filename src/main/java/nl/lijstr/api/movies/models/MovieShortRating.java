@@ -1,8 +1,9 @@
 package nl.lijstr.api.movies.models;
 
-import java.math.BigDecimal;
-import lombok.*;
+import lombok.Getter;
 import nl.lijstr.domain.movies.MovieRating;
+
+import java.math.BigDecimal;
 
 /**
  * A summarized version of a {@link MovieRating}.

@@ -1,10 +1,11 @@
 package nl.lijstr.repositories.movies;
 
-import java.util.List;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieUserMeta;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.abs.BasicMovieRepository;
+
+import java.util.List;
 
 /**
  * Repository for fetching user meta data.

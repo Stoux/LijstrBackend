@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -103,7 +103,7 @@ public class EmailScheduler extends AbsService {
         } catch (Exception e) {
             // Something went wrong
             this.logger.error(String.format("Failed to send digest to %s: %s", user.getUsername(), e.getMessage()));
-            Sentry.capture(e);
+            Sentry.captureException(e);
             return;
         }
 

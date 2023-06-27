@@ -1,6 +1,5 @@
 package nl.lijstr.services.retrofit;
 
-import java.util.Map;
 import nl.lijstr.beans.AppInfoBean;
 import nl.lijstr.services.retrofit.models.TimeoutTimings;
 import org.junit.Before;
@@ -9,9 +8,12 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.util.Map;
+
+import static nl.lijstr._TestUtils.TestUtils.getFieldValue;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Stoux on 29/01/2016.

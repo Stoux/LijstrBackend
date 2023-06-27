@@ -1,6 +1,7 @@
 package nl.lijstr.api.users.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nl.lijstr.domain.users.User;
 
 /**

@@ -1,8 +1,10 @@
 package nl.lijstr.services.maf.models;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.List;
-import lombok.*;
 
 /**
  * Created by Stoux on 03/12/2015.

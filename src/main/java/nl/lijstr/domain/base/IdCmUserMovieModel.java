@@ -1,10 +1,12 @@
 package nl.lijstr.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import nl.lijstr.domain.movies.Movie;
+
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * A IdCmUserMovieModel that is linked to a Movie.

@@ -1,6 +1,6 @@
 package nl.lijstr.services.maf.models;
 
-import lombok.*;
+import lombok.Getter;
 
 /**
  * Different name a movie might be called (in another country).

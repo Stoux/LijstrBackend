@@ -1,8 +1,5 @@
 package nl.lijstr.api.abs;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.interfaces.MovieBound;
@@ -12,6 +9,10 @@ import nl.lijstr.repositories.abs.PersonBoundRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * A basic endpoint that exposes fetch methods for {@link Person}s that are linked to a {@link nl.lijstr.domain.movies.Movie}.

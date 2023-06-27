@@ -1,8 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import nl.lijstr.api.movies.models.MovieDetail;
 import nl.lijstr.api.movies.models.wrappers.MovieOutstandingCount;
 import nl.lijstr.beans.UserBean;
@@ -10,16 +7,20 @@ import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.movies.MovieRepository;
-import nl.lijstr.security.model.JwtUser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static nl.lijstr._TestUtils.TestUtils.createUser;
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Stoux on 8-2-2017.

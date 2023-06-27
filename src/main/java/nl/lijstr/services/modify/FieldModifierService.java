@@ -1,8 +1,5 @@
 package nl.lijstr.services.modify;
 
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Optional;
 import nl.lijstr.common.Container;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.other.FieldHistory;
@@ -13,6 +10,10 @@ import nl.lijstr.services.modify.models.ReflectedField;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A service that provides the ability to automatically modify fields based on annotations.

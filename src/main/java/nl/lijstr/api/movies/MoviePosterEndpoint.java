@@ -1,7 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.io.File;
-import java.io.IOException;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.exceptions.db.NotFoundException;
@@ -13,6 +11,9 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * An endpoint that provides the posters of movies.

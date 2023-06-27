@@ -1,9 +1,10 @@
 package nl.lijstr.repositories.abs;
 
-import java.util.List;
 import nl.lijstr.domain.other.ApprovedFor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
+
+import java.util.List;
 
 /**
  * A repository base for items that have a {@link ApprovedFor}.

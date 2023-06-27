@@ -1,10 +1,5 @@
 package nl.lijstr;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -16,6 +11,12 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.SystemPropertyUtils;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 import static org.junit.Assert.*;
 

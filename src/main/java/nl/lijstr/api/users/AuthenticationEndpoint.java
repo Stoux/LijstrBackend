@@ -1,10 +1,5 @@
 package nl.lijstr.api.users;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.AuthenticationRequest;
 import nl.lijstr.api.users.models.RefreshRequest;
@@ -24,6 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
 /**
  * Created by Stoux on 18/04/2016.
  */
@@ -32,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationEndpoint extends AbsService {
 
     /**
-     * The maximum amount of attempts that can be made per {@link nl.lijstr.domain.users.LoginAttempt.Type} in
+     * The maximum amount of attempts that can be made per {@link LoginAttempt.Type} in
      * the last X minutes (see MAX_ATTEMPTS_MINUTES).
      */
     public static final long MAX_ATTEMPTS = 5L;

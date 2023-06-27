@@ -1,9 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import nl.lijstr.api.abs.AbsMovieService;
 import nl.lijstr.api.movies.models.MovieExtendedRating;
 import nl.lijstr.api.movies.models.MovieShortComment;
@@ -13,6 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Endpoint for returning a timeline of events regarding a movie.

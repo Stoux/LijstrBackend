@@ -1,12 +1,5 @@
 package nl.lijstr.services.maf.handlers.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import nl.lijstr.common.Container;
 import nl.lijstr.common.ReflectUtils;
 import nl.lijstr.common.StrUtils;
@@ -17,6 +10,14 @@ import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
 import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * A handler that can easily modify Field values while keeping track of history.

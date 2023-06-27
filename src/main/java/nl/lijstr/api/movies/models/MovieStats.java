@@ -2,12 +2,14 @@ package nl.lijstr.api.movies.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+import nl.lijstr.domain.users.User;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import lombok.*;
-import nl.lijstr.domain.users.User;
 
 @Getter
 @Setter

@@ -1,10 +1,11 @@
 package nl.lijstr.common;
 
+import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * Refleciton Utilities.

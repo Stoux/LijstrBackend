@@ -1,13 +1,5 @@
 package nl.lijstr.services.maf.handlers;
 
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import nl.lijstr.beans.ImdbBean;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.imdb.Genre;
@@ -19,7 +11,6 @@ import nl.lijstr.domain.movies.MovieTrivia;
 import nl.lijstr.domain.movies.people.MovieCharacter;
 import nl.lijstr.domain.movies.people.MovieDirector;
 import nl.lijstr.domain.movies.people.MovieWriter;
-import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.annotations.InjectLogger;
 import nl.lijstr.repositories.abs.BasicRepository;
@@ -40,6 +31,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Created by Stoux on 29/01/2016.

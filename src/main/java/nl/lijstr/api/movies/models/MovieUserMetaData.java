@@ -1,6 +1,8 @@
 package nl.lijstr.api.movies.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import nl.lijstr.domain.movies.MovieUserMeta;
 
 /**

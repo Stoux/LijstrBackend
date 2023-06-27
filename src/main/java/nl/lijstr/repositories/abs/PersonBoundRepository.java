@@ -1,11 +1,12 @@
 package nl.lijstr.repositories.abs;
 
-import java.util.List;
 import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.interfaces.PersonBound;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 /**
  * A repository for items that are bound to a {@link Person}.

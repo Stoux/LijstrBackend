@@ -2,11 +2,15 @@ package nl.lijstr.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.lijstr.domain.base.IdCmUserModel;
 import org.springframework.security.core.GrantedAuthority;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
 /**
  * Created by Stoux on 26/01/2016.

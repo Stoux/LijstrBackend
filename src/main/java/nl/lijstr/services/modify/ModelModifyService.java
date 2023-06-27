@@ -1,9 +1,7 @@
 package nl.lijstr.services.modify;
 
-import java.lang.reflect.Field;
-import java.util.*;
-import javax.annotation.PostConstruct;
-import javax.persistence.*;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.*;
 import nl.lijstr.common.ReflectUtils;
 import nl.lijstr.common.StrUtils;
 import nl.lijstr.common.Utils;
@@ -23,6 +21,9 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * A service that allows easy modification of entities by using annotations.

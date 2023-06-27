@@ -1,9 +1,11 @@
 package nl.lijstr.domain.base;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import nl.lijstr.domain.users.User;
+
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * An IdCmModel which is linked to a User.

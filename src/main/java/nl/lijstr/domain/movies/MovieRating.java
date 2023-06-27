@@ -1,15 +1,20 @@
 package nl.lijstr.domain.movies;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.math.BigDecimal;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.lijstr.domain.base.IdCmUserMovieModel;
 import nl.lijstr.domain.users.User;
-import org.thymeleaf.util.StringUtils;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import org.springframework.util.ObjectUtils;
+
+import java.math.BigDecimal;
 
 /**
  * Created by Stoux on 03/12/2015.
@@ -70,7 +75,7 @@ public class MovieRating extends IdCmUserMovieModel {
      * @return has comment
      */
     public boolean hasComment() {
-        return !StringUtils.isEmpty(this.comment);
+        return !ObjectUtils.isEmpty(this.comment);
     }
 
 }

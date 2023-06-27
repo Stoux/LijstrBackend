@@ -1,9 +1,5 @@
 package nl.lijstr;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.users.GrantedPermission;
 import nl.lijstr.domain.users.Permission;
@@ -22,6 +18,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
 import javax.naming.InitialContext;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by Stoux on 19/04/2016.

@@ -1,12 +1,13 @@
 package nl.lijstr.api.movies.models;
 
+import lombok.Getter;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import lombok.Getter;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.*;
 

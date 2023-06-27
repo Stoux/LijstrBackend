@@ -1,10 +1,11 @@
 package nl.lijstr.services.retrofit.annotations;
 
+import okhttp3.Interceptor;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import okhttp3.Interceptor;
 
 /**
  * An annotation that specifies the URL endpoint for a Retrofit service.

@@ -1,6 +1,6 @@
 package nl.lijstr.exceptions.security;
 
-import lombok.*;
+import lombok.Getter;
 import nl.lijstr.exceptions.LijstrException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

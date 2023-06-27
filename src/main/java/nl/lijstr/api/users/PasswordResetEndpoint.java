@@ -1,7 +1,5 @@
 package nl.lijstr.api.users;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.users.models.NewPasswordRequest;
 import nl.lijstr.api.users.models.ResetPasswordRequest;
@@ -14,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  * Created by Stoux on 23/04/2016.

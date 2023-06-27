@@ -1,8 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
 import nl.lijstr.api.abs.AbsMovieService;
 import nl.lijstr.api.movies.models.MovieUserMetaData;
 import nl.lijstr.domain.movies.Movie;
@@ -14,6 +11,10 @@ import nl.lijstr.security.model.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Endpoint for user's meta data on a movie.

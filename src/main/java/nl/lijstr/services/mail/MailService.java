@@ -1,12 +1,5 @@
 package nl.lijstr.services.mail;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.domain.other.MemeImage;
@@ -27,6 +20,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import retrofit2.Call;
+
+import jakarta.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A service that allows for mailing.

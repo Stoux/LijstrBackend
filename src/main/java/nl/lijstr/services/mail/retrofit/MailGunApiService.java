@@ -1,6 +1,5 @@
 package nl.lijstr.services.mail.retrofit;
 
-import java.util.Map;
 import nl.lijstr.configs.RetrofitEndpoints;
 import nl.lijstr.services.mail.model.MailGunResponse;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
@@ -8,6 +7,8 @@ import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+
+import java.util.Map;
 
 /**
  * A Retrofit service for the MailGun API.

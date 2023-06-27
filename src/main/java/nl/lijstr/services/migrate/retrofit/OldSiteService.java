@@ -1,6 +1,5 @@
 package nl.lijstr.services.migrate.retrofit;
 
-import java.util.Map;
 import nl.lijstr.configs.RetrofitEndpoints;
 import nl.lijstr.services.migrate.models.movies.OldMovie;
 import nl.lijstr.services.migrate.models.movies.OldMovieRating;
@@ -8,6 +7,8 @@ import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+
+import java.util.Map;
 
 /**
  * Endpoint for reaching details on the old site.

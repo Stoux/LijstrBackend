@@ -4,9 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.time.LocalDateTime;
-import java.util.function.Consumer;
 import nl.lijstr.exceptions.security.AccessExpiredException;
 import nl.lijstr.exceptions.security.TokenExpiredException;
 import nl.lijstr.security.model.AuthenticationToken;
@@ -15,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.time.LocalDateTime;
+import java.util.function.Consumer;
 
 /**
  * A JSON Web Tokens Spring component that has various methods that ease the JWT flow.

@@ -1,19 +1,19 @@
 package nl.lijstr.services.mail.retrofit;
 
-import java.nio.charset.Charset;
-import okhttp3.*;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.util.Base64Utils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.nio.charset.Charset;
+
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 23/04/2016.

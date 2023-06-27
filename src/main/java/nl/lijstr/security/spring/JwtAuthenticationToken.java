@@ -1,6 +1,6 @@
 package nl.lijstr.security.spring;
 
-import lombok.*;
+import lombok.Getter;
 import nl.lijstr.security.model.JwtUser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

@@ -1,8 +1,5 @@
 package nl.lijstr.processors;
 
-import java.util.ArrayList;
-import java.util.List;
-import lombok.*;
 import nl.lijstr.processors.annotations.InjectRetrofitService;
 import nl.lijstr.services.retrofit.RetrofitService;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
@@ -10,7 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

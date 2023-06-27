@@ -1,8 +1,5 @@
 package nl.lijstr.api.users;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import nl.lijstr.api.users.models.CreateUserRequest;
 import nl.lijstr.api.users.models.PasswordChangeRequest;
 import nl.lijstr.api.users.models.PermissionList;
@@ -24,6 +21,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;

@@ -1,9 +1,5 @@
 package nl.lijstr.beans;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.domain.users.PasswordReset;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
@@ -16,6 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+
 /**
  * Created by Leon Stam on 21-4-2016.
  */
@@ -23,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PasswordBean {
 
     /**
-     * The number of minutes a {@link nl.lijstr.domain.users.PasswordReset} is valid.
+     * The number of minutes a {@link PasswordReset} is valid.
      */
     public static final long PASSWORD_RESET_TIME = 30L;
 

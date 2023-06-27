@@ -1,6 +1,8 @@
 package nl.lijstr.services.maf.models;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Created by Stoux on 03/12/2015.

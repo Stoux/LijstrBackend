@@ -7,7 +7,8 @@ import nl.lijstr.services.migrate.models.MigrationType;
 import org.junit.Before;
 import org.junit.Test;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

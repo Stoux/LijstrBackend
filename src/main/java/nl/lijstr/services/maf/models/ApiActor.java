@@ -1,7 +1,8 @@
 package nl.lijstr.services.maf.models;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
+import lombok.Getter;
+import lombok.ToString;
 import nl.lijstr.domain.interfaces.ImdbIdentifiable;
 
 /**

@@ -1,6 +1,5 @@
 package nl.lijstr.processors;
 
-import java.lang.reflect.Field;
 import nl.lijstr.common.Utils;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.processors.abs.AbsBeanProcessor;
@@ -14,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Field;
 
 /**
  * A BeanPostProcessor that injects Retrofit Service instances into beans.

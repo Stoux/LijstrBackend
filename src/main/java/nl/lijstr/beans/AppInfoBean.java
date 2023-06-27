@@ -2,12 +2,14 @@ package nl.lijstr.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.util.Arrays;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Leon Stam on 28-4-2016.

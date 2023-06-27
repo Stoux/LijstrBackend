@@ -11,9 +11,9 @@ import nl.lijstr.repositories.movies.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +65,7 @@ public class MovieCollectionEndpoint extends AbsService {
     @Secured(Permission.MOVIE_MOD)
     @Transactional
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public MovieCollection addCollection(@Valid @RequestBody PostedCollectionRequest postedRequest) {
+    public MovieCollection addCollection(@Validated @RequestBody PostedCollectionRequest postedRequest) {
         // Find the linked movies (if any)
         final List<Movie> linkedMovies = postedMovieIdsToMovies(postedRequest);
 
@@ -83,7 +83,7 @@ public class MovieCollectionEndpoint extends AbsService {
     @Secured(Permission.MOVIE_MOD)
     @Transactional
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public MovieCollection updateCollection(@PathVariable("id") final long id, @Valid @RequestBody PostedCollectionRequest postedRequest) {
+    public MovieCollection updateCollection(@PathVariable("id") final long id, @Validated @RequestBody PostedCollectionRequest postedRequest) {
         final MovieCollection collection = findOne(collectionRepository, id, "movie collection");
 
         collection.setTitle(postedRequest.getTitle());

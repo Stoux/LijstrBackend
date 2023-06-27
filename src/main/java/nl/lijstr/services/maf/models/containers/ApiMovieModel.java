@@ -1,8 +1,10 @@
 package nl.lijstr.services.maf.models.containers;
 
-import java.util.List;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import nl.lijstr.services.maf.models.ApiMovie;
+
+import java.util.List;
 
 /**
  * Created by Stoux on 03/12/2015.

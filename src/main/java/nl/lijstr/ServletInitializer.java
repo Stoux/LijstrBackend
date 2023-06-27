@@ -1,7 +1,7 @@
 package nl.lijstr;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * The main SpringBootServletInitializer class for starting the application.
@@ -9,7 +9,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  */
 public class ServletInitializer extends SpringBootServletInitializer {
 
-    @SuppressWarnings("squid:UnusedProtectedMethod")
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(LijstrBackendApplication.class);

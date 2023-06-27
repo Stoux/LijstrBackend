@@ -1,13 +1,6 @@
 package nl.lijstr.services.maf.handlers;
 
 import com.google.gson.Gson;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.BiFunction;
 import nl.lijstr._TestUtils.TestUtils;
 import nl.lijstr.beans.ImdbBean;
 import nl.lijstr.domain.imdb.Genre;
@@ -31,7 +24,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.util.ReflectionUtils;
+
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiFunction;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
 import static org.junit.Assert.*;
@@ -41,7 +41,7 @@ import static org.mockito.Mockito.*;
  * A test for updating movies.
  * <p>
  * Note:
- * This test relies heavily on {@link nl.lijstr.services.maf.handlers.util.FieldModifyHandler} and it's test.
+ * This test relies heavily on {@link FieldModifyHandler} and it's test.
  * If anything of that test fails; this test will fail as well.
  */
 @RunWith(MockitoJUnitRunner.class)

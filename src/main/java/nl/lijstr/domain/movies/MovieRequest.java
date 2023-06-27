@@ -1,10 +1,13 @@
 package nl.lijstr.domain.movies;
 
-import java.math.BigDecimal;
-import javax.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.lijstr.domain.base.IdCmUserModel;
 import nl.lijstr.domain.users.User;
+
+import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Created by Stoux on 03/12/2015.

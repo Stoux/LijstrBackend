@@ -1,13 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.OptionalDouble;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieExtendedRating;
 import nl.lijstr.api.movies.models.MovieShortComment;
@@ -19,7 +11,6 @@ import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieRating;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
-import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.repositories.movies.MovieCommentRepository;
 import nl.lijstr.repositories.movies.MovieRatingRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
@@ -33,6 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import java.util.List;
+import java.util.Objects;
+import java.util.OptionalDouble;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 /**
  * Endpoint for fetching general stats (about movies & user ratings).
@@ -175,7 +175,7 @@ public class MovieStatsEndpoint extends AbsService {
 
     private <X, Y> PageResult<Y> getPaged(Function<Pageable, Page<X>> findMethod,
                                           int page, int limit, Function<X, Y> mapper) {
-        Pageable p = new PageRequest(page - 1, limit, Sort.Direction.DESC, "created");
+        Pageable p = PageRequest.of(page -1, limit, Sort.Direction.DESC, "created");
         Page<X> pagedResult = findMethod.apply(p);
 
         List<Y> content = pagedResult.getContent().stream()

@@ -5,9 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by Leon Stam on 28-4-2016.

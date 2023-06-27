@@ -1,8 +1,9 @@
 package nl.lijstr.services.maf.handlers.util;
 
+import org.springframework.util.StringUtils;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import org.springframework.util.StringUtils;
 
 /**
  * Field Converters for {@link nl.lijstr.domain.movies.Movie} and {@link nl.lijstr.services.maf.models.ApiMovie}.

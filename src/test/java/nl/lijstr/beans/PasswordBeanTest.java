@@ -1,8 +1,5 @@
 package nl.lijstr.beans;
 
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import javax.servlet.http.HttpServletRequest;
 import nl.lijstr.domain.users.PasswordReset;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.exceptions.BadRequestException;
@@ -18,7 +15,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import javax.servlet.http.HttpServletRequest;
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+
+import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

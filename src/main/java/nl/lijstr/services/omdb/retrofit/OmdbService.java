@@ -3,13 +3,10 @@ package nl.lijstr.services.omdb.retrofit;
 import nl.lijstr.configs.RetrofitEndpoints;
 import nl.lijstr.services.omdb.models.OmdbObject;
 import nl.lijstr.services.omdb.models.OmdbSearchContainer;
-import nl.lijstr.services.omdb.models.OmdbSearchResultObject;
 import nl.lijstr.services.retrofit.annotations.RetrofitServiceAnnotation;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-
-import java.util.List;
 
 /**
  * Created by Leon Stam on 21-4-2016.

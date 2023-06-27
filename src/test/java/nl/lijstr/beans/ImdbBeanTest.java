@@ -1,6 +1,5 @@
 package nl.lijstr.beans;
 
-import nl.lijstr._TestUtils.TestUtils;
 import nl.lijstr.domain.imdb.Genre;
 import nl.lijstr.domain.imdb.Person;
 import nl.lijstr.domain.imdb.SpokenLanguage;
@@ -13,7 +12,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
+import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

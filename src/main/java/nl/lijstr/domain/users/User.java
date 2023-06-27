@@ -1,13 +1,18 @@
 package nl.lijstr.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.lijstr.domain.base.IdCmModel;
 import nl.lijstr.domain.other.ApprovedFor;
 import nl.lijstr.services.modify.annotations.NotModifiable;
+
+import jakarta.persistence.*;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * Created by Stoux on 03/12/2015.

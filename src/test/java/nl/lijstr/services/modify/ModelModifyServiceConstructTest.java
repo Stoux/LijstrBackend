@@ -1,14 +1,5 @@
 package nl.lijstr.services.modify;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Consumer;
-import javax.persistence.Entity;
-import lombok.*;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 import nl.lijstr.services.modify.models.ReflectedField;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +17,17 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import javax.persistence.Entity;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+
+import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
+import static nl.lijstr._TestUtils.TestUtils.mockLogger;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

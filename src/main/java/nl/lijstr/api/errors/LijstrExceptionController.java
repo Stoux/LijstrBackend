@@ -1,6 +1,5 @@
 package nl.lijstr.api.errors;
 
-import javax.validation.ConstraintViolationException;
 import nl.lijstr.api.errors.models.ValidationErrors;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import jakarta.validation.ConstraintViolationException;
 
 /**
  * Created by Stoux on 29/01/2016.

@@ -1,9 +1,5 @@
 package nl.lijstr.services.migrate.migrators;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import nl.lijstr.common.Container;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
@@ -16,6 +12,11 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.util.ReflectionUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static nl.lijstr._TestUtils.TestUtils.successCall;

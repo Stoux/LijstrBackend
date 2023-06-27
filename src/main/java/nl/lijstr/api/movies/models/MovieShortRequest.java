@@ -1,8 +1,9 @@
 package nl.lijstr.api.movies.models;
 
-import java.time.LocalDateTime;
-import lombok.*;
+import lombok.Getter;
 import nl.lijstr.domain.movies.MovieRequest;
+
+import java.time.LocalDateTime;
 
 /**
  * Summarized version of a {@link MovieRequest}.

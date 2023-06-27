@@ -1,6 +1,5 @@
 package nl.lijstr.api.movies;
 
-import java.util.Collections;
 import nl.lijstr.api.abs.AbsService;
 import nl.lijstr.api.movies.models.MovieSummary;
 import nl.lijstr.domain.movies.Movie;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
 
 /**
  * A RestController that has endpoints for updating Movies.

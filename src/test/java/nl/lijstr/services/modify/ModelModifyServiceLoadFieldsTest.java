@@ -1,8 +1,5 @@
 package nl.lijstr.services.modify;
 
-import java.util.*;
-import javax.persistence.*;
-import lombok.*;
 import nl.lijstr.services.modify.annotations.ExternalModifiable;
 import nl.lijstr.services.modify.annotations.ModifiableWithHistory;
 import nl.lijstr.services.modify.annotations.NotModifiable;
@@ -11,7 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static nl.lijstr._TestUtils.TestUtils.*;
+import javax.persistence.*;
+import java.util.*;
+
+import static nl.lijstr._TestUtils.TestUtils.mockLogger;
 import static org.junit.Assert.*;
 
 /**

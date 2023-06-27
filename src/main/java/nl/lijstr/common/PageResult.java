@@ -1,7 +1,9 @@
 package nl.lijstr.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.List;
-import lombok.*;
 
 /**
  * A container for a paged result.
