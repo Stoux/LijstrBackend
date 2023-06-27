@@ -110,6 +110,8 @@ public final class Utils {
                                       Function<String, X> getOrCreateFunction) {
         final Map<String, X> itemMap = Utils.toMap(currentItems, getAsStringFunction);
 
+        newItems = newItems == null ? Collections.emptyList() : newItems;
+
         for (String newItem : newItems) {
             if (itemMap.containsKey(newItem)) {
                 itemMap.remove(newItem);
