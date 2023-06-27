@@ -4,24 +4,25 @@ import nl.lijstr.api.users.models.UserSummary;
 import nl.lijstr.domain.users.Permission;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.users.UserRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
 
 /**
  * Created by Leon Stam on 28-4-2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieUserEndpointTest {
 
     @Mock
@@ -29,7 +30,7 @@ public class MovieUserEndpointTest {
 
     private MovieUserEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new MovieUserEndpoint();
         insertMocks(endpoint, userRepository);

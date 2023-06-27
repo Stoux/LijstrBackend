@@ -2,8 +2,8 @@ package nl.lijstr.services.modify;
 
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.services.modify.models.ReflectedField;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static nl.lijstr._TestUtils.TestUtils.mockLogger;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -27,7 +27,7 @@ public class ModelModifyServicePublicTest {
     private Map<Class<?>, List<ReflectedField>> mirroredClassListMap;
 
     @SuppressWarnings("unchecked")
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         mockFieldModifier = mock(FieldModifierService.class);
 

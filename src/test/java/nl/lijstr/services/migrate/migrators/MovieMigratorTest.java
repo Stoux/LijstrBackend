@@ -9,8 +9,8 @@ import nl.lijstr.services.migrate.models.MigrationProgress;
 import nl.lijstr.services.migrate.models.movies.OldMovie;
 import nl.lijstr.services.migrate.retrofit.OldSiteService;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.util.ReflectionUtils;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static nl.lijstr._TestUtils.TestUtils.successCall;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -39,7 +39,7 @@ public class MovieMigratorTest {
     private MigrationProgress progress;
     private List<Movie> saveCalls;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         progress = new MigrationProgress();
         saveCalls = new ArrayList<>();
@@ -134,8 +134,8 @@ public class MovieMigratorTest {
         assertEquals(1, saveCalls.size());
         assertNotNull(movieContainer.getItem());
         assertNotEquals(
-                "MovieRepository#save() can return a different object",
-                saveCalls.get(0), movieContainer.getItem()
+                saveCalls.get(0), movieContainer.getItem(),
+                "MovieRepository#save() can return a different object"
         );
         assertEquals(saveCalls.get(0).getId(), movieContainer.getItem().getId());
         assertEquals("tt0000001", saveCalls.get(0).getImdbId());

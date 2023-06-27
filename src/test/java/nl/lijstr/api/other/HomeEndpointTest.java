@@ -1,12 +1,12 @@
 package nl.lijstr.api.other;
 
 import nl.lijstr.beans.AppInfoBean;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Leon Stam on 28-4-2016.
@@ -16,7 +16,7 @@ public class HomeEndpointTest {
     private AppInfoBean appInfoBean;
     private HomeEndpoint homeEndpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         homeEndpoint = new HomeEndpoint();
         appInfoBean = new AppInfoBean();

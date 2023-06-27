@@ -1,20 +1,23 @@
 package nl.lijstr.services.maf.handlers.util;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.other.FieldHistory;
 import nl.lijstr.domain.other.FieldHistorySuggestion;
 import nl.lijstr.exceptions.LijstrException;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.repositories.other.FieldHistorySuggestionRepository;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -27,7 +30,7 @@ public class FieldModifyHandlerTest {
 
     private FieldModifyHandler handler;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         handler = null;
         mockHistoryRepo = mock(FieldHistoryRepository.class);
@@ -57,17 +60,17 @@ public class FieldModifyHandlerTest {
         assertEquals(otherTestModify.varY, testModify.varX);
     }
 
-    @Test(expected = LijstrException.class)
+    @Test()
     public void testInvalidClass() throws Exception {
         //Arrange
         InvalidModel model = new InvalidModel();
         handler = createHandlerWithoutHistory(model, model);
 
         //Act
-        handler.modify("var");
-
-        //Assert
-        fail();
+        assertThrows(
+                LijstrException.class,
+                () -> handler.modify("var")
+        );
     }
 
     @Test
@@ -138,7 +141,7 @@ public class FieldModifyHandlerTest {
     @Setter
     @Getter
     @AllArgsConstructor
-    public class TestModify extends IdModel {
+    public static class TestModify extends IdModel {
         String nullVar;
         String varX;
         private String var;
@@ -148,19 +151,19 @@ public class FieldModifyHandlerTest {
     @Setter
     @Getter
     @AllArgsConstructor
-    public class OtherTestModify {
+    public static class OtherTestModify {
         public String var;
         String nullVar;
         String varY;
         int varEqual;
     }
 
-    public class InvalidModel extends IdModel {
+    public static class InvalidModel extends IdModel {
         private String var;
     }
 
     @AllArgsConstructor
-    public class DifferentModel {
+    public static class DifferentModel {
         int varEqual;
     }
 

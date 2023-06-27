@@ -7,11 +7,11 @@ import nl.lijstr.domain.users.User;
 import nl.lijstr.repositories.users.UserRepository;
 import nl.lijstr.security.model.JwtGrantedAuthority;
 import nl.lijstr.security.model.JwtUser;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 20/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JwtUserDetailsServiceTest {
 
     @Mock
@@ -34,11 +34,11 @@ public class JwtUserDetailsServiceTest {
 
     private JwtUserDetailsService userDetailsService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         userDetailsService = new JwtUserDetailsService();
         insertMocks(userDetailsService, userRepository);
-        when(userRepository.findByUsername(anyString()))
+        lenient().when(userRepository.findByUsername(anyString()))
                 .thenReturn(null);
     }
 
@@ -82,13 +82,14 @@ public class JwtUserDetailsServiceTest {
         }
     }
 
-    @Test(expected = UsernameNotFoundException.class)
-    public void loadNonExistingUser() throws Exception {
+    @Test()
+    public void loadNonExistingUser() {
         //Act
-        userDetailsService.loadUserByUsername("");
-
-        //Assert
-        fail("User doesn't exist");
+        assertThrows(
+                UsernameNotFoundException.class,
+                () -> userDetailsService.loadUserByUsername(""),
+                "User doesn't exist"
+        );
     }
 
 }

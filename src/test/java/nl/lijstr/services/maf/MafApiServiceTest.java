@@ -1,5 +1,6 @@
 package nl.lijstr.services.maf;
 
+import lombok.SneakyThrows;
 import nl.lijstr.common.Utils;
 import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.exceptions.LijstrException;
@@ -7,8 +8,8 @@ import nl.lijstr.services.maf.handlers.MovieUpdateHandler;
 import nl.lijstr.services.maf.models.ApiMovie;
 import nl.lijstr.services.maf.models.containers.ApiMovieModel;
 import nl.lijstr.services.maf.retrofit.ImdbService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
 import static nl.lijstr._TestUtils.TestUtils.mockLogger;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -28,7 +29,7 @@ public class MafApiServiceTest {
     private MovieUpdateHandler updateHandler;
     private ImdbService imdbService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         mafApiService = new MafApiService();
         mockLogger(mafApiService);
@@ -51,7 +52,7 @@ public class MafApiServiceTest {
         doReturn(mockedResponse).when(mockedCall).execute();
 
         assertNotNull(imdbService);
-        when(imdbService.getMovie(anyString(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt()))
+        when(imdbService.getMovie(any(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt()))
                 .thenReturn(mockedCall);
         when(updateHandler.update(any(), any()))
                 .thenReturn(movie);
@@ -61,23 +62,22 @@ public class MafApiServiceTest {
 
         //Assert
         assertEquals(movie, resultingMovie);
-        verify(imdbService, times(1)).getMovie(anyString(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
+        verify(imdbService, times(1)).getMovie(any(), eq(imdbId), anyString(), anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
         verify(updateHandler, times(1)).update(movie, apiMovie);
     }
 
-    @Test(expected = LijstrException.class)
+    @SneakyThrows
+    @Test()
     public void executeFailedCall() {
-        try {
-            //Arrange
-            Call call = mock(Call.class);
-            when(call.execute()).thenThrow(new IOException());
+        //Arrange
+        Call call = mock(Call.class);
+        doThrow(new IOException()).when(call).execute();
 
-            //Act
-            Utils.executeCall(call);
-            fail();
-        } catch (IOException e) {
-            fail("Exception should have been caught and rethrown as a LijstrException.");
-        }
+        assertThrows(
+                LijstrException.class,
+                () -> Utils.executeCall(call),
+                "IOException should have been caught and rethrown as a LijstrException."
+        );
     }
 
 }

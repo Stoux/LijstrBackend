@@ -8,20 +8,20 @@ import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.services.maf.MafApiService;
 import nl.lijstr.services.omdb.OmdbApiService;
 import nl.lijstr.services.omdb.models.OmdbObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 6-2-2017.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieAddBeanTest {
 
     private static final String IMDB_ID = "tt0481522";
@@ -37,7 +37,7 @@ public class MovieAddBeanTest {
 
     private MovieAddBean addBean;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         this.addBean = new MovieAddBean();
         insertMocks(addBean, movieRepository, omdbApiService, mafApiService);
@@ -55,16 +55,17 @@ public class MovieAddBeanTest {
         verify(movieRepository, times(1)).findByImdbId(eq(IMDB_ID));
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test()
     public void movieAdded() throws Exception {
         //Arrange
         when(movieRepository.findByImdbId(eq(IMDB_ID))).thenReturn(new Movie());
 
         //Act
-        addBean.checkIfMovieNotAdded(IMDB_ID);
-
-        //Assert
-        fail("A BadRequestException should have been thrown as the movie is already added.");
+        assertThrows(
+                BadRequestException.class,
+                () -> addBean.checkIfMovieNotAdded(IMDB_ID),
+                "A BadRequestException should have been thrown as the movie is already added."
+        );
     }
 
     @Test

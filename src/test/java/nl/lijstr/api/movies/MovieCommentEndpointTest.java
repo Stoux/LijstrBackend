@@ -13,24 +13,25 @@ import nl.lijstr.repositories.movies.MovieCommentRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.security.model.JwtUser;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 24/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieCommentEndpointTest {
 
     @Mock
@@ -44,7 +45,7 @@ public class MovieCommentEndpointTest {
 
     private MovieCommentEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new MovieCommentEndpoint();
         insertMocks(endpoint, userBean, movieRepository, historyRepository, commentRepository);
@@ -59,7 +60,7 @@ public class MovieCommentEndpointTest {
         Container<MovieComment> catchContainer = new Container<>();
 
         when(userBean.getJwtUser()).thenReturn(user);
-        when(movieRepository.findOne(anyLong())).thenReturn(movie);
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
         when(commentRepository.saveAndFlush(any())).thenAnswer(invocation -> {
             MovieComment movieComment = getInvocationParam(invocation, 0);
             movieComment.setId(1L);
@@ -99,7 +100,7 @@ public class MovieCommentEndpointTest {
         Container<FieldHistory> historyContainer = new Container<>();
 
         when(userBean.getJwtUser()).thenReturn(user);
-        when(movieRepository.findOne(eq(movieId))).thenReturn(movie);
+        when(movieRepository.findById(eq(movieId))).thenReturn(Optional.of(movie));
         when(commentRepository.saveAndFlush(any())).thenAnswer(invocation -> {
             commentContainer.setItem(getInvocationParam(invocation, 0));
             return commentContainer.getItem();
@@ -131,7 +132,7 @@ public class MovieCommentEndpointTest {
         assertEquals(newComment, commentMap.get("comment"));
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test()
     public void editNotFound() throws Exception {
         //Arrange
         JwtUser user = createUser(1L);
@@ -139,16 +140,17 @@ public class MovieCommentEndpointTest {
         movie.setMovieComments(new ArrayList<>());
 
         when(userBean.getJwtUser()).thenReturn(user);
-        when(movieRepository.findOne(anyLong())).thenReturn(movie);
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
 
         //Act
-        endpoint.edit(1L, 1L, null);
-
-        //Fail
-        fail("Movie doesn't exist");
+        assertThrows(
+                NotFoundException.class,
+                () -> endpoint.edit(1L, 1L, null),
+                "Movie doesn't exist"
+        );
     }
 
-    @Test(expected = UnauthorizedException.class)
+    @Test()
     public void editWrongUser() throws Exception {
         //Arrange
         long commentId = 1L;
@@ -158,13 +160,14 @@ public class MovieCommentEndpointTest {
         movie.setMovieComments(Arrays.asList(comment));
 
         when(userBean.getJwtUser()).thenReturn(user);
-        when(movieRepository.findOne(anyLong())).thenReturn(movie);
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
 
         //Act
-        endpoint.edit(1L, commentId, null);
-
-        //Fail
-        fail("Comment belongs to a different user");
+        assertThrows(
+                UnauthorizedException.class,
+                () -> endpoint.edit(1L, commentId, null),
+                "Comment belongs to a different user"
+        );
     }
 
     private MovieComment createComment(long userId, long commentId) {

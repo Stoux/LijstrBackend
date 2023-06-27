@@ -7,22 +7,21 @@ import nl.lijstr.beans.UserBean;
 import nl.lijstr.domain.users.PasswordReset;
 import nl.lijstr.domain.users.User;
 import nl.lijstr.services.mail.MailService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 25/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PasswordResetEndpointTest {
 
     @Mock
@@ -34,7 +33,7 @@ public class PasswordResetEndpointTest {
 
     private PasswordResetEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new PasswordResetEndpoint();
         insertMocks(endpoint, userBean, passwordBean, mailService);

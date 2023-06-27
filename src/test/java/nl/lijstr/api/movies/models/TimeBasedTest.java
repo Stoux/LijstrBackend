@@ -1,15 +1,16 @@
 package nl.lijstr.api.movies.models;
 
 import lombok.Getter;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Created by Stoux on 5-2-2017.
@@ -21,7 +22,7 @@ public class TimeBasedTest {
     private List<TimeBased> originalList;
     private List<TimeBased> sortableList;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         List<TimeBased> list = new ArrayList<>();
         for (int minute : MINUTES) {
@@ -31,9 +32,12 @@ public class TimeBasedTest {
         sortableList = new ArrayList<>(list);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void dontModify() throws Exception {
-        Collections.sort(originalList);
+    @Test()
+    public void dontModify() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> Collections.sort(originalList)
+        );
     }
 
     @Test

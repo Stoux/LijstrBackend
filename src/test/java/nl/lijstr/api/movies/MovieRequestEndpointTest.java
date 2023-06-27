@@ -15,24 +15,25 @@ import nl.lijstr.repositories.movies.MovieRatingRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.movies.MovieRequestRepository;
 import nl.lijstr.services.omdb.models.OmdbObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 6-2-2017.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieRequestEndpointTest {
 
     public static final String IMDB_ID = "imdbId";
@@ -52,11 +53,11 @@ public class MovieRequestEndpointTest {
 
     private MovieRequestEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new MovieRequestEndpoint();
         insertMocks(endpoint, userBean, movieRepository, requestRepository, ratingRepository, movieAddBean);
-        when(userBean.getJwtUser()).thenReturn(createUser(1L));
+        lenient().when(userBean.getJwtUser()).thenReturn(createUser(1L));
     }
 
     @Test
@@ -116,7 +117,7 @@ public class MovieRequestEndpointTest {
         //Arrange
         MovieRequest request = createRequestWithRating(2L);
 
-        when(requestRepository.findOne(eq(2L))).thenReturn(request);
+        when(requestRepository.findById(eq(2L))).thenReturn(Optional.of(request));
         Movie movie = new Movie(IMDB_ID);
         when(movieAddBean.addMovie(eq(IMDB_ID), eq(TITLE), eq(YOUTUBE_ID), eq(request.getUser())))
                 .thenReturn(movie);
@@ -147,7 +148,7 @@ public class MovieRequestEndpointTest {
     public void approveAlreadyAddedRequest() throws Exception {
         //Arrange
         MovieRequest request = createRequestWithRating(2L);
-        when(requestRepository.findOne(eq(2L))).thenReturn(request);
+        when(requestRepository.findById(eq(2L))).thenReturn(Optional.of(request));
         doThrow(new BadRequestException("Already added!")).when(movieAddBean).checkIfMovieNotAdded(eq(IMDB_ID));
 
         Movie m = new Movie();

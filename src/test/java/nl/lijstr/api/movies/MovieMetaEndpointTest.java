@@ -7,20 +7,22 @@ import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.domain.movies.MovieUserMeta;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.repositories.movies.MovieUserMetaRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 9-2-2017.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieMetaEndpointTest {
 
     @Mock
@@ -33,7 +35,7 @@ public class MovieMetaEndpointTest {
     private Movie movie;
     private MovieMetaEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new MovieMetaEndpoint();
         insertMocks(endpoint, userBean, movieRepository, metaRepository);
@@ -42,7 +44,7 @@ public class MovieMetaEndpointTest {
 
         movie = new Movie(null, null, (String) null, null);
         movie.setId(1L);
-        when(movieRepository.findOne(eq(1L))).thenReturn(movie);
+        when(movieRepository.findById(eq(1L))).thenReturn(Optional.of(movie));
     }
 
     @Test

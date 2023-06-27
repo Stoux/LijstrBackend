@@ -1,12 +1,13 @@
 package nl.lijstr.services.maf.handlers.util;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.function.Function;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Created by Leon Stam on 29-1-2016.
@@ -15,7 +16,7 @@ public class FieldConvertersTest {
 
     private Function<String, Object> objectFunction;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         objectFunction = null;
     }

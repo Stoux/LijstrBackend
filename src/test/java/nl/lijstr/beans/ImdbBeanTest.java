@@ -6,21 +6,21 @@ import nl.lijstr.domain.imdb.SpokenLanguage;
 import nl.lijstr.repositories.imdb.GenreRepository;
 import nl.lijstr.repositories.imdb.PersonRepository;
 import nl.lijstr.repositories.imdb.SpokenLanguageRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static nl.lijstr._TestUtils.TestUtils.getInvocationParam;
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 23/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ImdbBeanTest {
 
     @Mock
@@ -32,17 +32,17 @@ public class ImdbBeanTest {
 
     private ImdbBean imdbBean;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         imdbBean = new ImdbBean();
         insertMocks(imdbBean, genreRepository, languageRepository, personRepository);
 
-        when(genreRepository.saveAndFlush(any(Genre.class)))
+        lenient().when(genreRepository.saveAndFlush(any(Genre.class)))
                 .thenAnswer(invocation -> getInvocationParam(invocation, 0));
-        when(languageRepository.saveAndFlush(any(SpokenLanguage.class)))
+        lenient().when(languageRepository.saveAndFlush(any(SpokenLanguage.class)))
                 .thenAnswer(invocation -> getInvocationParam(invocation, 0));
 
-        when(personRepository.save(any(Person.class)))
+        lenient().when(personRepository.save(any(Person.class)))
                 .thenAnswer(invocation -> getInvocationParam(invocation, 0));
     }
 

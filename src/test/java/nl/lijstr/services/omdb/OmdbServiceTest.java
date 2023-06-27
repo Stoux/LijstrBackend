@@ -4,12 +4,12 @@ import nl.lijstr._TestUtils.TestUtils;
 import nl.lijstr.exceptions.BadRequestException;
 import nl.lijstr.services.omdb.models.OmdbObject;
 import nl.lijstr.services.omdb.retrofit.OmdbService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import retrofit2.Call;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -20,7 +20,7 @@ public class OmdbServiceTest {
     private OmdbApiService apiService;
     private OmdbService omdbService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         apiService = new OmdbApiService("");
 
@@ -43,7 +43,7 @@ public class OmdbServiceTest {
         assertEquals(omdbObject, movie);
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test()
     public void getNonMovie() throws Exception {
         //Arrange
         OmdbObject omdbObject = new OmdbObject("", "", "", "series");
@@ -52,13 +52,14 @@ public class OmdbServiceTest {
                 .thenReturn(mockedCall);
 
         //Act
-        apiService.getMovie("Series");
-
-        //Assert
-        fail("The OmdbObject isn't a movie");
+        assertThrows(
+                BadRequestException.class,
+                () -> apiService.getMovie("Series"),
+                "The OmdbObject isn't a movie"
+        );
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test()
     public void getNonExistentMovie() throws Exception {
         //Arrange
         Call<OmdbObject> failedCall = TestUtils.failedCall(404, "Not found");
@@ -66,10 +67,11 @@ public class OmdbServiceTest {
                 .thenReturn(failedCall);
 
         //Act
-        apiService.getMovie("Null");
-
-        //Assert
-        fail("The movie didn't exist");
+        assertThrows(
+                BadRequestException.class,
+                () -> apiService.getMovie("Null"),
+                "The movie didn't exist"
+        );
     }
 
     @Test

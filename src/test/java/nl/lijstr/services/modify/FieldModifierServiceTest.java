@@ -1,5 +1,9 @@
 package nl.lijstr.services.modify;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.lijstr.common.ReflectUtils;
 import nl.lijstr.domain.base.IdModel;
 import nl.lijstr.domain.other.FieldHistory;
@@ -7,8 +11,8 @@ import nl.lijstr.repositories.abs.BasicRepository;
 import nl.lijstr.repositories.other.FieldHistoryRepository;
 import nl.lijstr.services.modify.models.ReflectedField;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.lang.reflect.Field;
@@ -18,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -34,7 +38,7 @@ public class FieldModifierServiceTest {
 
     private Logger mockedLogger;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         mockedHistoryRepo = mock(FieldHistoryRepository.class);
 
@@ -135,7 +139,7 @@ public class FieldModifierServiceTest {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public class FieldModel extends IdModel {
+    public static class FieldModel extends IdModel {
         private String var1;
         private String var2;
         private String var3;

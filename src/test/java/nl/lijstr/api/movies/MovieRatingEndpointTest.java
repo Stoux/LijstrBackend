@@ -12,11 +12,11 @@ import nl.lijstr.exceptions.db.ConflictException;
 import nl.lijstr.repositories.movies.MovieRatingRepository;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.security.model.JwtUser;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
@@ -24,15 +24,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 24/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieRatingEndpointTest {
 
     @Mock
@@ -44,7 +45,7 @@ public class MovieRatingEndpointTest {
 
     private MovieRatingEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new MovieRatingEndpoint();
         insertMocks(endpoint, userBean, movieRepository, movieRatingRepository);
@@ -61,7 +62,7 @@ public class MovieRatingEndpointTest {
         long ratingId = 10L;
 
         when(userBean.getJwtUser()).thenReturn(jwtUser);
-        when(movieRepository.findOne(anyLong())).thenReturn(movie);
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
         whenRatingSaveReturnWithId(ratingId);
 
         //Act
@@ -125,7 +126,7 @@ public class MovieRatingEndpointTest {
         verify(movieRatingRepository, times(1)).save(eq(ownRating));
     }
 
-    @Test(expected = ConflictException.class)
+    @Test()
     public void addRatingWithRecentExisting() throws Exception {
         //Arrange
         JwtUser user = createUser(1L);
@@ -135,10 +136,11 @@ public class MovieRatingEndpointTest {
         ));
 
         //Act
-        ReflectionTestUtils.invokeMethod(endpoint, "addRating", user, movie, null);
-
-        //Assert
-        fail("Should warn about the old rating");
+        assertThrows(
+                ConflictException.class,
+                () -> ReflectionTestUtils.invokeMethod(endpoint, "addRating", user, movie, null),
+                "Should warn about the old rating"
+        );
     }
 
     private MovieRating createRating(long userId, LocalDateTime validTill) {
@@ -164,7 +166,7 @@ public class MovieRatingEndpointTest {
         ));
 
         when(userBean.getJwtUser()).thenReturn(user);
-        when(movieRepository.findOne(anyLong())).thenReturn(movie);
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
         whenRatingSaveReturnWithId(1L);
 
         //Act
@@ -177,20 +179,20 @@ public class MovieRatingEndpointTest {
         verify(movieRatingRepository, times(1)).saveAndFlush(eq(oldRating));
     }
 
-    @Test(expected = ConflictException.class)
+    @Test()
     public void editNonExistent() throws Exception {
         failedEdit(new ArrayList<>(), "No rating");
     }
 
-    @Test(expected = ConflictException.class)
-    public void editWrongRating() throws Exception {
+    @Test()
+    public void editWrongRating() {
         MovieRating rating = createRating(1L, LocalDateTime.now());
         rating.setId(2L);
         failedEdit(Arrays.asList(rating), "Wrong rating");
     }
 
-    @Test(expected = ConflictException.class)
-    public void editNotRecent() throws Exception {
+    @Test()
+    public void editNotRecent() {
         MovieRating rating = createRating(1L, LocalDateTime.now().minusHours(24));
         failedEdit(Arrays.asList(rating), "Not a recent rating");
     }
@@ -203,13 +205,14 @@ public class MovieRatingEndpointTest {
         movie.setLatestMovieRatings(latestRatings);
 
         when(userBean.getJwtUser()).thenReturn(user);
-        when(movieRepository.findOne(anyLong())).thenReturn(movie);
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
 
         //Act
-        endpoint.edit(1L, 1L, null);
-
-        //Assert
-        fail(failMessage);
+        assertThrows(
+                ConflictException.class,
+                () -> endpoint.edit(1L, 1L, null),
+                failMessage
+        );
     }
 
     private void whenRatingSaveReturnWithId(final long id) {

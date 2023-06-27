@@ -6,22 +6,22 @@ import nl.lijstr.domain.movies.Movie;
 import nl.lijstr.repositories.movies.MovieRepository;
 import nl.lijstr.services.maf.MafApiService;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
 import static nl.lijstr._TestUtils.TestUtils.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Stoux on 24/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MovieUpdateEndpointTest {
 
     @Mock
@@ -33,7 +33,7 @@ public class MovieUpdateEndpointTest {
 
     private MovieUpdateEndpoint endpoint;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         endpoint = new MovieUpdateEndpoint();
         insertMocks(endpoint, movieRepository, mafApiService);

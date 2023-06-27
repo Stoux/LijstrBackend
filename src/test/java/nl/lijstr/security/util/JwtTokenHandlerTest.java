@@ -5,20 +5,23 @@ import nl.lijstr.exceptions.security.TokenExpiredException;
 import nl.lijstr.security.model.AuthenticationToken;
 import nl.lijstr.security.model.JwtGrantedAuthority;
 import nl.lijstr.security.model.JwtUser;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import static nl.lijstr._TestUtils.TestUtils.insertMocks;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +29,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Stoux on 20/04/2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JwtTokenHandlerTest {
 
     private JwtTokenHandler jwtTokenHandler;
@@ -34,10 +37,12 @@ public class JwtTokenHandlerTest {
     @Mock
     private UserDetailsService userDetailsService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jwtTokenHandler = new JwtTokenHandler();
-        ReflectionTestUtils.setField(jwtTokenHandler, "secret", "SECRET");
+
+        String secret = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+        ReflectionTestUtils.setField(jwtTokenHandler, "secret", secret);
         insertMocks(jwtTokenHandler, userDetailsService);
     }
 
@@ -91,30 +96,32 @@ public class JwtTokenHandlerTest {
         assertNull(foundUser.getPassword());
     }
 
-    @Test(expected = TokenExpiredException.class)
+    @Test()
     public void parseExpiredToken() throws Exception {
         //Arrange
         JwtUser user = new JwtUser(1L, "A", "B", new ArrayList<>(), null, LocalDateTime.now().minusMinutes(5), 0);
         String token = ReflectionTestUtils.invokeMethod(jwtTokenHandler, "generateToken", user);
 
         //Act
-        jwtTokenHandler.parseToken(token);
-
-        //Assert
-        fail("Token has expired");
+        assertThrows(
+                TokenExpiredException.class,
+                () -> jwtTokenHandler.parseToken(token),
+                "Token has expired"
+        );
     }
 
-    @Test(expected = AccessExpiredException.class)
+    @Test()
     public void parseExpiredAccessToken() throws Exception {
         //Arrange
         JwtUser user = new JwtUser(1L, "A", "B", new ArrayList<>(), LocalDateTime.now().minusMinutes(5), LocalDateTime.now().plusDays(1), 0);
         String token = ReflectionTestUtils.invokeMethod(jwtTokenHandler, "generateToken", user);
 
         //Act
-        jwtTokenHandler.parseToken(token);
-
-        //Assert
-        fail("Access has expired");
+        assertThrows(
+                AccessExpiredException.class,
+                () -> jwtTokenHandler.parseToken(token),
+                "Access has expired"
+        );
     }
 
     @Test
@@ -157,7 +164,7 @@ public class JwtTokenHandlerTest {
     }
 
 
-    @Test(expected = TokenExpiredException.class)
+    @Test()
     public void refreshExpiredToken() throws Exception {
         //Arrange
         JwtUser user = new JwtUser(
@@ -172,10 +179,11 @@ public class JwtTokenHandlerTest {
         user.setValidatingKey(1);
 
         //Act
-        jwtTokenHandler.refreshToken(token, s -> assertEquals(user.getUsername(), s));
-
-        //Assert
-        fail("Token has expired");
+        assertThrows(
+                TokenExpiredException.class,
+                () -> jwtTokenHandler.refreshToken(token, s -> assertEquals(user.getUsername(), s)),
+                "Token has expired"
+        );
     }
 
 }

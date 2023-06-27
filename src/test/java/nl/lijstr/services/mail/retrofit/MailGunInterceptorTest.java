@@ -6,14 +6,14 @@ import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.util.Base64Utils;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Stoux on 23/04/2016.
@@ -26,7 +26,7 @@ public class MailGunInterceptorTest {
     private MockWebServer mockWebServer;
     private MailGunInterceptor mailGunInterceptor;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         mailGunInterceptor = new MailGunInterceptor();
         ReflectionTestUtils.setField(mailGunInterceptor, "apiKey", TEST_KEY);
@@ -51,7 +51,7 @@ public class MailGunInterceptorTest {
 
         //Assert
         assertEquals("/v3/" + EXAMPLE_COM + "/post", recordedRequest.getPath());
-        String base64 = Base64Utils.encodeToString(("api:key-" + TEST_KEY).getBytes(Charset.forName("UTF-8")));
+        String base64 = Base64.getEncoder().encodeToString(("api:key-" + TEST_KEY).getBytes(StandardCharsets.UTF_8));
         assertEquals("Basic " + base64, recordedRequest.getHeader("Authorization"));
 
     }
