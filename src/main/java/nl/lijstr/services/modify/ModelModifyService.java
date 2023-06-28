@@ -125,7 +125,7 @@ public class ModelModifyService {
         return Class.forName(className);
     }
 
-    private ClassPathScanningCandidateComponentProvider getClassPathScanner() {
+    public ClassPathScanningCandidateComponentProvider getClassPathScanner() {
         return new ClassPathScanningCandidateComponentProvider(false);
     }
 
@@ -136,7 +136,7 @@ public class ModelModifyService {
      *
      * @return the list of fields
      */
-    private List<ReflectedField> loadClassFields(Class<?> clazz) {
+    public List<ReflectedField> loadClassFields(Class<?> clazz) {
         final boolean classKeepsHistory = keepsHistory(clazz);
         List<ReflectedField> reflectedFields = new ArrayList<>();
 

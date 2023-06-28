@@ -1,11 +1,11 @@
 package nl.lijstr.services.modify;
 
+import jakarta.persistence.Entity;
 import lombok.Setter;
 import nl.lijstr.services.modify.annotations.NotModifiable;
 import nl.lijstr.services.modify.models.ReflectedField;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -15,9 +15,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import jakarta.persistence.Entity;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -35,11 +33,9 @@ import static org.mockito.Mockito.*;
  * <p>
  * It uses PowerMockito to override private methods.
  */
-@Disabled // TODO: Get this working again
 @ExtendWith(MockitoExtension.class)
 public class ModelModifyServiceConstructTest {
 
-    public static final String SCANNER_GETTER = "getClassPathScanner";
     private ModelModifyService spyService;
     private Logger mockedLogger;
     private ClassPathScanningCandidateComponentProvider mockProvider;
@@ -53,17 +49,7 @@ public class ModelModifyServiceConstructTest {
     public void setUp() throws Exception {
         ModelModifyService service = new ModelModifyService();
         mockedLogger = mockLogger(service);
-        spyService =  service; // PowerMockito.spy(service);
-    }
-
-    @Test
-    public void testGetClassPathScanner() {
-        //Act
-        ClassPathScanningCandidateComponentProvider provider =
-                ReflectionTestUtils.invokeMethod(spyService, SCANNER_GETTER);
-
-        //Assert
-        assertNotNull(provider);
+        spyService = spy(service);
     }
 
     @Test
@@ -75,15 +61,13 @@ public class ModelModifyServiceConstructTest {
         when(mockProvider.findCandidateComponents(any())).thenReturn(beanDefinitions);
 
         List<ReflectedField> reflectedFields = reflectedFieldList();
-//        Method method = MemberMatcher.method(ModelModifyService.class, "loadClassFields", Class.class);
-//        PowerMockito.doReturn(reflectedFields).when(spyService, method).withArguments(any(Class.class));
+        doReturn(reflectedFields).when(spyService).loadClassFields(any(Class.class));
 
-        doAnswer(this::assertLoggerInvocation)
+        lenient().doAnswer(this::assertLoggerInvocation)
                 .when(mockedLogger).info(anyString(), anyInt(), anyString(), anyString());
 
         //Act
         ReflectionTestUtils.invokeMethod(spyService, "construct");
-
 
         //Assert
         assertTrue(excludedNotModifiable);
@@ -129,8 +113,8 @@ public class ModelModifyServiceConstructTest {
             return null;
         }).when(mockProvider).addExcludeFilter(any());
 
-//        Method method = MemberMatcher.method(ModelModifyService.class, SCANNER_GETTER);
-//        PowerMockito.when(spyService, method).withNoArguments().thenReturn(mockProvider);
+
+        doReturn(mockProvider).when(spyService).getClassPathScanner();
     }
 
     private void expectedAnnotationFilter(InvocationOnMock invocation,
@@ -145,7 +129,7 @@ public class ModelModifyServiceConstructTest {
         }
     }
 
-    public class ConstructModel {
+    public static class ConstructModel {
     }
 
 }
