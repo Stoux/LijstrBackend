@@ -46,3 +46,10 @@ out/
 # Ignore root property files
 /application.properties
 /sentry.properties
+
+# Local config with secrets
+/src/main/resources/application.properties
+
+# Local DB dumps
+/lijstr.sql
+/lijstr.sql.zip
